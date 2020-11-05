@@ -5,7 +5,7 @@ import './ui/login.dart';
 void main(){
   runApp(new MaterialApp(
     title: "Login App",
-    home: new Login(),
-    //home: new Signup(),
+    //home: new Login(),
+    home: new Signup(),
   ));
 }

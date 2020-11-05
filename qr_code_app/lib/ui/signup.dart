@@ -35,7 +35,7 @@ class SignupState extends State<Signup> {
             new Padding(padding: new EdgeInsets.all(10.0)),
             new Container(
               //height: double.infinity,
-              height: 500,
+              height: 550,
               width: 380,
               child: SingleChildScrollView(
 
