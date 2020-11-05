@@ -35,36 +35,39 @@ class LoginState extends State<Login> {
             new Container(
               height: 180,
               width: 380,
-              child: new Column(
-                children: <Widget>[
-                  new Center(
-                    //child: new Text("Login", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.blue),),
-                  ),
-                  new TextField(
-                    decoration: new InputDecoration(
-                        hintText: 'Username', icon: new Icon(Icons.person)),
-                  ),
+              child: SingleChildScrollView(
+                child: new Column(
+                  children: <Widget>[
+                    new Center(
+                      //child: new Text("Login", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.blue),),
+                    ),
+                    new TextField(
+                      decoration: new InputDecoration(
+                          hintText: 'Username', icon: new Icon(Icons.person)),
+                    ),
 
-                  //new Padding(padding: new EdgeInsets.all(10.0)),
+                    //new Padding(padding: new EdgeInsets.all(10.0)),
 
-                  new TextField(
-                    decoration: new InputDecoration(
-                        hintText: 'Password', icon: new Icon(Icons.lock)),
-                    obscureText: true,
-                  ),
+                    new TextField(
+                      decoration: new InputDecoration(
+                          hintText: 'Password', icon: new Icon(Icons.lock)),
+                      obscureText: true,
+                    ),
 
-                  new Center(
-                      child: new RaisedButton(
-                        child: new Text(
-                          "Login",
-                          style: new TextStyle(
-                              color: Colors.white, fontSize: 20.5),
-                        ),
+                    new Center(
+                        child: new RaisedButton(
+                          child: new Text(
+                            "Login",
+                            style: new TextStyle(
+                                color: Colors.white, fontSize: 20.5),
+                          ),
 
-                      )
-                  ),
-                ],
+                        )
+                    ),
+                  ],
+                ),
               ),
+
             ),
           ],
         ),
