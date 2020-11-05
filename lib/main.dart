@@ -6,10 +6,11 @@ import './ui/home.dart';
 
 void main(){
   runApp(new MaterialApp(
-    title: "Login App",
+    title: "Dcode App",
     //home: new Login(),
     //home: new Signup(),
-    home: new home(),
+    //home: new home(),
+    home: new scanQr(),
 
   ));
 }
