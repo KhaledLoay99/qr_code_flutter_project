@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_app/ui/login.dart';
+import 'package:qr_code_app/ui/scanQr.dart';
+import 'package:qr_code_app/ui/signup.dart';
 
 class home extends StatefulWidget {
   @override
@@ -10,7 +13,6 @@ class home extends StatefulWidget {
 
 class homeState extends State<home> {
   Color c1 = const Color.fromRGBO(110,204,234,1.0); // fully transparent white (invisible)
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -32,6 +34,31 @@ class homeState extends State<home> {
 //        unselectedFontSize: 14,
         onTap: (value) {
           // Respond to item press.
+          if(value == 0){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => home()),
+            );
+          }else if(value == 1){
+
+            //Navigator.push(
+              //context,
+              //MaterialPageRoute(builder: (context) => notifications()),
+           // );
+          }else if(value == 2){
+
+//            Navigator.push(
+//              context,
+//              MaterialPageRoute(builder: (context) => chats()),
+//            );
+          }else if(value == 3){
+
+//            Navigator.push(
+//              context,
+//              MaterialPageRoute(builder: (context) => profile()),
+//            );
+          }
+
         },
         items: [
           BottomNavigationBarItem(
@@ -49,6 +76,7 @@ class homeState extends State<home> {
           BottomNavigationBarItem(
             title: Text('My Profile'),
             icon: Icon(Icons.account_circle),
+
           ),
         ],
       ),
@@ -63,7 +91,12 @@ class homeState extends State<home> {
     new Container(
 
       child:GestureDetector(
-            onTap: () {},   // When the child is tapped, make an action
+            onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => scanQr()),
+                );
+            },   // When the child is tapped, make an action
             child: new Container(
               width: 100 ,
               height: 100,

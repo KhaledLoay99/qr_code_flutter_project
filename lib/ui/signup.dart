@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_app/ui/login.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -85,10 +86,16 @@ class SignupState extends State<Signup> {
 
                   new Center(
                       child: new RaisedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Login()),
+                          );
+                        },
                         child: new Text(
                           "Sign Up",
                           style: new TextStyle(
-                              color: Colors.white, fontSize: 20.5),
+                              color: Colors.blueGrey, fontSize: 20.5),
                         ),
 
                       )

@@ -8,10 +8,10 @@ import './ui/carProfile.dart';
 
 void main() {
   runApp(new MaterialApp(
-    title: "Login App",
-    //home: new Login(),
+    title: "Dcode App",
+    home: new Login(),
     //home: new Signup(),
     //home: new home(),
-    home: new carProfile(),
+    //home: new scanQr(),
   ));
 }
