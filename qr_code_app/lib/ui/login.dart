@@ -15,7 +15,8 @@ class LoginState extends State<Login> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
-        appBar: new AppBar(
+      resizeToAvoidBottomInset: false,
+      appBar: new AppBar(
           title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
 //          title: new Text("Login"),
           backgroundColor: c1,
