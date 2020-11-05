@@ -23,24 +23,32 @@ class homeState extends State<home> {
       ),
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0, // this will be set when a new tab is tapped
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: c1,
+        selectedItemColor: Colors.white,
+//        unselectedItemColor: Colors.white.withOpacity(.60),
+//        selectedFontSize: 14,
+//        unselectedFontSize: 14,
+        onTap: (value) {
+          // Respond to item press.
+        },
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text('Home'),
+            title: Text('Home'),
+            icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.notifications),
-            title: new Text('My Notifications'),
+            title: Text('Notifications'),
+            icon: Icon(Icons.notifications),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.access_time),
-              title: Text('Recent Chats')
+            title: Text('Recent Chats'),
+            icon: Icon(Icons.chat),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              title: Text('My Profile')
-          )
+            title: Text('My Profile'),
+            icon: Icon(Icons.account_circle),
+          ),
         ],
       ),
       body: new Container(),
