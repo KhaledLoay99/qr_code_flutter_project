@@ -16,9 +16,13 @@ class LoginState extends State<Login> {
     return new Scaffold(
 
 
+
+
         appBar: new AppBar(
-        title: new Text("Login"),
-        backgroundColor: Colors.blue,
+          title: Image.asset('Decode_home.jpg', fit: BoxFit.cover),
+
+          //title: new Text("Login"),
+        //backgroundColor: Colors.blue,
       ),
       backgroundColor: Colors.white,
       body: new Container(
