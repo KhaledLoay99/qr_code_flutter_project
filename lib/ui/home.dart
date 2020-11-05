@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_app/ui/scanQr.dart';
 
 class home extends StatefulWidget {
   @override
@@ -63,7 +64,12 @@ class homeState extends State<home> {
     new Container(
 
       child:GestureDetector(
-            onTap: () {},   // When the child is tapped, make an action
+            onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => scanQr()),
+                );
+            },   // When the child is tapped, make an action
             child: new Container(
               width: 100 ,
               height: 100,
