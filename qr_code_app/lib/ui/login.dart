@@ -31,11 +31,12 @@ class LoginState extends State<Login> {
 
             new Padding(padding: new EdgeInsets.all(20.0)),
             new Text("Login", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 55,color: Colors.blue),),
-            new Padding(padding: new EdgeInsets.all(10.0)),
+            new Padding(padding: new EdgeInsets.all(20.0)),
             new Container(
-              height: 180,
+              height: 500,
               width: 380,
               child: SingleChildScrollView(
+                padding: EdgeInsets.all(30.0),
                 child: new Column(
                   children: <Widget>[
                     new Center(
@@ -46,14 +47,14 @@ class LoginState extends State<Login> {
                           hintText: 'Username', icon: new Icon(Icons.person)),
                     ),
 
-                    //new Padding(padding: new EdgeInsets.all(10.0)),
+                    new Padding(padding: new EdgeInsets.all(20.0)),
 
                     new TextField(
                       decoration: new InputDecoration(
                           hintText: 'Password', icon: new Icon(Icons.lock)),
                       obscureText: true,
                     ),
-
+                    new Padding(padding: new EdgeInsets.all(20.0)),
                     new Center(
                         child: new RaisedButton(
                           child: new Text(
