@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_app/ui/home.dart';
 
 class scanQr extends StatefulWidget {
   @override
@@ -31,6 +32,30 @@ class scanQrState extends State<scanQr> {
 //        unselectedFontSize: 14,
         onTap: (value) {
           // Respond to item press.
+          if(value == 0){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => home()),
+            );
+          }else if(value == 1){
+
+            //Navigator.push(
+            //context,
+            //MaterialPageRoute(builder: (context) => notifications()),
+            // );
+          }else if(value == 2){
+
+//            Navigator.push(
+//              context,
+//              MaterialPageRoute(builder: (context) => chats()),
+//            );
+          }else if(value == 3){
+
+//            Navigator.push(
+//              context,
+//              MaterialPageRoute(builder: (context) => profile()),
+//            );
+          }
         },
         items: [
           BottomNavigationBarItem(
