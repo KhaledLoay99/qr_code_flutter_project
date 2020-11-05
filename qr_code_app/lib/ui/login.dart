@@ -9,40 +9,44 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
+  Color c1 = const Color.fromRGBO(110,204,234,1.0); // fully transparent white (invisible)
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
-
-
-
-
         appBar: new AppBar(
-          title: Image.asset('Decode_home.jpg', fit: BoxFit.cover),
-
-          //title: new Text("Login"),
-        //backgroundColor: Colors.blue,
+          title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
+//          title: new Text("Login"),
+          backgroundColor: c1,
       ),
       backgroundColor: Colors.white,
+
+
       body: new Container(
+
         alignment: Alignment.topCenter,
         child: new Column(
           children: <Widget>[
-            new Image.asset(
-              'images/Dcode_home.jpg',
-              width: 1500.0,
-              height: 150.0,
-            ),
+
+            new Padding(padding: new EdgeInsets.all(20.0)),
+            new Text("Login", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 55,color: Colors.blue),),
+            new Padding(padding: new EdgeInsets.all(10.0)),
             new Container(
               height: 180,
               width: 380,
               child: new Column(
                 children: <Widget>[
+                  new Center(
+                    //child: new Text("Login", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.blue),),
+                  ),
                   new TextField(
                     decoration: new InputDecoration(
                         hintText: 'Username', icon: new Icon(Icons.person)),
                   ),
+
+                  //new Padding(padding: new EdgeInsets.all(10.0)),
+
                   new TextField(
                     decoration: new InputDecoration(
                         hintText: 'Password', icon: new Icon(Icons.lock)),
