@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_app/ui/signup.dart';
+import 'package:Dcode/ui/signup.dart';
 import './ui/login.dart';
 import './ui/scanQr.dart';
 import './ui/home.dart';

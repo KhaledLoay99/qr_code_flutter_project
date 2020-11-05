@@ -32,8 +32,8 @@ class _ProfileState extends State<Profile> {
           ),
           Row(children: [
             Container(
-              padding: EdgeInsets.only(left: 350, top: 20),
-              child: qr ? Icon(Icons.qr_code) : Icon(Icons.edit),
+              padding: EdgeInsets.only(left: 320, top: 20),
+              child: qr ? Icon(Icons.center_focus_weak) : Icon(Icons.edit),
             )
           ])
         ]));

@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_app/ui/login.dart';
-import 'package:qr_code_app/ui/scanQr.dart';
-import 'package:qr_code_app/ui/signup.dart';
-
+import 'package:Dcode/ui/login.dart';
+import 'package:Dcode/ui/scanQr.dart';
+import 'package:Dcode/ui/signup.dart';
+import 'package:Dcode/ui/profile.dart';
+import 'package:Dcode/ui/carProfile.dart';
 class home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -53,10 +55,10 @@ class homeState extends State<home> {
 //            );
           }else if(value == 3){
 
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(builder: (context) => profile()),
-//            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
           }
 
         },
@@ -207,7 +209,14 @@ class homeState extends State<home> {
           new Padding(padding: new EdgeInsets.all(30.0)),
 
     GestureDetector(
-             onTap: () {},    // When the child is tapped, make an action
+             onTap: () {
+
+
+               Navigator.push(
+               context,
+               MaterialPageRoute(builder: (context) => carProfile()),
+                );
+             },    // When the child is tapped, make an action
 
         child :new Container(
           width: 100 ,

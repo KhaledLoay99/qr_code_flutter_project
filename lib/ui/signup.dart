@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_app/ui/login.dart';
+import 'package:Dcode/ui/login.dart';
 
 class Signup extends StatefulWidget {
   @override

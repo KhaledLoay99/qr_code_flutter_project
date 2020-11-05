@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_app/ui/home.dart';
+import 'package:Dcode/ui/home.dart';
+import 'package:Dcode/ui/profile.dart';
+
 
 class scanQr extends StatefulWidget {
   @override
@@ -51,10 +53,10 @@ class scanQrState extends State<scanQr> {
 //            );
           }else if(value == 3){
 
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(builder: (context) => profile()),
-//            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
           }
         },
         items: [

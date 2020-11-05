@@ -32,7 +32,7 @@ class _carProfileState extends State<carProfile> {
           ),
           Row(children: [
             Container(
-              padding: EdgeInsets.only(left: 350, top: 20),
+              padding: EdgeInsets.only(left: 320, top: 20),
               child: Icon(Icons.edit),
             )
           ])
