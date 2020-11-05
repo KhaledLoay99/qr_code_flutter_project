@@ -106,7 +106,8 @@ class homeState extends State<home> {
         ),
     ]),
           new Text(
-            'Scan               Settings',
+            'Scan               '
+                'Settings',
             style: new TextStyle(
                 fontSize: 25.0,
                 fontFamily: 'Roboto',
@@ -161,7 +162,8 @@ class homeState extends State<home> {
             ),
           ]),
           new Text(
-            'Recent Chats    Notifications',
+            'Recent Chats    '
+                'Notifications',
             style: new TextStyle(
                 fontSize: 25.0,
                 fontFamily: 'Roboto',
