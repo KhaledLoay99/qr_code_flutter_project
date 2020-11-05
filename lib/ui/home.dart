@@ -22,6 +22,7 @@ class homeState extends State<home> {
         backgroundColor: c1,
       ),
       backgroundColor: Colors.white,
+
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: c1,
@@ -51,7 +52,75 @@ class homeState extends State<home> {
           ),
         ],
       ),
-      body: new Container(),
+
+      body: new Column(
+        children: <Widget>[
+          new Padding(padding: new EdgeInsets.all(50.0)),
+
+    new Row(children: <Widget>[
+      new Padding(padding: new EdgeInsets.all(10.0)),
+      new Container(
+        padding: EdgeInsets.all(50.0),
+        decoration: BoxDecoration(
+          color: Theme.of(context).buttonColor,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Text('My Button'),
+      ),
+
+      new Padding(padding: new EdgeInsets.all(10.0)),
+
+      new Container(
+        padding: EdgeInsets.all(50.0),
+        decoration: BoxDecoration(
+          color: Theme.of(context).buttonColor,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Text('My Button'),
+      ),
+
+    ]),
+
+
+          new Padding(padding: new EdgeInsets.all(20.0)),
+//////////////////////////////////////////////////////////////////////////////////////////
+          new Row(children: <Widget>[
+            new Padding(padding: new EdgeInsets.all(10.0)),
+            new Container(
+              padding: EdgeInsets.all(50.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).buttonColor,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Text('My Button'),
+            ),
+
+            new Padding(padding: new EdgeInsets.all(10.0)),
+
+            new Container(
+              padding: EdgeInsets.all(50.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).buttonColor,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Text('My Button'),
+            ),
+
+          ]),
+          ////////////////////////////////////////////////////////////////////
+          new Padding(padding: new EdgeInsets.all(20.0)),
+          new Container(
+            padding: EdgeInsets.all(50.0),
+            decoration: BoxDecoration(
+              color: Theme.of(context).buttonColor,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Text('My Button'),
+          ),
+        ]
+      ),
+
+
     );
   }
 }
