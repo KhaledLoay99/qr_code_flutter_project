@@ -59,7 +59,9 @@ class homeState extends State<home> {
 
     new Row(children: <Widget>[
       new Padding(padding: new EdgeInsets.all(10.0)),
-      new Container(
+    GestureDetector(
+      onTap: () {},   // When the child is tapped, make an action
+      child: new Container(
         padding: EdgeInsets.all(50.0),
         decoration: BoxDecoration(
           color: Theme.of(context).buttonColor,
@@ -67,49 +69,14 @@ class homeState extends State<home> {
         ),
         child: Text('My Button'),
       ),
+
+    ),
+
 
       new Padding(padding: new EdgeInsets.all(10.0)),
-
-      new Container(
-        padding: EdgeInsets.all(50.0),
-        decoration: BoxDecoration(
-          color: Theme.of(context).buttonColor,
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Text('My Button'),
-      ),
-
-    ]),
-
-
-          new Padding(padding: new EdgeInsets.all(20.0)),
-//////////////////////////////////////////////////////////////////////////////////////////
-          new Row(children: <Widget>[
-            new Padding(padding: new EdgeInsets.all(10.0)),
-            new Container(
-              padding: EdgeInsets.all(50.0),
-              decoration: BoxDecoration(
-                color: Theme.of(context).buttonColor,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Text('My Button'),
-            ),
-
-            new Padding(padding: new EdgeInsets.all(10.0)),
-
-            new Container(
-              padding: EdgeInsets.all(50.0),
-              decoration: BoxDecoration(
-                color: Theme.of(context).buttonColor,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Text('My Button'),
-            ),
-
-          ]),
-          ////////////////////////////////////////////////////////////////////
-          new Padding(padding: new EdgeInsets.all(20.0)),
-          new Container(
+        GestureDetector(
+          onTap: () {}, // When the child is tapped, make an action
+          child: new Container(
             padding: EdgeInsets.all(50.0),
             decoration: BoxDecoration(
               color: Theme.of(context).buttonColor,
@@ -117,10 +84,64 @@ class homeState extends State<home> {
             ),
             child: Text('My Button'),
           ),
+        ),
+    ]),
+
+
+          new Padding(padding: new EdgeInsets.all(20.0)),
+//////////////////////////////////////////////////////////////////////////////////////////
+          new Row(children: <Widget>[
+            new Padding(padding: new EdgeInsets.all(10.0)),
+
+    GestureDetector(
+            onTap: () {},   // When the child is tapped, make an action
+                child: new Container(
+                padding: EdgeInsets.all(50.0),
+                decoration: BoxDecoration(
+                color: Theme.of(context).buttonColor,
+                borderRadius: BorderRadius.circular(8.0),
+                ),
+
+                  child: Text('My Button'),
+
+                ),
+    ),
+
+
+            new Padding(padding: new EdgeInsets.all(10.0)),
+            GestureDetector(
+              onTap: () {},  // When the child is tapped, make an action
+
+              child :new Container(
+                padding: EdgeInsets.all(50.0),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).buttonColor,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Text('My Button'),
+              ),
+            )
+
+
+          ]),
+          ////////////////////////////////////////////////////////////////////
+          new Padding(padding: new EdgeInsets.all(20.0)),
+
+    GestureDetector(
+             onTap: () {},    // When the child is tapped, make an action
+
+        child :new Container(
+              padding: EdgeInsets.all(50.0),
+               decoration: BoxDecoration(
+                color: Theme.of(context).buttonColor,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+        child: Text('My Button'),
+    ),
+    )
+
         ]
       ),
-
-
     );
   }
 }
