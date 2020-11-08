@@ -86,12 +86,7 @@ class SignupState extends State<Signup> {
 
                   new Center(
                       child: new RaisedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Login()),
-                          );
-                        },
+                        
                         child: new Text(
                           "Sign Up",
                           style: new TextStyle(
