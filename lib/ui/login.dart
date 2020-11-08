@@ -50,8 +50,10 @@ class LoginState extends State<Login> {
                           hintText: 'Username', icon: new Icon(Icons.person)),
                     ),
 
+                    
                     new Padding(padding: new EdgeInsets.all(20.0)),
-
+                    //new Padding(padding: new EdgeInsets.all(20.0)),
+                    
                     new TextField(
                       decoration: new InputDecoration(
                           hintText: 'Password', icon: new Icon(Icons.lock)),
@@ -71,13 +73,11 @@ class LoginState extends State<Login> {
                             style: new TextStyle(
                                 color: Colors.blueGrey, fontSize: 20.5),
                           ),
-
                         )
                     ),
                   ],
                 ),
               ),
-
             ),
           ],
         ),
