@@ -50,8 +50,10 @@ class LoginState extends State<Login> {
                           hintText: 'Username', icon: new Icon(Icons.person)),
                     ),
 
+                    
                     new Padding(padding: new EdgeInsets.all(20.0)),
-
+                    //new Padding(padding: new EdgeInsets.all(20.0)),
+                    
                     new TextField(
                       decoration: new InputDecoration(
                           hintText: 'Password', icon: new Icon(Icons.lock)),
@@ -60,24 +62,22 @@ class LoginState extends State<Login> {
                     new Padding(padding: new EdgeInsets.all(20.0)),
                     new Center(
                         child: new RaisedButton(
-//                           onPressed: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(builder: (context) => home()),
-//                             );
-//                           },
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => home()),
+                            );
+                          },
                           child: new Text(
                             "Login",
                             style: new TextStyle(
                                 color: Colors.blueGrey, fontSize: 20.5),
                           ),
-
                         )
                     ),
                   ],
                 ),
               ),
-
             ),
           ],
         ),
