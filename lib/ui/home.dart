@@ -83,167 +83,172 @@ class homeState extends State<home> {
         ],
       ),
 
-      body: new Column(
-        children: <Widget>[
-          new Padding(padding: new EdgeInsets.all(50.0)),
+      body: Container(
+        height: 600,
+        width: 500,
+        child: new Column(
+            children: <Widget>[
+              new Padding(padding: new EdgeInsets.all(50.0)),
 
-    new Row(children: <Widget>[
-      new Padding(padding: new EdgeInsets.all(30.0)),
+              new Row(children: <Widget>[
+                new Padding(padding: new EdgeInsets.all(30.0)),
 
-    new Container(
+                new Container(
 
-      child:GestureDetector(
-            onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => scanQr()),
-                );
-            },   // When the child is tapped, make an action
-            child: new Container(
-              width: 100 ,
-              height: 100,
-              padding: EdgeInsets.all(50.0),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).buttonColor,
-                  borderRadius: BorderRadius.circular(8.0),
-                  image: new DecorationImage(
-                    image: new AssetImage("images/qr-code.png"),
-                    fit: BoxFit.fill,
-                  )
+                  child:GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => scanQr()),
+                      );
+                    },   // When the child is tapped, make an action
+                    child: new Container(
+                      width: 100 ,
+                      height: 100,
+                      padding: EdgeInsets.all(50.0),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).buttonColor,
+                          borderRadius: BorderRadius.circular(8.0),
+                          image: new DecorationImage(
+                            image: new AssetImage("images/qr-code.png"),
+                            fit: BoxFit.fill,
+                          )
+                      ),
+                      //child: Text('My Button'),
+                    ),
+
+                  ),
+
+
+                ),
+
+
+
+                new Padding(padding: new EdgeInsets.all(30.0)),
+                GestureDetector(
+                  onTap: () {}, // When the child is tapped, make an action
+                  child: new Container(
+                    width: 100 ,
+                    height: 100,
+                    padding: EdgeInsets.all(50.0),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).buttonColor,
+                        borderRadius: BorderRadius.circular(8.0),
+                        image: new DecorationImage(
+                          image: new AssetImage("images/settings.png"),
+                          fit: BoxFit.fill,
+                        )
+                    ),
+                    //child: Text('My Button'),
+                  ),
+                ),
+              ]),
+              new Text(
+                'Scan               '
+                    'Settings',
+                style: new TextStyle(
+                    fontSize: 25.0,
+                    fontFamily: 'Roboto',
+                    color: new Color(0xFF26C6DA)
+                ),
               ),
-              //child: Text('My Button'),
-            ),
 
-          ),
-
-
-    ),
-
-
-
-      new Padding(padding: new EdgeInsets.all(30.0)),
-        GestureDetector(
-          onTap: () {}, // When the child is tapped, make an action
-          child: new Container(
-            width: 100 ,
-            height: 100,
-            padding: EdgeInsets.all(50.0),
-            decoration: BoxDecoration(
-              color: Theme.of(context).buttonColor,
-              borderRadius: BorderRadius.circular(8.0),
-                image: new DecorationImage(
-                  image: new AssetImage("images/settings.png"),
-                  fit: BoxFit.fill,
-                )
-            ),
-            //child: Text('My Button'),
-          ),
-        ),
-    ]),
-          new Text(
-            'Scan               '
-                'Settings',
-            style: new TextStyle(
-                fontSize: 25.0,
-                fontFamily: 'Roboto',
-                color: new Color(0xFF26C6DA)
-            ),
-          ),
-
-          new Padding(padding: new EdgeInsets.all(40.0)),
+              new Padding(padding: new EdgeInsets.all(20.0)),
 //////////////////////////////////////////////////////////////////////////////////////////
-          new Row(children: <Widget>[
-            new Padding(padding: new EdgeInsets.all(30.0)),
+              new Row(children: <Widget>[
+                new Padding(padding: new EdgeInsets.all(30.0)),
 
-    GestureDetector(
-            onTap: () {},   // When the child is tapped, make an action
-                child: new Container(
+                GestureDetector(
+                  onTap: () {},   // When the child is tapped, make an action
+                  child: new Container(
+                    width: 100 ,
+                    height: 100,
+                    padding: EdgeInsets.all(50.0),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).buttonColor,
+                        borderRadius: BorderRadius.circular(8.0),
+                        image: new DecorationImage(
+                          image: new AssetImage("images/history.png"),
+                          fit: BoxFit.fill,
+                        )
+                    ),
+
+                    //child: Text('My Button'),
+
+                  ),
+                ),
+
+
+                new Padding(padding: new EdgeInsets.all(30.0)),
+                GestureDetector(
+                  onTap: () {},  // When the child is tapped, make an action
+
+                  child :new Container(
+                    width: 100 ,
+                    height: 100,
+                    padding: EdgeInsets.all(50.0),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).buttonColor,
+                        borderRadius: BorderRadius.circular(8.0),
+                        image: new DecorationImage(
+                          image: new AssetImage("images/packard-bell.png"),
+                          fit: BoxFit.fill,
+                        )
+                    ),
+                    //child: Text('My Button'),
+                  ),
+                ),
+              ]),
+              new Text(
+                'Recent Chats    '
+                    'Notifications',
+                style: new TextStyle(
+                    fontSize: 25.0,
+                    fontFamily: 'Roboto',
+                    color: new Color(0xFF26C6DA)
+                ),
+              ),
+              ////////////////////////////////////////////////////////////////////
+              new Padding(padding: new EdgeInsets.all(20.0)),
+
+              GestureDetector(
+                onTap: () {
+
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => carProfile()),
+                  );
+                },    // When the child is tapped, make an action
+
+                child :new Container(
                   width: 100 ,
                   height: 100,
-                padding: EdgeInsets.all(50.0),
-                decoration: BoxDecoration(
-                color: Theme.of(context).buttonColor,
-                borderRadius: BorderRadius.circular(8.0),
-                    image: new DecorationImage(
-                      image: new AssetImage("images/history.png"),
-                      fit: BoxFit.fill,
-                    )
-                ),
-
+                  padding: EdgeInsets.all(50.0),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).buttonColor,
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: new DecorationImage(
+                        image: new AssetImage("images/background.png"),
+                        fit: BoxFit.fill,
+                      )
+                  ),
                   //child: Text('My Button'),
-
                 ),
-    ),
-
-
-            new Padding(padding: new EdgeInsets.all(30.0)),
-            GestureDetector(
-              onTap: () {},  // When the child is tapped, make an action
-
-              child :new Container(
-                width: 100 ,
-                height: 100,
-                padding: EdgeInsets.all(50.0),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).buttonColor,
-                  borderRadius: BorderRadius.circular(8.0),
-                    image: new DecorationImage(
-                      image: new AssetImage("images/packard-bell.png"),
-                      fit: BoxFit.fill,
-                    )
-                ),
-                //child: Text('My Button'),
               ),
-            ),
-          ]),
-          new Text(
-            'Recent Chats    '
-                'Notifications',
-            style: new TextStyle(
-                fontSize: 25.0,
-                fontFamily: 'Roboto',
-                color: new Color(0xFF26C6DA)
-            ),
-          ),
-          ////////////////////////////////////////////////////////////////////
-          new Padding(padding: new EdgeInsets.all(30.0)),
-
-    GestureDetector(
-             onTap: () {
-
-
-               Navigator.push(
-               context,
-               MaterialPageRoute(builder: (context) => carProfile()),
-                );
-             },    // When the child is tapped, make an action
-
-        child :new Container(
-          width: 100 ,
-          height: 100,
-              padding: EdgeInsets.all(50.0),
-               decoration: BoxDecoration(
-                color: Theme.of(context).buttonColor,
-                  borderRadius: BorderRadius.circular(8.0),
-                   image: new DecorationImage(
-                     image: new AssetImage("images/background.png"),
-                     fit: BoxFit.fill,
-                   )
+              new Text(
+                'Check Car Information',
+                style: new TextStyle(
+                    fontSize: 25.0,
+                    fontFamily: 'Roboto',
+                    color: new Color(0xFF26C6DA)
                 ),
-        //child: Text('My Button'),
-    ),
-    ),
-          new Text(
-            'Check Car Information',
-            style: new TextStyle(
-                fontSize: 25.0,
-                fontFamily: 'Roboto',
-                color: new Color(0xFF26C6DA)
-            ),
-          ),
+              ),
 
-        ]
+            ]
+        ),
       ),
+
     );
   }
 }
