@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-
-
-
-
-
 class Profile extends StatefulWidget {
   @override
   static Pattern pattern;
@@ -71,7 +66,7 @@ class _ProfileState extends State<Profile> {
                   children: [
                     textfield(hintText: 'Robert Lewandowski', qr: false),
                     textfield(hintText: 'RL9@gmail.com', qr: false),
-                    textfield(hintText: 'Warso, Poland', qr: false),
+                    textfield(hintText: 'Warsaw, Poland', qr: false),
                     textfield(hintText: 'QR Code', qr: true),
                   ],
                 ),

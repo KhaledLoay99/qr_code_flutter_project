@@ -5,6 +5,7 @@ import './ui/scanQr.dart';
 import './ui/home.dart';
 import './ui/profile.dart';
 import './ui/carProfile.dart';
+import 'ui/settings.dart';
 
 void main() {
   runApp(new MaterialApp(
