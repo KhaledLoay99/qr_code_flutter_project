@@ -1,3 +1,4 @@
+import 'package:Dcode/ui/privateChat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:Dcode/ui/login.dart';
@@ -30,10 +31,7 @@ class homeState extends State<home> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: c1,
-        selectedItemColor: Colors.white,
-//        unselectedItemColor: Colors.white.withOpacity(.60),
-//        selectedFontSize: 14,
-//        unselectedFontSize: 14,
+
         onTap: (value) {
           // Respond to item press.
           if(value == 0){
@@ -49,10 +47,10 @@ class homeState extends State<home> {
            // );
           }else if(value == 2){
 
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(builder: (context) => chats()),
-//            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => privateChat()),
+            );
           }else if(value == 3){
 
             Navigator.push(
@@ -64,20 +62,21 @@ class homeState extends State<home> {
         },
         items: [
           BottomNavigationBarItem(
-            title: Text('Home'),
-            icon: Icon(Icons.home),
+            title: Text('Home', style: TextStyle(color: Colors.white),),
+            icon: Icon(Icons.home,color: Colors.white,),
           ),
           BottomNavigationBarItem(
-            title: Text('Notifications'),
-            icon: Icon(Icons.notifications),
+            title: Text('Notifications', style: TextStyle(color: Colors.black45),),
+            icon: Icon(Icons.notifications,color: Colors.black45,),
           ),
           BottomNavigationBarItem(
-            title: Text('Recent Chats'),
-            icon: Icon(Icons.chat),
+              title: Text('Recent Chats', style: TextStyle(color: Colors.black45),),
+              icon: Icon(Icons.chat,color: Colors.black45,),
+              backgroundColor: Colors.white
           ),
           BottomNavigationBarItem(
-            title: Text('My Profile'),
-            icon: Icon(Icons.account_circle),
+            title: Text('My Profile', style: TextStyle(color: Colors.black45),),
+            icon: Icon(Icons.account_circle,color: Colors.black45,),
 
           ),
         ],
