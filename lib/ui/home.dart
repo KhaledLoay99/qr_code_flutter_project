@@ -1,4 +1,5 @@
 import 'package:Dcode/ui/privateChat.dart';
+import 'package:Dcode/ui/settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:Dcode/ui/login.dart';
@@ -125,7 +126,12 @@ class homeState extends State<home> {
 
                 new Padding(padding: new EdgeInsets.all(30.0)),
                 GestureDetector(
-                  onTap: () {}, // When the child is tapped, make an action
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Settings()),
+                    );
+                  }, // When the child is tapped, make an action
                   child: new Container(
                     width: 100 ,
                     height: 100,
@@ -158,7 +164,12 @@ class homeState extends State<home> {
                 new Padding(padding: new EdgeInsets.all(30.0)),
 
                 GestureDetector(
-                  onTap: () {},   // When the child is tapped, make an action
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => privateChat()),
+                    );
+                  },   // When the child is tapped, make an action
                   child: new Container(
                     width: 100 ,
                     height: 100,

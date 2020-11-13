@@ -1,3 +1,4 @@
+import 'package:Dcode/ui/profile.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatelessWidget {
@@ -71,7 +72,12 @@ class Settings extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         color: Color.fromRGBO(110, 204, 234, 1.0),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Profile()),
+                          );
+                        },
                       ),
                     )
                   ],
@@ -121,7 +127,7 @@ class Settings extends StatelessWidget {
                               ),
                               IconButton(
                                 alignment: Alignment.topCenter,
-                                icon: Icon(Icons.priority_high_rounded),
+                                icon: Icon(Icons.info_outline),
                               )
                             ],
                           ),
@@ -145,12 +151,12 @@ class Settings extends StatelessWidget {
                               ),
                               IconButton(
                                   alignment: Alignment.topCenter,
-                                  icon: Icon(Icons.logout))
+                                  icon: Icon(Icons.arrow_forward))
                             ],
                           ),
                         ),
                         Divider(
-                          color: Colors.black,
+                     color: Colors.black,
                           thickness: 2,
                         ),
                       ],
@@ -190,7 +196,7 @@ class Settings extends StatelessWidget {
                               ),
                               IconButton(
                                 alignment: Alignment.topCenter,
-                                icon: Icon(Icons.privacy_tip),
+                                icon: Icon(Icons.security),
                               )
                             ],
                           ),
