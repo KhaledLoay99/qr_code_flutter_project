@@ -1,19 +1,26 @@
 
+import 'package:Dcode/ui/home.dart';
+import 'package:Dcode/ui/privateChat.dart';
 import 'package:flutter/material.dart';
+
+import 'profile.dart';
 
 
 
 class notify extends StatelessWidget {
+  Color c1 = const Color.fromRGBO(110,204,234,1.0); // fully transparent white (invisible)
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
  
 appBar: new AppBar(
+  backgroundColor: c1,
         title:Row(  children: <Widget>[
             Text('Notification'),
               Icon(
                 Icons.notifications,
-              color: Colors.yellow,
+              color:Colors.yellow,
               ),
           ],
         ),
@@ -24,27 +31,34 @@ appBar: new AppBar(
 
         bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+          backgroundColor: c1,
         
 
         onTap: (value) {
           // Respond to item press.
           if(value == 0){
-           
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => home()),
+            );
             
           }else if(value == 1){
 
-            //Navigator.push(
-            //context,
-            //MaterialPageRoute(builder: (context) => notifications()),
-            // );
+//            Navigator.push(
+//            context,
+//            MaterialPageRoute(builder: (context) => notify()),
+//             );
           }else if(value == 2){
 
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(builder: (context) => chats()),
-//            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => privateChat()),
+            );
           }else if(value == 3){
-
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
        
           }
 
@@ -55,12 +69,12 @@ appBar: new AppBar(
             icon: Icon(Icons.home,color: Colors.black45,),
           ),
           BottomNavigationBarItem(
-            title: Text('Notifications', style: TextStyle(color: Colors.black45),),
-            icon: Icon(Icons.notifications,color: Colors.black45,),
+            title: Text('Notifications', style: TextStyle(color: Colors.white),),
+            icon: Icon(Icons.notifications,color: Colors.white,),
           ),
           BottomNavigationBarItem(
-            title: Text('Recent Chats', style: TextStyle(color: Colors.white),),
-            icon: Icon(Icons.chat,color: Colors.white,),
+            title: Text('Recent Chats', style: TextStyle(color: Colors.black45),),
+            icon: Icon(Icons.chat,color: Colors.black45,),
             backgroundColor: Colors.white
           ),
           BottomNavigationBarItem(
@@ -120,7 +134,7 @@ appBar: new AppBar(
 
         ),
    Icon(
-          Icons.qr_code,
+          Icons.center_focus_weak,
           size: 40,
           color: Colors.black,
          
@@ -133,7 +147,7 @@ appBar: new AppBar(
             color: Colors.black,
           ),),
         Icon(
-          Icons.circle,
+          Icons.check_circle,
           size: 15,
           color: Colors.red,
         ),
@@ -184,7 +198,7 @@ appBar: new AppBar(
 
         ),
    Icon(
-          Icons.qr_code,
+          Icons.center_focus_weak,
           size: 40,
           color: Colors.black,
          
@@ -197,7 +211,7 @@ appBar: new AppBar(
             color: Colors.black,
           ),),
         Icon(
-          Icons.circle,
+          Icons.check_circle,
           size: 15,
           color: Colors.red,
         ),

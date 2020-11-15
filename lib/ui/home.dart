@@ -1,3 +1,4 @@
+import 'package:Dcode/ui/notification.dart';
 import 'package:Dcode/ui/privateChat.dart';
 import 'package:Dcode/ui/settings.dart';
 import 'package:flutter/foundation.dart';
@@ -36,16 +37,16 @@ class homeState extends State<home> {
         onTap: (value) {
           // Respond to item press.
           if(value == 0){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => home()),
-            );
+//            Navigator.push(
+//              context,
+//              MaterialPageRoute(builder: (context) => home()),
+//            );
           }else if(value == 1){
 
-            //Navigator.push(
-              //context,
-              //MaterialPageRoute(builder: (context) => notifications()),
-           // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => notify()),
+            );
           }else if(value == 2){
 
             Navigator.push(
@@ -191,7 +192,12 @@ class homeState extends State<home> {
 
                 new Padding(padding: new EdgeInsets.all(30.0)),
                 GestureDetector(
-                  onTap: () {},  // When the child is tapped, make an action
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => notify()),
+                    );
+                  },  // When the child is tapped, make an action
 
                   child :new Container(
                     width: 100 ,

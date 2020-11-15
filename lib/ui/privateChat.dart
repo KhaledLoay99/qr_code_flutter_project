@@ -1,3 +1,4 @@
+import 'package:Dcode/ui/notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -51,15 +52,15 @@ class privateChatState extends State<privateChat> {
             );
           }else if(value == 1){
 
-            //Navigator.push(
-            //context,
-            //MaterialPageRoute(builder: (context) => notifications()),
-            // );
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => notify()),
+             );
           }else if(value == 2){
 
 //            Navigator.push(
 //              context,
-//              MaterialPageRoute(builder: (context) => chats()),
+//              MaterialPageRoute(builder: (context) => privatechat()),
 //            );
           }else if(value == 3){
 
