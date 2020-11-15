@@ -134,7 +134,7 @@ appBar: new AppBar(
           ),),
         Icon(
           Icons.circle,
-          size: 20,
+          size: 15,
           color: Colors.red,
         ),
         ],), 
@@ -198,7 +198,7 @@ appBar: new AppBar(
           ),),
         Icon(
           Icons.circle,
-          size: 20,
+          size: 15,
           color: Colors.red,
         ),
         ],), 
