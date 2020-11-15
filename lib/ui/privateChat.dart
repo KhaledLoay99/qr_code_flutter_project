@@ -17,6 +17,8 @@ class privateChat extends StatefulWidget {
 
 class privateChatState extends State<privateChat> {
   Color c1 = const Color.fromRGBO(110,204,234,1.0); // fully transparent white (invisible)
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -211,13 +213,15 @@ class privateChatState extends State<privateChat> {
             ),
 
             new Padding(padding: new EdgeInsets.all(20.0)),
-
-            TextField(
-                decoration: InputDecoration(
-                     icon: Icon(Icons.send),
-                     hintText: 'Type . . .',
-                     border: const OutlineInputBorder(),
-                ),
+            Form(
+              key: _formKey,
+              child: TextFormField(
+              decoration: InputDecoration(
+                icon: Icon(Icons.send),
+                hintText: 'Type . . .',
+                border: const OutlineInputBorder(),
+              ),
+            ),
             ),
           ],
         ),

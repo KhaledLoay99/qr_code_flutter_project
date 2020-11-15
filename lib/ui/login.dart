@@ -18,6 +18,7 @@ class Login extends StatefulWidget {
 
 class LoginState extends State<Login> {
   Color c1 = const Color.fromRGBO(110,204,234,1.0); // fully transparent white (invisible)
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,57 +33,64 @@ class LoginState extends State<Login> {
       backgroundColor: Colors.white,
 
 
-      body: new Container(
+      body: Form(
+        key: _formKey,
+        child: Column(
 
-        alignment: Alignment.topCenter,
-        child: new Column(
           children: <Widget>[
-
             new Padding(padding: new EdgeInsets.all(20.0)),
             new Text("Login", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 55,color: Colors.blue),),
-            new Padding(padding: new EdgeInsets.all(20.0)),
-            new Container(
-              height: 500,
-              width: 380,
-              child: SingleChildScrollView(
-                padding: EdgeInsets.all(30.0),
-                child: new Column(
-                  children: <Widget>[
-                    new Center(
-                      //child: new Text("Login", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.blue),),
+            Container(
+              padding: EdgeInsets.all(50.0),
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter Username';
+                      }
+                      if(!value.contains('@dcode.com')){
+                        return 'username should end with @decode.com';
+                      }
+                      return null;
+                    },
+                    decoration: new InputDecoration(
+                        hintText: 'Username', icon: new Icon(Icons.person),
+                        border: const OutlineInputBorder(),
                     ),
-                    new TextField(
-                      decoration: new InputDecoration(
-                          hintText: 'Username', icon: new Icon(Icons.person)),
+                  ),
+                  new Padding(padding: new EdgeInsets.all(20.0)),
+                  TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter Your Password';
+                      }
+                      return null;
+                    },
+                    decoration: new InputDecoration(
+                        hintText: 'Password', icon: new Icon(Icons.lock),
+                        border: const OutlineInputBorder(),
                     ),
-
-                    
-                    new Padding(padding: new EdgeInsets.all(20.0)),
-                    //new Padding(padding: new EdgeInsets.all(20.0)),
-                    
-                    new TextField(
-                      decoration: new InputDecoration(
-                          hintText: 'Password', icon: new Icon(Icons.lock)),
-                      obscureText: true,
+                    obscureText: true,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 26.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        // Validate returns true if the form is valid, or false
+                        // otherwise.
+                        if (_formKey.currentState.validate()) {
+                          // If the form is valid, Go to Home screen.
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => home()),
+                          );
+                        }
+                      },
+                      child: Text('Login'),
                     ),
-                    new Padding(padding: new EdgeInsets.all(20.0)),
-                    new Center(
-                        child: new RaisedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => home()),
-                            );
-                          },
-                          child: new Text(
-                            "Login",
-                            style: new TextStyle(
-                                color: Colors.blueGrey, fontSize: 20.5),
-                          ),
-                        )
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
