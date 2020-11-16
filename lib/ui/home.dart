@@ -86,10 +86,9 @@ class homeState extends State<home> {
         ],
       ),
 
-      body: Container(
-        height: 600,
-        width: 500,
-        child: new Column(
+      body: ListView(
+        children: [
+          new Column(
             children: <Widget>[
               new Padding(padding: new EdgeInsets.all(50.0)),
 
@@ -265,8 +264,8 @@ class homeState extends State<home> {
 
             ]
         ),
+    ],
       ),
-
     );
   }
 }

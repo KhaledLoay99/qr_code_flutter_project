@@ -81,10 +81,10 @@ class scanQrState extends State<scanQr> {
         ],
       ),
 
-      body:new Container(
-
-        alignment: Alignment.topCenter,
-        child: new Column(
+      body:new ListView(
+        //alignment: Alignment.topCenter,
+        children: [
+          new Column(
           children: <Widget>[
 
             new Padding(padding: new EdgeInsets.all(20.0)),
@@ -108,6 +108,7 @@ class scanQrState extends State<scanQr> {
             new Padding(padding: new EdgeInsets.all(20.0)),
           ],
         ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

@@ -35,11 +35,13 @@ class LoginState extends State<Login> {
 
       body: Form(
         key: _formKey,
-        child: Column(
+        child: ListView(
 
           children: <Widget>[
             new Padding(padding: new EdgeInsets.all(20.0)),
-            new Text("Login", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 55,color: Colors.blue),),
+            new Center(
+              child: new Text("Login", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 55,color: Colors.blue),),
+            ),
             Container(
               padding: EdgeInsets.all(50.0),
               child: Column(

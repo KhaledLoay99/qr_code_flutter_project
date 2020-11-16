@@ -100,11 +100,11 @@ class privateChatState extends State<privateChat> {
         ],
       ),
 
-      body: Container(
-        height: 600,
-        width: 500,
+      body: ListView(
+
         padding: EdgeInsets.all(30.0),
-        child: Column(
+        children: [
+          Column(
           children: <Widget>[
             new Padding(padding: new EdgeInsets.all(20.0)),
 
@@ -233,6 +233,7 @@ class privateChatState extends State<privateChat> {
             ),
           ],
         ),
+        ],
       ),
 
     );

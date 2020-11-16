@@ -28,11 +28,13 @@ class SignupState extends State<Signup> {
 
       body: Form(
         key: _formKey,
-        child: Column(
+        child: ListView(
 
           children: <Widget>[
             new Padding(padding: new EdgeInsets.all(20.0)),
-            new Text("Sign Up", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 55,color: Colors.blue),),
+            new Center(
+              child: new Text("Sign Up", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 55,color: Colors.blue),),
+            ),
             Container(
               padding: EdgeInsets.all(20.0),
               child: SingleChildScrollView(
