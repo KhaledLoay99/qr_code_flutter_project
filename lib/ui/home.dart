@@ -8,6 +8,8 @@ import 'package:Dcode/ui/scanQr.dart';
 import 'package:Dcode/ui/signup.dart';
 import 'package:Dcode/ui/profile.dart';
 import 'package:Dcode/ui/carProfile.dart';
+
+import 'chatlist.dart';
 class home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -51,7 +53,7 @@ class homeState extends State<home> {
 
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => privateChat()),
+              MaterialPageRoute(builder: (context) => chatlist()),
             );
           }else if(value == 3){
 
@@ -168,7 +170,7 @@ class homeState extends State<home> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => privateChat()),
+                      MaterialPageRoute(builder: (context) => chatlist()),
                     );
                   },   // When the child is tapped, make an action
                   child: new Container(

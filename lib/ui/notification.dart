@@ -1,4 +1,6 @@
 
+import 'package:Dcode/logic/notifications.dart';
+import 'package:Dcode/ui/chatlist.dart';
 import 'package:Dcode/ui/home.dart';
 import 'package:Dcode/ui/privateChat.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'profile.dart';
 
 class notify extends StatelessWidget {
   Color c1 = const Color.fromRGBO(110,204,234,1.0); // fully transparent white (invisible)
+  final notifylogic Notification = notifylogic();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,7 @@ appBar: new AppBar(
 
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => privateChat()),
+              MaterialPageRoute(builder: (context) => chatlist()),
             );
           }else if(value == 3){
             Navigator.push(
@@ -123,8 +126,8 @@ appBar: new AppBar(
          children: [
          
          Text(
-           
-    'KaledLoay',
+
+           Notification.getmsgs().keys.toList()[0],
           style: TextStyle(
             
             fontSize: 20,
@@ -134,12 +137,12 @@ appBar: new AppBar(
 
         ),
    Icon(
-          Icons.center_focus_weak,
+          Icons.qr_code,
           size: 40,
           color: Colors.black,
          
         ),
-        Text('Hello Friend...',
+        Text( Notification.getmsgs().values.toList()[0],
          style: TextStyle(
            
             fontSize: 10,
@@ -147,7 +150,7 @@ appBar: new AppBar(
             color: Colors.black,
           ),),
         Icon(
-          Icons.check_circle,
+          Icons.circle,
           size: 15,
           color: Colors.red,
         ),
@@ -187,8 +190,8 @@ appBar: new AppBar(
          children: [
          
          Text(
-           
-    'Ahmed Elbanna',
+
+           Notification.getpurchasers().keys.toList()[0],
           style: TextStyle(
             
             fontSize: 20,
@@ -198,12 +201,12 @@ appBar: new AppBar(
 
         ),
    Icon(
-          Icons.center_focus_weak,
+          Icons.qr_code,
           size: 40,
           color: Colors.black,
          
         ),
-        Text('New Purchaser is intersting',
+        Text(Notification.getpurchasers().values.toList()[0],
          style: TextStyle(
            
             fontSize: 10,
@@ -211,7 +214,7 @@ appBar: new AppBar(
             color: Colors.black,
           ),),
         Icon(
-          Icons.check_circle,
+          Icons.circle,
           size: 15,
           color: Colors.red,
         ),

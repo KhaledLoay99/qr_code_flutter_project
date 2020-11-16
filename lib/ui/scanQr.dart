@@ -1,3 +1,5 @@
+import 'package:Dcode/ui/chatlist.dart';
+import 'package:Dcode/ui/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:Dcode/ui/home.dart';
 import 'package:Dcode/ui/profile.dart';
@@ -41,16 +43,16 @@ class scanQrState extends State<scanQr> {
             );
           }else if(value == 1){
 
-            //Navigator.push(
-            //context,
-            //MaterialPageRoute(builder: (context) => notifications()),
-            // );
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => notify()),
+            );
           }else if(value == 2){
 
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(builder: (context) => chats()),
-//            );
+           Navigator.push(
+             context,
+             MaterialPageRoute(builder: (context) => chatlist()),
+           );
           }else if(value == 3){
 
             Navigator.push(

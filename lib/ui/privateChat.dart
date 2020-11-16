@@ -1,3 +1,6 @@
+import 'package:Dcode/logic/chatlist.dart';
+import 'package:Dcode/logic/privatechat.dart';
+import 'package:Dcode/ui/chatlist.dart';
 import 'package:Dcode/ui/notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -19,6 +22,10 @@ class privateChat extends StatefulWidget {
 class privateChatState extends State<privateChat> {
   Color c1 = const Color.fromRGBO(110,204,234,1.0); // fully transparent white (invisible)
   final _formKey = GlobalKey<FormState>();
+  final chatlistNames chatlistLogic = chatlistNames();
+  final privatechat chatmsgs = privatechat();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +37,8 @@ class privateChatState extends State<privateChat> {
         padding: const EdgeInsets.only(top: 10.0),
     child: Row(
           children: <Widget>[
-            Image.asset('images/chat.png', height: 40,),
-            new Text(" Khaled Loay"),
+            Icon(Icons.account_circle_rounded),
+            new Text(chatlistLogic.getNames()[0]),
           ],
         ),
         ),
@@ -58,10 +65,10 @@ class privateChatState extends State<privateChat> {
              );
           }else if(value == 2){
 
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(builder: (context) => privatechat()),
-//            );
+           Navigator.push(
+             context,
+             MaterialPageRoute(builder: (context) => chatlist()),
+           );
           }else if(value == 3){
 
             Navigator.push(
@@ -108,7 +115,7 @@ class privateChatState extends State<privateChat> {
               width: 250,
               child: Center(
                 child : Text(
-                  'Hello, my friend',
+                  chatmsgs.getuser1Chat().keys.toList()[0],
                   textScaleFactor: 2,
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
@@ -121,7 +128,7 @@ class privateChatState extends State<privateChat> {
             ),
 
             new Text(
-              'sent at: 3.00 PM',
+              chatmsgs.getuser1Chat().values.toList()[0],
               textScaleFactor: 2,
               style: TextStyle(color: Colors.black26, fontSize: 7),
             ),
@@ -135,7 +142,7 @@ class privateChatState extends State<privateChat> {
                 width: 250,
                 child: Center(
                   child : Text(
-                    'Hello, how are you man ?',
+                    chatmsgs.getuser2Chat().keys.toList()[0],
                     textScaleFactor: 2,
                     style: TextStyle(color: Colors.white, fontSize: 10),
                   ),
@@ -148,7 +155,7 @@ class privateChatState extends State<privateChat> {
             ),
 
             new Text(
-              'sent at: 3.04 PM',
+              chatmsgs.getuser2Chat().values.toList()[0],
               textScaleFactor: 2,
               style: TextStyle(color: Colors.black26, fontSize: 7),
             ),
@@ -166,7 +173,7 @@ class privateChatState extends State<privateChat> {
                 width: 250,
                 child: Center(
                   child : Text(
-                    'I am fine thanks',
+                    chatmsgs.getuser1Chat().keys.toList()[1],
                     textScaleFactor: 2,
                     style: TextStyle(color: Colors.white, fontSize: 10),
                   ),
@@ -179,7 +186,7 @@ class privateChatState extends State<privateChat> {
             ),
 
             new Text(
-              'sent at: 3.04 PM',
+              chatmsgs.getuser1Chat().values.toList()[1],
               textScaleFactor: 2,
               style: TextStyle(color: Colors.black26, fontSize: 7),
             ),
@@ -195,7 +202,7 @@ class privateChatState extends State<privateChat> {
                 //width: 250,
                 child: Center(
                   child : Text(
-                    'What is the lecture time !?',
+                      chatmsgs.getuser2Chat().keys.toList()[1],
                     textScaleFactor: 2,
                     style: TextStyle(color: Colors.white, fontSize: 10),
                   ),
@@ -208,7 +215,7 @@ class privateChatState extends State<privateChat> {
             ),
 
             new Text(
-              'sent at: 3.05 PM',
+              chatmsgs.getuser2Chat().values.toList()[1],
               textScaleFactor: 2,
               style: TextStyle(color: Colors.black26, fontSize: 7),
             ),
