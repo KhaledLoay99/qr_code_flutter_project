@@ -10,8 +10,55 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final TextEditingController _controller = new TextEditingController();
   TextFormField test;
-  bool _isEnabled = false;
-  Widget textfield({@required String hintText, bool qr}) {
+  bool _isEnabled;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController _customController;
+  createAlertDialog(BuildContext context, String type, String val) {
+    _customController = new TextEditingController(text: val);
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Your $type"),
+            content: Container(
+              height: 125,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please Enter Your text';
+                        }
+                        if (value.length > 25) {
+                          return 'too long';
+                        }
+                        if (value.length < 5) {
+                          return 'too short';
+                        }
+                        return null;
+                      },
+                      controller: _customController,
+                    ),
+                    MaterialButton(
+                      elevation: 5.0,
+                      child: Text('Submit'),
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
+                          // If the form is valid, Go to Home screen.
+                        }
+                      },
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget textfield({@required String hintText, bool qr, String type}) {
     return Material(
         elevation: 4,
         shadowColor: Colors.grey,
@@ -21,9 +68,19 @@ class _ProfileState extends State<Profile> {
         child: Form(
           child: Stack(children: [
             test = TextFormField(
-              //readOnly: _notEnabled,
-              enabled: _isEnabled,
-              controller: _controller,
+              /*validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please Enter Your text';
+                }
+                if (value.length > 25) {
+                  return 'too long';
+                }
+                if (value.length < 5) {
+                  return 'too short';
+                }
+                return null;
+              },*/
+              enabled: false,
               decoration: InputDecoration(
                   hintText: hintText,
                   hintStyle: TextStyle(
@@ -39,18 +96,15 @@ class _ProfileState extends State<Profile> {
             ),
             Row(children: [
               Container(
-                padding: EdgeInsets.only(left: 320, top: 20),
+                padding: qr
+                    ? EdgeInsets.only(left: 320, top: 20)
+                    : EdgeInsets.only(left: 310, top: 10),
                 child: qr
                     ? Icon(Icons.center_focus_weak)
                     : IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () {
-                          setState(() {
-                            if (_isEnabled)
-                              _isEnabled = false;
-                            else
-                              _isEnabled = true;
-                          });
+                          createAlertDialog(context, type, hintText);
                         },
                       ),
               )
@@ -61,6 +115,10 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    /*final _formKey = GlobalKey<FormState>();
+    final _formKey2 = GlobalKey<FormState>();
+    final _formKey3 = GlobalKey<FormState>();
+    final _formKey4 = GlobalKey<FormState>();*/
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: new AppBar(
@@ -136,10 +194,20 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    textfield(hintText: 'Robert Lewandowski', qr: false),
-                    textfield(hintText: 'RL9@gmail.com', qr: false),
-                    textfield(hintText: 'Warsaw, Poland', qr: false),
-                    textfield(hintText: 'QR Code', qr: true),
+                    textfield(
+                        hintText: 'Robert Lewandowski',
+                        qr: false,
+                        type: "Name"),
+                    textfield(
+                        hintText: 'RL9@gmail.com', qr: false, type: "Email"),
+                    textfield(
+                        hintText: 'Warsaw, Poland',
+                        qr: false,
+                        type: "Location"),
+                    textfield(
+                      hintText: 'QR Code',
+                      qr: true,
+                    ),
                   ],
                 ),
               )
@@ -156,9 +224,9 @@ class HeaderCurvedContainer extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()..color = Color.fromRGBO(110, 204, 234, 1.0);
     Path path = Path()
-      ..relativeLineTo(0, 150)
+      ..lineTo(0, 150)
       ..quadraticBezierTo(size.width / 2, 225, size.width, 150)
-      ..relativeLineTo(0, -150)
+      ..lineTo(size.width, 0)
       ..close();
     canvas.drawPath(path, paint);
   }
