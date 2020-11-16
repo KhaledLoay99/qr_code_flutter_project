@@ -8,6 +8,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final TextEditingController _controller = new TextEditingController();
+  TextFormField test;
+  bool _isEnabled = false;
   Widget textfield({@required String hintText, bool qr}) {
     return Material(
         elevation: 4,
@@ -15,33 +18,51 @@ class _ProfileState extends State<Profile> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Stack(children: [
-          TextField(
-            decoration: InputDecoration(
-                hintText: hintText,
-                hintStyle: TextStyle(
-                  letterSpacing: 2,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold,
-                ),
-                fillColor: Colors.white30,
-                filled: true,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide.none)),
-          ),
-          Row(children: [
-            Container(
-              padding: EdgeInsets.only(left: 320, top: 20),
-              child: qr ? Icon(Icons.center_focus_weak) : Icon(Icons.edit),
-            )
-          ])
-        ]));
+        child: Form(
+          child: Stack(children: [
+            test = TextFormField(
+              //readOnly: _notEnabled,
+              enabled: _isEnabled,
+              controller: _controller,
+              decoration: InputDecoration(
+                  hintText: hintText,
+                  hintStyle: TextStyle(
+                    letterSpacing: 2,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  fillColor: Colors.white30,
+                  filled: true,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide.none)),
+            ),
+            Row(children: [
+              Container(
+                padding: EdgeInsets.only(left: 320, top: 20),
+                child: qr
+                    ? Icon(Icons.center_focus_weak)
+                    : IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          setState(() {
+                            if (_isEnabled)
+                              _isEnabled = false;
+                            else
+                              _isEnabled = true;
+                          });
+                        },
+                      ),
+              )
+            ])
+          ]),
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: new AppBar(
         title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
         leading: IconButton(
@@ -56,22 +77,7 @@ class _ProfileState extends State<Profile> {
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                height: 450,
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    textfield(hintText: 'Robert Lewandowski', qr: false),
-                    textfield(hintText: 'RL9@gmail.com', qr: false),
-                    textfield(hintText: 'Warsaw, Poland', qr: false),
-                    textfield(hintText: 'QR Code', qr: true),
-                  ],
-                ),
-              )
-            ],
+            children: [],
           ),
           CustomPaint(
             child: Container(
@@ -108,17 +114,36 @@ class _ProfileState extends State<Profile> {
               )
             ],
           ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 270, left: 184),
-            child: CircleAvatar(
-              backgroundColor: Colors.black54,
-              child: IconButton(
-                icon: Icon(
-                  Icons.edit,
-                  color: Colors.white,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 220, left: 184),
+                child: CircleAvatar(
+                  backgroundColor: Colors.black54,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Container(
+                height: 450,
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    textfield(hintText: 'Robert Lewandowski', qr: false),
+                    textfield(hintText: 'RL9@gmail.com', qr: false),
+                    textfield(hintText: 'Warsaw, Poland', qr: false),
+                    textfield(hintText: 'QR Code', qr: true),
+                  ],
+                ),
+              )
+            ],
           ),
         ],
       ),
