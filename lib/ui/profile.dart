@@ -195,7 +195,9 @@ class _ProfileState extends State<Profile> {
                                   image: AssetImage('images/profile.jpg'))),
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 140, left: 184),
+                          padding: EdgeInsets.only(
+                              top: 140,
+                              left: MediaQuery.of(context).size.width / 2.2),
                           margin: EdgeInsets.only(bottom: 50),
                           child: CircleAvatar(
                             backgroundColor: Colors.black54,
