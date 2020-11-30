@@ -3,36 +3,34 @@ import 'package:Dcode/ui/chatlist.dart';
 import 'package:Dcode/ui/home.dart';
 import 'package:Dcode/ui/privateChat.dart';
 import 'package:flutter/material.dart';
-
+import 'package:badges/badges.dart';
 import 'profile.dart';
+
 class notify extends StatefulWidget {
   @override
   _notifyState createState() => _notifyState();
 }
 
-class _notifyState extends State<notify>with TickerProviderStateMixin {
+class _notifyState extends State<notify> with TickerProviderStateMixin {
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
   final notifylogic Notification = notifylogic();
-   AnimationController _animationController;
+  AnimationController _animationController;
   @override
   void initState() {
-      _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500))..repeat();
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+          ..repeat();
     // TODO: implement initState
     super.initState();
   }
-      void _runAnimation() async {
-    for (int i = 0; i < 3; i++) {
-      await _animationController.forward();
-      await _animationController.reverse();
-    }
-  }
-    @override
+
+  @override
   void dispose() {
     _animationController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +39,18 @@ class _notifyState extends State<notify>with TickerProviderStateMixin {
         title: Row(
           children: <Widget>[
             Text('Notification'),
-                 RotationTransition( turns: Tween(begin: 0.0, end: -.1)
-                    .chain(CurveTween(curve: Curves.elasticIn))
-                    .animate(_animationController)
-                    ,child: Icon(
-                Icons.notifications,
-              color: Colors.yellow,
-              ) ,),
+            RotationTransition(
+              turns: Tween(begin: 0.0, end: -.1)
+                  .chain(CurveTween(curve: Curves.elasticIn))
+                  .animate(_animationController),
+              child: Badge(
+                badgeContent: Text('3', style: TextStyle(color: Colors.white)),
+                child: Icon(
+                  Icons.notifications_active,
+                  color: Colors.yellow,
+                ),
+              ),
+            ),
           ],
         ),
 //          title: new Text("Login"),
@@ -132,12 +135,12 @@ class _notifyState extends State<notify>with TickerProviderStateMixin {
                     Padding(
                       padding: EdgeInsets.all(20.0),
                       child: Text(
-                        'New Conversation',
+                        'Conversations',
                         style: TextStyle(
                           fontSize: 30,
                           fontFamily: 'Futura',
                           color: Colors.black,
-                          height: 3,
+                          height: 2,
                         ),
                       ),
                     ),
@@ -195,7 +198,7 @@ class _notifyState extends State<notify>with TickerProviderStateMixin {
                     Padding(
                       padding: EdgeInsets.all(20.0),
                       child: Text(
-                        'New Purchaser',
+                        'Purchasers',
                         style: TextStyle(
                           fontSize: 30,
                           fontFamily: 'Futura',
@@ -292,6 +295,4 @@ class _notifyState extends State<notify>with TickerProviderStateMixin {
       ),
     );
   }
-  }
-
-
+}
