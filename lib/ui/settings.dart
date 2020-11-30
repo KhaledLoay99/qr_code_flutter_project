@@ -1,7 +1,9 @@
+import 'package:Dcode/logic/userProfile.dart';
 import 'package:Dcode/ui/profile.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatelessWidget {
+  Userprofile userprofileData = new Userprofile();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,7 @@ class Settings extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Colors.white,
                     image: DecorationImage(
-                        image: AssetImage('images/profile.jpg'))),
+                        image: AssetImage(userprofileData.get_profileImage))),
               ),
               Container(
                 width: MediaQuery.of(context).size.width / 2.4,
@@ -37,18 +39,20 @@ class Settings extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 15.0, top: 9.0),
                       child: Text(
-                        "R L",
+                        userprofileData.first_name +
+                            " " +
+                            userprofileData.last_name,
                         style: TextStyle(
                             letterSpacing: 2,
                             color: Colors.black54,
                             fontWeight: FontWeight.bold,
-                            fontSize: 24),
+                            fontSize: 13),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 25.0),
                       child: Text(
-                        "RL9@gmail.com",
+                        userprofileData.get_mail,
                         style: TextStyle(
                           letterSpacing: 2,
                           color: Colors.black54,

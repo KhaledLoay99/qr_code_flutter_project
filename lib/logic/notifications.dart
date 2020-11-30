@@ -5,11 +5,17 @@ class notifylogic {
     'Khaled Loay': 'New Purchaser is intersted'
   };
 
+  String qrImage = "images/qr_code.png";
+
   Map getmsgs() {
     return msgs;
   }
 
   Map getpurchasers() {
     return purchasers;
+  }
+
+  String get get_qrImage {
+    return qrImage;
   }
 }

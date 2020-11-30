@@ -137,10 +137,10 @@ class notify extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      Icon(
-                        Icons.qr_code,
-                        size: 40,
-                        color: Colors.black,
+                      Image.asset(
+                        Notification.get_qrImage,
+                        fit: BoxFit.cover,
+                        width: 25,
                       ),
                       Text(
                         Notification.getmsgs().values.toList()[0],
@@ -200,10 +200,10 @@ class notify extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      Icon(
-                        Icons.qr_code,
-                        size: 40,
-                        color: Colors.black,
+                      Image.asset(
+                        Notification.get_qrImage,
+                        fit: BoxFit.cover,
+                        width: 25,
                       ),
                       Text(
                         Notification.getpurchasers().values.toList()[0],
@@ -239,10 +239,10 @@ class notify extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      Icon(
-                        Icons.qr_code,
-                        size: 40,
-                        color: Colors.black,
+                      Image.asset(
+                        Notification.get_qrImage,
+                        fit: BoxFit.cover,
+                        width: 25,
                       ),
                       Text(
                         Notification.getpurchasers().values.toList()[1],
