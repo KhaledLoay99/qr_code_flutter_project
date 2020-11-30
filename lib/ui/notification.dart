@@ -5,12 +5,34 @@ import 'package:Dcode/ui/privateChat.dart';
 import 'package:flutter/material.dart';
 
 import 'profile.dart';
+class notify extends StatefulWidget {
+  @override
+  _notifyState createState() => _notifyState();
+}
 
-class notify extends StatelessWidget {
+class _notifyState extends State<notify>with TickerProviderStateMixin {
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
   final notifylogic Notification = notifylogic();
-
+   AnimationController _animationController;
+  @override
+  void initState() {
+      _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500))..repeat();
+    // TODO: implement initState
+    super.initState();
+  }
+      void _runAnimation() async {
+    for (int i = 0; i < 3; i++) {
+      await _animationController.forward();
+      await _animationController.reverse();
+    }
+  }
+    @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +41,13 @@ class notify extends StatelessWidget {
         title: Row(
           children: <Widget>[
             Text('Notification'),
-            Icon(
-              Icons.notifications,
+                 RotationTransition( turns: Tween(begin: 0.0, end: -.1)
+                    .chain(CurveTween(curve: Curves.elasticIn))
+                    .animate(_animationController)
+                    ,child: Icon(
+                Icons.notifications,
               color: Colors.yellow,
-            ),
+              ) ,),
           ],
         ),
 //          title: new Text("Login"),
@@ -267,4 +292,6 @@ class notify extends StatelessWidget {
       ),
     );
   }
-}
+  }
+
+
