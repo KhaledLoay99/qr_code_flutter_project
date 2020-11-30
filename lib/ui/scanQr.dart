@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:Dcode/ui/home.dart';
 import 'package:Dcode/ui/profile.dart';
 
-
 class scanQr extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -14,7 +13,8 @@ class scanQr extends StatefulWidget {
 }
 
 class scanQrState extends State<scanQr> {
-  Color c1 = const Color.fromRGBO(110,204,234,1.0); // fully transparent white (invisible)
+  Color c1 = const Color.fromRGBO(
+      110, 204, 234, 1.0); // fully transparent white (invisible)
 
   @override
   Widget build(BuildContext context) {
@@ -36,25 +36,22 @@ class scanQrState extends State<scanQr> {
 //        unselectedFontSize: 14,
         onTap: (value) {
           // Respond to item press.
-          if(value == 0){
+          if (value == 0) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => home()),
             );
-          }else if(value == 1){
-
+          } else if (value == 1) {
             Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => notify()),
+              context,
+              MaterialPageRoute(builder: (context) => notify()),
             );
-          }else if(value == 2){
-
-           Navigator.push(
-             context,
-             MaterialPageRoute(builder: (context) => chatlist()),
-           );
-          }else if(value == 3){
-
+          } else if (value == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => chatlist()),
+            );
+          } else if (value == 3) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Profile()),
@@ -80,34 +77,42 @@ class scanQrState extends State<scanQr> {
           ),
         ],
       ),
-
-      body:new ListView(
+      body: new ListView(
         //alignment: Alignment.topCenter,
         children: [
           new Column(
-          children: <Widget>[
-
-            new Padding(padding: new EdgeInsets.all(20.0)),
-            new Text("Scan New Qr", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 35,color: Colors.blue),),
-            new Padding(padding: new EdgeInsets.all(20.0)),
-            new Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).buttonColor,
-                  borderRadius: BorderRadius.circular(8.0),
-                  image: new DecorationImage(
-                    image: new AssetImage("images/qr-code.png"),
-                    fit: BoxFit.fill,
-                  )
+            children: <Widget>[
+              new Padding(padding: new EdgeInsets.all(20.0)),
+              new Text(
+                "Scan New Qr",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 35,
+                    color: Colors.blue),
               ),
-            ),
-
-            new Padding(padding: new EdgeInsets.all(20.0)),
-            new Text("Click below Camer Button To Scan", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.blue),),
-            new Padding(padding: new EdgeInsets.all(20.0)),
-          ],
-        ),
+              new Padding(padding: new EdgeInsets.all(20.0)),
+              new Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).buttonColor,
+                    borderRadius: BorderRadius.circular(8.0),
+                    image: new DecorationImage(
+                      image: new AssetImage("images/qr-code.png"),
+                      fit: BoxFit.fill,
+                    )),
+              ),
+              new Padding(padding: new EdgeInsets.all(20.0)),
+              new Text(
+                "Click below Camer Button To Scan",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Colors.blue),
+              ),
+              new Padding(padding: new EdgeInsets.all(20.0)),
+            ],
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -117,7 +122,6 @@ class scanQrState extends State<scanQr> {
         child: Icon(Icons.camera_alt),
         backgroundColor: Colors.lightBlue,
       ),
-
     );
   }
 }

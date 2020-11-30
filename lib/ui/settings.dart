@@ -156,7 +156,7 @@ class Settings extends StatelessWidget {
                           ),
                         ),
                         Divider(
-                     color: Colors.black,
+                          color: Colors.black,
                           thickness: 2,
                         ),
                       ],

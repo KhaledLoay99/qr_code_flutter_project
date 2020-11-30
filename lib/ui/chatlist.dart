@@ -10,7 +10,6 @@ void main() => runApp(chatlist());
 
 // #docregion MyApp
 class chatlist extends StatelessWidget {
-
   // #docregion build
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,8 @@ class chatlist extends StatelessWidget {
 
 // #docregion RWS-var
 class UserListState extends State<UserList> {
-  Color c1 = const Color.fromRGBO(110,204,234,1.0); // fully transparent white (invisible)
+  Color c1 = const Color.fromRGBO(
+      110, 204, 234, 1.0); // fully transparent white (invisible)
   final _biggerFont = const TextStyle(fontSize: 18.0);
   final chatlistNames chatlistLogic = chatlistNames();
 
@@ -50,11 +50,14 @@ class UserListState extends State<UserList> {
   Widget _buildRow(String name) {
     return ListTile(
       leading: CircleAvatar(
-       child: Row(
-         children: <Widget>[
-           Image.asset('images/user.png', height: 40,),
-         ],
-       ),
+        child: Row(
+          children: <Widget>[
+            Image.asset(
+              'images/user.png',
+              height: 40,
+            ),
+          ],
+        ),
       ),
       title: Text(
         name,
@@ -78,73 +81,89 @@ class UserListState extends State<UserList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Row(
           children: [
             Text('Chats '),
-            Image.asset('images/chat.png', height: 40,),
+            Image.asset(
+              'images/chat.png',
+              height: 40,
+            ),
           ],
         ),
         backgroundColor: c1,
       ),
       backgroundColor: Colors.white,
-
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: c1,
-
         onTap: (value) {
           // Respond to item press.
-          if(value == 0){
-           Navigator.push(
-             context,
-             MaterialPageRoute(builder: (context) => home()),
-           );
-          }else if(value == 1){
-
+          if (value == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => home()),
+            );
+          } else if (value == 1) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => notify()),
             );
-          }else if(value == 2){
-
+          } else if (value == 2) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => chatlist()),
             );
-          }else if(value == 3){
-
+          } else if (value == 3) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Profile()),
             );
           }
-
         },
         items: [
           BottomNavigationBarItem(
-            title: Text('Home', style: TextStyle(color: Colors.black45),),
-            icon: Icon(Icons.home,color: Colors.black45,),
+            title: Text(
+              'Home',
+              style: TextStyle(color: Colors.black45),
+            ),
+            icon: Icon(
+              Icons.home,
+              color: Colors.black45,
+            ),
           ),
           BottomNavigationBarItem(
-            title: Text('Notifications', style: TextStyle(color: Colors.black45),),
-            icon: Icon(Icons.notifications,color: Colors.black45,),
+            title: Text(
+              'Notifications',
+              style: TextStyle(color: Colors.black45),
+            ),
+            icon: Icon(
+              Icons.notifications,
+              color: Colors.black45,
+            ),
           ),
           BottomNavigationBarItem(
-              title: Text('Recent Chats', style: TextStyle(color: Colors.white),),
-              icon: Icon(Icons.chat,color: Colors.white,),
-              backgroundColor: Colors.white
-          ),
+              title: Text(
+                'Recent Chats',
+                style: TextStyle(color: Colors.white),
+              ),
+              icon: Icon(
+                Icons.chat,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.white),
           BottomNavigationBarItem(
-            title: Text('My Profile', style: TextStyle(color: Colors.black45),),
-            icon: Icon(Icons.account_circle,color: Colors.black45,),
-
+            title: Text(
+              'My Profile',
+              style: TextStyle(color: Colors.black45),
+            ),
+            icon: Icon(
+              Icons.account_circle,
+              color: Colors.black45,
+            ),
           ),
         ],
       ),
-
       body: _buildChatList(),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!

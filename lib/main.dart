@@ -5,6 +5,6 @@ import 'package:Dcode/ui/profile.dart';
 void main() {
   runApp(new MaterialApp(
     title: "Dcode App",
-    home: new Profile(),
+    home: new Signup(),
   ));
 }
