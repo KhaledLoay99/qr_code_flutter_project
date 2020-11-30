@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Dcode/ui/home.dart';
 import 'package:Dcode/ui/signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -14,9 +15,45 @@ class LoginState extends State<Login> {
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
   final _formKey = GlobalKey<FormState>();
+  String _savedDataUsername = "";
+  String _savedDataPassword = "";
+
+  var _usernameField = new TextEditingController();
+  var _passwordField = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedData();
+  }
+
+  _loadSavedData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      if (sharedPreferences.getString('username') != null &&
+          sharedPreferences.getString('username').isNotEmpty) {
+        _savedDataUsername = sharedPreferences.getString('username');
+      }
+      if (sharedPreferences.getString('password') != null &&
+          sharedPreferences.getString('password').isNotEmpty) {
+        _savedDataPassword = sharedPreferences.getString('password');
+      } else {
+        _savedDataPassword = '';
+      }
+    });
+  }
+
+  _saveData(String username, String password) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    sharedPreferences.setString('username', username);
+    sharedPreferences.setString('password', password);
+  }
 
   @override
   Widget build(BuildContext context) {
+    _usernameField.text = _savedDataUsername;
+    _passwordField.text = _savedDataPassword;
     // TODO: implement build
     return new Scaffold(
       resizeToAvoidBottomInset: false,
@@ -45,12 +82,13 @@ class LoginState extends State<Login> {
               child: Column(
                 children: <Widget>[
                   TextFormField(
+                    controller: _usernameField,
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter Username';
                       }
                       if (!value.contains('@dcode.com')) {
-                        return 'username should end with @decode.com';
+                        return 'username should end with @dcode.com';
                       }
                       return null;
                     },
@@ -62,6 +100,7 @@ class LoginState extends State<Login> {
                   ),
                   new Padding(padding: new EdgeInsets.all(20.0)),
                   TextFormField(
+                    controller: _passwordField,
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter Your Password';
@@ -87,6 +126,8 @@ class LoginState extends State<Login> {
                             context,
                             MaterialPageRoute(builder: (context) => home()),
                           );
+
+                          _saveData(_usernameField.text, _passwordField.text);
                         }
                       },
                       child: Text('Login'),

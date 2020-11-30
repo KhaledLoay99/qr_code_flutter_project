@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  shared_preferences: ^0.5.12+4
   flutter:
     sdk: flutter
 
@@ -60,6 +61,7 @@ flutter:
     - images/chat.png
     - images/user.png
     - images/qrr.jpg
+    - images/qr_code.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

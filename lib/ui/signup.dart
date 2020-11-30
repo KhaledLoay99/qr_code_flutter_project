@@ -100,7 +100,7 @@ class SignupState extends State<Signup> {
                           return 'Username is too short';
                         }
                         if (!value.contains('@dcode.com')) {
-                          return 'username should end with @decode.com';
+                          return 'username should end with @dcode.com';
                         }
                         return null;
                       },

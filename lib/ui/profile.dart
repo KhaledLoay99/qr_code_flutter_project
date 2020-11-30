@@ -1,3 +1,4 @@
+import 'package:Dcode/logic/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -14,6 +15,7 @@ class _ProfileState extends State<Profile> {
   static final validCharacters = RegExp(r"^[a-zA-Z]+$");
   final _formKey = GlobalKey<FormState>();
   TextEditingController _customController;
+  Userprofile userProfileData = new Userprofile();
   createAlertDialog(BuildContext context, String type, String val) {
     _customController = new TextEditingController(text: val);
     return showDialog(
@@ -96,6 +98,26 @@ class _ProfileState extends State<Profile> {
         });
   }
 
+  show_Qr() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Center(
+              child: Text("Your Qr Code"),
+            ),
+            content: Container(
+              height: 125,
+              width: 250,
+              child: Image.asset(
+                userProfileData.get_qrImage,
+                width: 70,
+              ),
+            ),
+          );
+        });
+  }
+
   Widget textfield({@required String hintText, bool qr, String type}) {
     return Material(
         elevation: 4,
@@ -123,10 +145,15 @@ class _ProfileState extends State<Profile> {
             Row(children: [
               Container(
                 padding: qr
-                    ? EdgeInsets.only(left: 320, top: 20)
+                    ? EdgeInsets.only(left: 310, top: 10)
                     : EdgeInsets.only(left: 310, top: 10),
                 child: qr
-                    ? Icon(Icons.center_focus_weak)
+                    ? IconButton(
+                        icon: Icon(Icons.qr_code),
+                        onPressed: () {
+                          show_Qr();
+                        },
+                      )
                     : IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () {
@@ -192,7 +219,8 @@ class _ProfileState extends State<Profile> {
                               shape: BoxShape.circle,
                               color: Colors.red,
                               image: DecorationImage(
-                                  image: AssetImage('images/profile.jpg'))),
+                                  image: AssetImage(
+                                      userProfileData.get_profileImage))),
                         ),
                         Container(
                           padding: EdgeInsets.only(
@@ -239,13 +267,19 @@ class _ProfileState extends State<Profile> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       textfield(
-                          hintText: 'Robert', qr: false, type: "FirstName"),
+                          hintText: userProfileData.first_name,
+                          qr: false,
+                          type: "FirstName"),
                       textfield(
-                          hintText: 'Lewandowski', qr: false, type: "LastName"),
+                          hintText: userProfileData.last_name,
+                          qr: false,
+                          type: "LastName"),
                       textfield(
-                          hintText: 'RL9@dcode.com', qr: false, type: "Email"),
+                          hintText: userProfileData.get_mail,
+                          qr: false,
+                          type: "Email"),
                       textfield(
-                          hintText: 'Warsaw, Poland',
+                          hintText: userProfileData.get_location,
                           qr: false,
                           type: "Location"),
                       textfield(

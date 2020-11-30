@@ -1,3 +1,4 @@
+import 'package:Dcode/logic/carProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -14,6 +15,7 @@ class _carProfileState extends State<carProfile> {
   static final validCharacters = RegExp(r"^[a-zA-Z]+$");
   final _formKey = GlobalKey<FormState>();
   TextEditingController _customController;
+  Carprofile carprofileData = new Carprofile();
   createAlertDialog(BuildContext context, String type, String val) {
     _customController = new TextEditingController(text: val);
     return showDialog(
@@ -189,7 +191,8 @@ class _carProfileState extends State<carProfile> {
                               shape: BoxShape.circle,
                               color: Colors.white,
                               image: DecorationImage(
-                                  image: AssetImage('images/car.png'))),
+                                  image: AssetImage(
+                                      carprofileData.get_carprofileImage))),
                         ),
                         Container(
                           padding: EdgeInsets.only(
@@ -223,12 +226,18 @@ class _carProfileState extends State<carProfile> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      textfield(hintText: 'Nissan Sunny 2020', type: "CarName"),
-                      textfield(hintText: 'For Sale', type: "Status"),
                       textfield(
-                          hintText: 'Egypt, Cairo, Masr el jadidah',
+                          hintText: carprofileData.get_carmodel,
+                          type: "CarName"),
+                      textfield(
+                          hintText: carprofileData.get_salestatus,
+                          type: "Status"),
+                      textfield(
+                          hintText: carprofileData.get_location,
                           type: "Location"),
-                      textfield(hintText: '01125118300', type: "Number"),
+                      textfield(
+                          hintText: carprofileData.get_phonenumber,
+                          type: "Number"),
                     ],
                   ),
                 )
