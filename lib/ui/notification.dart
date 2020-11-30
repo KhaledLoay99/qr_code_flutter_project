@@ -104,14 +104,16 @@ class notify extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                      'New Conversation',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontFamily: 'Futura',
-                        color: Colors.black,
-                        decoration: TextDecoration.underline,
-                        height: 3,
+                    Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text(
+                        'New Conversation',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'Futura',
+                          color: Colors.black,
+                          height: 3,
+                        ),
                       ),
                     ),
                   ],
@@ -148,26 +150,35 @@ class notify extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      Icon(
-                        Icons.circle,
-                        size: 15,
+                      IconButton(
+                        icon: Icon(Icons.circle),
                         color: Colors.red,
-                      ),
+                        iconSize: 15,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => privateChat()),
+                          );
+                        },
+                      )
                     ],
                   ),
                 ),
                 Row(
                   children: [
-                    Text(
-                      'New Purchaser',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontFamily: 'Futura',
-                        color: Colors.black,
-                        decoration: TextDecoration.underline,
-                        height: 3,
+                    Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text(
+                        'New Purchaser',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'Futura',
+                          color: Colors.black,
+                          height: 3,
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 SizedBox(height: 20),
@@ -196,6 +207,45 @@ class notify extends StatelessWidget {
                       ),
                       Text(
                         Notification.getpurchasers().values.toList()[0],
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontFamily: 'Futura',
+                          color: Colors.black,
+                        ),
+                      ),
+                      Icon(
+                        Icons.circle,
+                        size: 15,
+                        color: Colors.red,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(width: 0.5, color: Colors.black),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        Notification.getpurchasers().keys.toList()[1],
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Futura',
+                          color: Colors.black,
+                        ),
+                      ),
+                      Icon(
+                        Icons.qr_code,
+                        size: 40,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        Notification.getpurchasers().values.toList()[1],
                         style: TextStyle(
                           fontSize: 10,
                           fontFamily: 'Futura',
