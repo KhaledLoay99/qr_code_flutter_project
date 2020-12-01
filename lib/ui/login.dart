@@ -131,6 +131,11 @@ class LoginState extends State<Login> {
                         }
                       },
                       child: Text('Login'),
+                           color: Colors.cyan,
+                      textColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100.0),
+                      ),
                     ),
                   ),
                 ],
