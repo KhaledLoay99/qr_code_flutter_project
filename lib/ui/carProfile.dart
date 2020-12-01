@@ -36,22 +36,19 @@ class _carProfileState extends State<carProfile> {
                       validator: (value) {
                         if (type == "CarName") {
                           if (value.isEmpty) {
-                            return 'Please Enter First Name';
+                            return 'Please Enter Car Name';
                           }
                           if (value.length < 3) {
-                            return 'First Name is too short';
+                            return 'Car Name is too short';
                           }
                           if (value.length > 18) {
-                            return 'First Name is too long';
-                          }
-                          if (!validCharacters.hasMatch(value)) {
-                            return 'First Name should be alphabets only';
+                            return 'Car Name is too long';
                           }
                           return null;
                         }
                         if (type == "Status") {
                           if (value.isEmpty) {
-                            return 'Please Enter Last Name';
+                            return 'Please Enter Status';
                           }
                           if (value.length < 3) {
                             return 'Status is too short';
@@ -73,24 +70,24 @@ class _carProfileState extends State<carProfile> {
                             return 'Location is too long';
                           }
                           if (value.length < 11) {
-                            return 'Username is too short';
+                            return 'Location is too short';
                           }
                           return null;
                         }
                         if (type == "PhoneNumber") {
                           if (value.isEmpty) {
-                            return 'Please Enter your Number';
+                            return 'Please Enter your Phone Number';
                           }
                           if (value.length > 35) {
-                            return 'Number is too long';
+                            return 'Phone Number is too long';
                           }
                           if (value.length < 11) {
-                            return 'Number is too short';
+                            return 'Phone Number is too short';
                           }
                           if (!new RegExp(
                                   r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$')
                               .hasMatch(value)) {
-                            return 'Number should be in numbers only';
+                            return 'Phone Number should be in numbers only';
                           }
                           return null;
                         }
