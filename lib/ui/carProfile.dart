@@ -12,7 +12,9 @@ class _carProfileState extends State<carProfile> {
   final TextEditingController _controller = new TextEditingController();
   TextFormField test;
   bool _isEnabled;
+  var _val = false;
   static final validCharacters = RegExp(r"^[a-zA-Z]+$");
+  static final validNumbers = RegExp('[0-9]');
   final _formKey = GlobalKey<FormState>();
   TextEditingController _customController;
   Carprofile carprofileData = new Carprofile();
@@ -32,7 +34,7 @@ class _carProfileState extends State<carProfile> {
                   children: [
                     TextFormField(
                       validator: (value) {
-                        if (type == "FirstName") {
+                        if (type == "CarName") {
                           if (value.isEmpty) {
                             return 'Please Enter First Name';
                           }
@@ -47,34 +49,48 @@ class _carProfileState extends State<carProfile> {
                           }
                           return null;
                         }
-                        if (type == "LastName") {
+                        if (type == "Status") {
                           if (value.isEmpty) {
                             return 'Please Enter Last Name';
                           }
                           if (value.length < 3) {
-                            return 'Last Name is too short';
+                            return 'Status is too short';
                           }
 
                           if (value.length > 18) {
-                            return 'Last Name is too long';
+                            return 'Status is too long';
                           }
                           if (!validCharacters.hasMatch(value)) {
-                            return 'Last Name should be alphabets only';
+                            return 'Status should be alphabets only';
                           }
                           return null;
                         }
-                        if (type == "Email") {
+                        if (type == "Location") {
                           if (value.isEmpty) {
-                            return 'Please Enter Username';
+                            return 'Please Enter your Location';
                           }
-                          if (value.length > 25) {
-                            return 'Username is too long';
+                          if (value.length > 35) {
+                            return 'Location is too long';
                           }
                           if (value.length < 11) {
                             return 'Username is too short';
                           }
-                          if (!value.contains('@dcode.com')) {
-                            return 'username should end with @decode.com';
+                          return null;
+                        }
+                        if (type == "PhoneNumber") {
+                          if (value.isEmpty) {
+                            return 'Please Enter your Number';
+                          }
+                          if (value.length > 35) {
+                            return 'Number is too long';
+                          }
+                          if (value.length < 11) {
+                            return 'Number is too short';
+                          }
+                          if (!new RegExp(
+                                  r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$')
+                              .hasMatch(value)) {
+                            return 'Number should be in numbers only';
                           }
                           return null;
                         }
@@ -99,6 +115,7 @@ class _carProfileState extends State<carProfile> {
   }
 
   Widget textfield({@required String hintText, String type}) {
+    //var val = false;
     return Material(
         elevation: 4,
         shadowColor: Colors.grey,
@@ -125,12 +142,24 @@ class _carProfileState extends State<carProfile> {
             Row(children: [
               Container(
                 padding: EdgeInsets.only(left: 310, top: 10),
-                child: IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    createAlertDialog(context, type, hintText);
-                  },
-                ),
+                child: type == "Status"
+                    ? Container(
+                        width: 60,
+                        height: 30,
+                        child: Switch(
+                          value: _val,
+                          onChanged: (value) {
+                            setState(() {
+                              _val = value;
+                            });
+                          },
+                        ))
+                    : IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          createAlertDialog(context, type, hintText);
+                        },
+                      ),
               )
             ])
           ]),
@@ -170,7 +199,7 @@ class _carProfileState extends State<carProfile> {
                     Padding(
                       padding: EdgeInsets.all(20),
                       child: Text(
-                        "Profile",
+                        "Car Profile",
                         style: TextStyle(
                           fontSize: 35,
                           letterSpacing: 1.5,
@@ -237,7 +266,7 @@ class _carProfileState extends State<carProfile> {
                           type: "Location"),
                       textfield(
                           hintText: carprofileData.get_phonenumber,
-                          type: "Number"),
+                          type: "PhoneNumber"),
                     ],
                   ),
                 )
