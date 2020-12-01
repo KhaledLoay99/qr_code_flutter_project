@@ -174,11 +174,13 @@ class _carProfileState extends State<carProfile> {
         title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
         backgroundColor: const Color.fromRGBO(110, 204, 234, 1.0),
       ),
-      body: ListView(children: [
+      body: ListView(physics: const NeverScrollableScrollPhysics(), children: [
         Stack(
           alignment: Alignment.center,
           children: [

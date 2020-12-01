@@ -174,11 +174,13 @@ class _ProfileState extends State<Profile> {
         title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
         backgroundColor: const Color.fromRGBO(110, 204, 234, 1.0),
       ),
-      body: ListView(children: [
+      body: ListView(physics: const NeverScrollableScrollPhysics(), children: [
         Stack(
           alignment: Alignment.center,
           children: [
@@ -243,54 +245,37 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
             ]),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                /*Padding(
-                  padding: EdgeInsets.only(top: 100, left: 184),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.black54,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ),
-                    ),
+            Container(
+              padding: EdgeInsets.only(top: 150),
+              height: 550,
+              width: double.infinity,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  textfield(
+                      hintText: userProfileData.first_name,
+                      qr: false,
+                      type: "FirstName"),
+                  textfield(
+                      hintText: userProfileData.last_name,
+                      qr: false,
+                      type: "LastName"),
+                  textfield(
+                      hintText: userProfileData.get_mail,
+                      qr: false,
+                      type: "Email"),
+                  textfield(
+                      hintText: userProfileData.get_location,
+                      qr: false,
+                      type: "Location"),
+                  textfield(
+                    hintText: 'QR Code',
+                    qr: true,
                   ),
-                ),*/
-                Container(
-                  padding: EdgeInsets.only(top: 150),
-                  height: 550,
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      textfield(
-                          hintText: userProfileData.first_name,
-                          qr: false,
-                          type: "FirstName"),
-                      textfield(
-                          hintText: userProfileData.last_name,
-                          qr: false,
-                          type: "LastName"),
-                      textfield(
-                          hintText: userProfileData.get_mail,
-                          qr: false,
-                          type: "Email"),
-                      textfield(
-                          hintText: userProfileData.get_location,
-                          qr: false,
-                          type: "Location"),
-                      textfield(
-                        hintText: 'QR Code',
-                        qr: true,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                ],
+              ),
+            )
           ],
         ),
       ]),
