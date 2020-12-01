@@ -66,11 +66,17 @@ class Settings extends StatelessWidget {
                       child: RaisedButton(
                         child: Row(
                           children: [
-                            Text("Edit Profile"),
+                            Text(
+                              "Edit Profile",
+                              style: TextStyle(color: Colors.white),
+                            ),
                             Spacer(
                               flex: 1,
                             ),
-                            Icon(Icons.edit)
+                            Icon(
+                              Icons.edit,
+                              color: Colors.blueGrey,
+                            ),
                           ],
                         ),
                         shape: RoundedRectangleBorder(
@@ -130,9 +136,16 @@ class Settings extends StatelessWidget {
                                 style: TextStyle(fontSize: 18),
                               ),
                               IconButton(
+                                icon: Icon(Icons.help),
                                 alignment: Alignment.topCenter,
-                                icon: Icon(Icons.info_outline),
-                              )
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => logout()),
+                                  // );
+                                },
+                              ),
                             ],
                           ),
                         ),
@@ -154,8 +167,16 @@ class Settings extends StatelessWidget {
                                 style: TextStyle(fontSize: 18),
                               ),
                               IconButton(
-                                  alignment: Alignment.topCenter,
-                                  icon: Icon(Icons.arrow_forward))
+                                icon: Icon(Icons.logout),
+                                alignment: Alignment.topCenter,
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => logout()),
+                                  // );
+                                },
+                              ),
                             ],
                           ),
                         ),
@@ -199,9 +220,16 @@ class Settings extends StatelessWidget {
                                 style: TextStyle(fontSize: 18),
                               ),
                               IconButton(
+                                icon: Icon(Icons.report),
                                 alignment: Alignment.topCenter,
-                                icon: Icon(Icons.security),
-                              )
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => logout()),
+                                  // );
+                                },
+                              ),
                             ],
                           ),
                         ),
@@ -223,8 +251,16 @@ class Settings extends StatelessWidget {
                                 style: TextStyle(fontSize: 18),
                               ),
                               IconButton(
-                                  alignment: Alignment.topCenter,
-                                  icon: Icon(Icons.share))
+                                icon: Icon(Icons.share),
+                                alignment: Alignment.topCenter,
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => logout()),
+                                  // );
+                                },
+                              ),
                             ],
                           ),
                         ),
