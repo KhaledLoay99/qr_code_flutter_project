@@ -5,6 +5,6 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(new MaterialApp(
     title: "Dcode App",
-    home: new carProfile(),
+    home: new intro(),
   ));
 }
