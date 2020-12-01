@@ -18,7 +18,7 @@ class SignupState extends State<Signup> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: new AppBar(
         title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
 //          title: new Text("Login"),

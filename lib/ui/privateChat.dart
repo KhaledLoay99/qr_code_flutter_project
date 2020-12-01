@@ -31,7 +31,7 @@ class privateChatState extends State<privateChat> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: new AppBar(
         title: Padding(
           padding: const EdgeInsets.only(top: 10.0),
