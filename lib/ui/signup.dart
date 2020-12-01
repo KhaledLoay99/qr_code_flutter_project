@@ -128,19 +128,28 @@ class SignupState extends State<Signup> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 26.0),
-                      child: RaisedButton(
-                        onPressed: () {
-                          // Validate returns true if the form is valid, or false
-                          // otherwise.
-                          if (_formKey.currentState.validate()) {
-                            // If the form is valid, Go to Home screen.
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Login()),
-                            );
-                          }
-                        },
-                        child: Text('Sign Up'),
+                      child: SizedBox(
+                        width: 160,
+                        child: RaisedButton(
+                          onPressed: () {
+                            // Validate returns true if the form is valid, or false
+                            // otherwise.
+                            if (_formKey.currentState.validate()) {
+                              // If the form is valid, Go to Home screen.
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Login()),
+                              );
+                            }
+                          },
+                          child: Text('Sign Up'),
+                          color: Colors.cyan,
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                        ),
                       ),
                     ),
                   ],
