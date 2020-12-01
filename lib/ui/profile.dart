@@ -1,6 +1,8 @@
 import 'package:Dcode/logic/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:Dcode/ui/chatlist.dart';
+import 'package:Dcode/ui/home.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final TextEditingController _controller = new TextEditingController();
+  Color c1 = const Color.fromRGBO(110, 204, 234, 1.0);
   TextFormField test;
   bool _isEnabled;
   static final validCharacters = RegExp(r"^[a-zA-Z]+$");
@@ -180,7 +183,77 @@ class _ProfileState extends State<Profile> {
         ),
         backgroundColor: const Color.fromRGBO(110, 204, 234, 1.0),
       ),
-      body: ListView(physics: const NeverScrollableScrollPhysics(), children: [
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: c1,
+        onTap: (value) {
+          // Respond to item press.
+          if (value == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => home()),
+            );
+          } else if (value == 1) {
+//            Navigator.push(
+//            context,
+//            MaterialPageRoute(builder: (context) => notify()),
+//             );
+          } else if (value == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => chatlist()),
+            );
+          } else if (value == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
+          }
+        },
+        items: [
+          BottomNavigationBarItem(
+            title: Text(
+              'Home',
+              style: TextStyle(color: Colors.black45),
+            ),
+            icon: Icon(
+              Icons.home,
+              color: Colors.black45,
+            ),
+          ),
+          BottomNavigationBarItem(
+            title: Text(
+              'Notifications',
+              style: TextStyle(color: Colors.black45),
+            ),
+            icon: Icon(
+              Icons.notifications,
+              color: Colors.black45,
+            ),
+          ),
+          BottomNavigationBarItem(
+              title: Text(
+                'Recent Chats',
+                style: TextStyle(color: Colors.black45),
+              ),
+              icon: Icon(
+                Icons.chat,
+                color: Colors.black45,
+              ),
+              backgroundColor: Colors.white),
+          BottomNavigationBarItem(
+            title: Text(
+              'My Profile',
+              style: TextStyle(color: Colors.white),
+            ),
+            icon: Icon(
+              Icons.account_circle,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+      body: ListView(children: [
         Stack(
           alignment: Alignment.center,
           children: [
@@ -246,8 +319,9 @@ class _ProfileState extends State<Profile> {
               ),
             ]),
             Container(
-              padding: EdgeInsets.only(top: 150),
-              height: 550,
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 5.5),
+              height: MediaQuery.of(context).size.height / 1.5,
               width: double.infinity,
               margin: EdgeInsets.symmetric(horizontal: 10),
               child: Column(
