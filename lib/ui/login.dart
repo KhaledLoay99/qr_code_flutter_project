@@ -17,6 +17,7 @@ class LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   String _savedDataUsername = "";
   String _savedDataPassword = "";
+  bool _showPassword = false;
 
   var _usernameField = new TextEditingController();
   var _passwordField = new TextEditingController();
@@ -111,8 +112,18 @@ class LoginState extends State<Login> {
                       hintText: 'Password',
                       icon: new Icon(Icons.lock),
                       border: const OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: this._showPassword ? Colors.blue : Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(
+                              () => this._showPassword = !this._showPassword);
+                        },
+                      ),
                     ),
-                    obscureText: true,
+                    obscureText: !this._showPassword,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 26.0),
@@ -131,7 +142,7 @@ class LoginState extends State<Login> {
                         }
                       },
                       child: Text('Login'),
-                           color: Colors.cyan,
+                      color: Colors.cyan,
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(100.0),
