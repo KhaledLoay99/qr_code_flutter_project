@@ -2,6 +2,7 @@ import 'package:Dcode/logic/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:Dcode/ui/chatlist.dart';
+import 'package:Dcode/ui/notification.dart';
 import 'package:Dcode/ui/home.dart';
 
 class Profile extends StatefulWidget {
@@ -194,20 +195,20 @@ class _ProfileState extends State<Profile> {
               MaterialPageRoute(builder: (context) => home()),
             );
           } else if (value == 1) {
-//            Navigator.push(
-//            context,
-//            MaterialPageRoute(builder: (context) => notify()),
-//             );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => notify()),
+            );
           } else if (value == 2) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => chatlist()),
             );
           } else if (value == 3) {
-            Navigator.push(
+            /*Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Profile()),
-            );
+            );*/
           }
         },
         items: [

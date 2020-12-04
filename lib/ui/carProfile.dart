@@ -44,6 +44,10 @@ class _carProfileState extends State<carProfile> {
                           if (value.length > 18) {
                             return 'Car Name is too long';
                           }
+                          if (new RegExp(r'[ !@#$%^&*(),.?":{}|<>]$')
+                              .hasMatch(value)) {
+                            return "Car Name shouldn't contain any symbols";
+                          }
                           return null;
                         }
                         if (type == "Status") {
@@ -84,9 +88,7 @@ class _carProfileState extends State<carProfile> {
                           if (value.length < 11) {
                             return 'Phone Number is too short';
                           }
-                          if (!new RegExp(
-                                  r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$')
-                              .hasMatch(value)) {
+                          if (!new RegExp(r'[0-9]$').hasMatch(value)) {
                             return 'Phone Number should be in numbers only';
                           }
                           return null;
