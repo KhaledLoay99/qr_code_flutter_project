@@ -158,7 +158,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        Notification.getmsgs().keys.toList()[0],
+                        Notification.getNames()[0],
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'Futura',
@@ -171,7 +171,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                         width: 25,
                       ),
                       Text(
-                        Notification.getmsgs().values.toList()[0],
+                        Notification.getMsgs()[0],
                         style: TextStyle(
                           fontSize: 10,
                           fontFamily: 'Futura',
@@ -221,7 +221,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        Notification.getpurchasers().keys.toList()[0],
+                        Notification.getpurchasers()[0],
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'Futura',
@@ -234,7 +234,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                         width: 25,
                       ),
                       Text(
-                        Notification.getpurchasers().values.toList()[0],
+                        "New Purchaser is intersted",
                         style: TextStyle(
                           fontSize: 10,
                           fontFamily: 'Futura',
@@ -260,7 +260,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        Notification.getpurchasers().keys.toList()[1],
+                        Notification.getpurchasers()[1],
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'Futura',
@@ -273,7 +273,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                         width: 25,
                       ),
                       Text(
-                        Notification.getpurchasers().values.toList()[1],
+                        "New Purchaser is intersted",
                         style: TextStyle(
                           fontSize: 10,
                           fontFamily: 'Futura',
