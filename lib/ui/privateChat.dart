@@ -128,7 +128,7 @@ class privateChatState extends State<privateChat> {
                   width: 250,
                   child: Center(
                     child: Text(
-                      chatmsgs.getuser1Chat().keys.toList()[0],
+                      chatmsgs.getMessages()[0].getText(),
                       textScaleFactor: 2,
                       style: TextStyle(color: Colors.white, fontSize: 10),
                     ),
@@ -140,7 +140,7 @@ class privateChatState extends State<privateChat> {
                 ),
               ),
               new Text(
-                chatmsgs.getuser1Chat().values.toList()[0],
+                chatmsgs.getMessages()[0].getTime(),
                 textScaleFactor: 2,
                 style: TextStyle(color: Colors.black26, fontSize: 7),
               ),
@@ -152,7 +152,7 @@ class privateChatState extends State<privateChat> {
                   width: 250,
                   child: Center(
                     child: Text(
-                      chatmsgs.getuser2Chat().keys.toList()[0],
+                      chatmsgs.getMessages()[1].getText(),
                       textScaleFactor: 2,
                       style: TextStyle(color: Colors.white, fontSize: 10),
                     ),
@@ -164,7 +164,7 @@ class privateChatState extends State<privateChat> {
                 ),
               ),
               new Text(
-                chatmsgs.getuser2Chat().values.toList()[0],
+                chatmsgs.getMessages()[1].getTime(),
                 textScaleFactor: 2,
                 style: TextStyle(color: Colors.black26, fontSize: 7),
               ),
@@ -176,7 +176,7 @@ class privateChatState extends State<privateChat> {
                   width: 250,
                   child: Center(
                     child: Text(
-                      chatmsgs.getuser1Chat().keys.toList()[1],
+                      chatmsgs.getMessages()[2].getText(),
                       textScaleFactor: 2,
                       style: TextStyle(color: Colors.white, fontSize: 10),
                     ),
@@ -188,7 +188,7 @@ class privateChatState extends State<privateChat> {
                 ),
               ),
               new Text(
-                chatmsgs.getuser1Chat().values.toList()[1],
+                chatmsgs.getMessages()[2].getTime(),
                 textScaleFactor: 2,
                 style: TextStyle(color: Colors.black26, fontSize: 7),
               ),
@@ -200,7 +200,7 @@ class privateChatState extends State<privateChat> {
                   //width: 250,
                   child: Center(
                     child: Text(
-                      chatmsgs.getuser2Chat().keys.toList()[1],
+                      chatmsgs.getMessages()[3].getText(),
                       textScaleFactor: 2,
                       style: TextStyle(color: Colors.white, fontSize: 10),
                     ),
@@ -212,7 +212,7 @@ class privateChatState extends State<privateChat> {
                 ),
               ),
               new Text(
-                chatmsgs.getuser2Chat().values.toList()[1],
+                chatmsgs.getMessages()[3].getTime(),
                 textScaleFactor: 2,
                 style: TextStyle(color: Colors.black26, fontSize: 7),
               ),
