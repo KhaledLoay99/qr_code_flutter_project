@@ -8,7 +8,7 @@ class notifylogic {
     Purchasers.add("ahmed mohamed");
     Purchasers.add("youssef karim");
 
-    names.add("zizo moahmed");
+    names.add("Mohamed Ahmed");
     messages.add("hello friend");
   }
 
