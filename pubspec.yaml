@@ -21,6 +21,7 @@ dependencies:
   badges: ^1.1.4
   http: ^0.12.2
   provider: ^4.3.2+3
+  firebase_auth: ^0.18.4+1
   flutter:
     sdk: flutter
 
