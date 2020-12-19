@@ -8,6 +8,8 @@ import 'package:Dcode/ui/scanQr.dart';
 import 'package:Dcode/ui/signup.dart';
 import 'package:Dcode/ui/profile.dart';
 import 'package:Dcode/ui/carProfile.dart';
+import 'package:Dcode/providers/Userprovider.dart';
+import "package:provider/provider.dart";
 
 import 'chatlist.dart';
 
@@ -56,7 +58,9 @@ class homeState extends State<home> {
           } else if (value == 3) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Profile()),
+              MaterialPageRoute(
+                  builder: (context) => ChangeNotifierProvider<Userprovider>(
+                      create: (_) => Userprovider(), child: Profile())),
             );
           }
         },

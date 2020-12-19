@@ -4,6 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:Dcode/ui/chatlist.dart';
 import 'package:Dcode/ui/notification.dart';
 import 'package:Dcode/ui/home.dart';
+import 'package:Dcode/providers/Userprovider.dart';
+import "package:provider/provider.dart";
 
 class Profile extends StatefulWidget {
   @override
@@ -20,6 +22,8 @@ class _ProfileState extends State<Profile> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _customController;
   Userprofile userProfileData = new Userprofile();
+  //Userprovider userOn = new Userprovider();
+
   createAlertDialog(BuildContext context, String type, String val) {
     _customController = new TextEditingController(text: val);
     return showDialog(
@@ -172,6 +176,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    List<Userprofile> userList = Provider.of<Userprovider>(context).user;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: new AppBar(
@@ -295,8 +300,7 @@ class _ProfileState extends State<Profile> {
                               shape: BoxShape.circle,
                               color: Colors.red,
                               image: DecorationImage(
-                                  image: AssetImage(
-                                      userProfileData.get_profileImage))),
+                                  image: AssetImage("images/profile.jpg"))),
                         ),
                         Container(
                           padding: EdgeInsets.only(
@@ -329,19 +333,17 @@ class _ProfileState extends State<Profile> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   textfield(
-                      hintText: userProfileData.first_name,
+                      hintText: userList[0].first_name,
                       qr: false,
                       type: "FirstName"),
                   textfield(
-                      hintText: userProfileData.last_name,
+                      hintText: userList[0].last_name,
                       qr: false,
                       type: "LastName"),
                   textfield(
-                      hintText: userProfileData.get_mail,
-                      qr: false,
-                      type: "Email"),
+                      hintText: userList[0].get_mail, qr: false, type: "Email"),
                   textfield(
-                      hintText: userProfileData.get_location,
+                      hintText: userList[0].get_location,
                       qr: false,
                       type: "Location"),
                   textfield(

@@ -1,11 +1,22 @@
-class Userprofile {
-  String firstname = "Robert";
-  String lastname = "Lewandowski";
-  String mail = "RL9@dcode.com";
-  String location = "Warsaw, Poland";
-  String profileImage = "images/profile.jpg";
-  String qrImage = "images/qr_code.png";
+import 'package:flutter/material.dart';
 
+class Userprofile {
+  String id;
+  String firstname;
+  String lastname;
+  String email;
+  String location;
+  String profileImage;
+  String qrImage = "images/car.png";
+  Userprofile({
+    @required this.id,
+    @required this.email,
+    @required this.firstname,
+    @required this.lastname,
+    @required this.location,
+    @required this.profileImage,
+    @required this.qrImage,
+  });
   String get first_name {
     return firstname;
   }
@@ -15,7 +26,7 @@ class Userprofile {
   }
 
   String get get_mail {
-    return mail;
+    return email;
   }
 
   String get get_location {

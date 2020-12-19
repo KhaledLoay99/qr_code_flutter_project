@@ -1,45 +1,42 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-class Userprofile {
-  final String id;
-  final String Email;
-  final String FirstName;
-  final String LastName;
-  final String Location;
-  final String profileImage;
-  final String qrImage;
-
-  Userprofile({
-    @required this.id,
-    @required this.Email,
-    @required this.FirstName,
-    @required this.LastName,
-    @required this.Location,
-    @required this.profileImage,
-    @required this.qrImage,
-  });
-}
+import 'package:Dcode/logic/userProfile.dart';
 
 class Userprovider with ChangeNotifier {
+  Userprovider() {
+    fetchdata();
+    //print(user);
+  }
   List<Userprofile> user = [];
   Future<void> fetchdata() async {
     const url = "https://dcode-bd3d1-default-rtdb.firebaseio.com/User.json";
     try {
       final http.Response res = await http.get(url);
+      /* http.post(url,
+        body: json.encode({
+          "Email": "RL9@gmail.com",
+          "FirstName": "Robert",
+          "LastName": "Lewandowski",
+          "FirstName": "Robert",
+          "Location": "Wursaw, Poland",
+          "FirstName": "Robert",
+          "profileImage": "images/profile.jpg",
+          "qrImage": "images/car.png",
+        }));*/
       final extractedData = json.decode(res.body) as Map<String, dynamic>;
       extractedData.forEach((userid, userData) {
         user.add(Userprofile(
           id: userid,
-          Email: userData['Email'],
-          FirstName: userData['FirstName'],
-          LastName: userData['LastName'],
-          Location: userData['Location'],
+          email: userData['Email'],
+          firstname: userData['FirstName'],
+          lastname: userData['LastName'],
+          location: userData['Location'],
           profileImage: userData['profileImage'],
           qrImage: userData['qrImage'],
         ));
       });
+      print(user);
       notifyListeners();
     } catch (error) {
       throw error;
