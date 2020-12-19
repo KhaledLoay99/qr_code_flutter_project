@@ -10,6 +10,7 @@ class Userprovider with ChangeNotifier {
   }
   List<Userprofile> user = [];
   bool prog = true;
+  bool err = false;
   Future<void> fetchdata() async {
     const url = "https://dcode-bd3d1-default-rtdb.firebaseio.com/User.json";
     try {
@@ -40,7 +41,10 @@ class Userprovider with ChangeNotifier {
       prog = false;
       notifyListeners();
     } catch (error) {
-      throw error;
+      prog = false;
+      err = true;
+      notifyListeners();
+      //throw error;
     }
   }
 }

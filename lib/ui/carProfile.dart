@@ -180,120 +180,148 @@ class _carProfileState extends State<carProfile> {
   Widget build(BuildContext context) {
     List<Carprofile> carList = Provider.of<Carprovider>(context).user;
     bool prog = Provider.of<Carprovider>(context).prog;
+    bool err = Provider.of<Carprovider>(context).err;
     //bool ForSale = carList[0].salestatus;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: new AppBar(
-        title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        backgroundColor: const Color.fromRGBO(110, 204, 234, 1.0),
-      ),
-      body: prog
-          ? Center(child: CircularProgressIndicator())
-          : ListView(physics: const NeverScrollableScrollPhysics(), children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Stack(alignment: Alignment.topCenter, children: [
-                    CustomPaint(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                      ),
-                      painter: HeaderCurvedContainer(),
-                    ),
-                    Container(
-                      alignment: Alignment.topCenter,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Text(
-                              "Car Profile",
-                              style: TextStyle(
-                                fontSize: 35,
-                                letterSpacing: 1.5,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          Stack(
-                            children: [
-                              Container(
-                                alignment: Alignment.center,
-                                //padding: EdgeInsets.all(0.0),
-                                width: MediaQuery.of(context).size.width / 2,
-                                height: MediaQuery.of(context).size.width / 2,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.white, width: 5),
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                        image: AssetImage("images/car.png"))),
+    return err
+        ? Scaffold(
+            body: new AlertDialog(
+              title: new Text('Error'),
+              content: new Text('Error while fetching data!'),
+              actions: <Widget>[
+                new FlatButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: new Text('Exit'),
+                ),
+              ],
+            ),
+          )
+        : Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: new AppBar(
+              title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              backgroundColor: const Color.fromRGBO(110, 204, 234, 1.0),
+            ),
+            body: prog
+                ? Center(child: CircularProgressIndicator())
+                : ListView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Stack(alignment: Alignment.topCenter, children: [
+                              CustomPaint(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                ),
+                                painter: HeaderCurvedContainer(),
                               ),
                               Container(
-                                padding: EdgeInsets.only(
-                                    top: 140,
-                                    left: MediaQuery.of(context).size.width /
-                                        2.2),
-                                margin: EdgeInsets.only(bottom: 50),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.black54,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
+                                alignment: Alignment.topCenter,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(20),
+                                      child: Text(
+                                        "Car Profile",
+                                        style: TextStyle(
+                                          fontSize: 35,
+                                          letterSpacing: 1.5,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.center,
+                                          //padding: EdgeInsets.all(0.0),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 5),
+                                              shape: BoxShape.circle,
+                                              color: Colors.white,
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      "images/car.png"))),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              top: 140,
+                                              left: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.2),
+                                          margin: EdgeInsets.only(bottom: 50),
+                                          child: CircleAvatar(
+                                            backgroundColor: Colors.black54,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.edit,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ]),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 150),
-                        height: 550,
-                        width: double.infinity,
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            textfield(
-                                hintText: carList[0].carmodel, type: "CarName"),
-                            textfield(
-                                hintText: "For Sale",
-                                type: "Status",
-                                ForSale: carList[0].salestatus),
-                            textfield(
-                                hintText: carList[0].location,
-                                type: "Location"),
-                            textfield(
-                                hintText: carList[0].phonenumber,
-                                type: "PhoneNumber"),
+                            ]),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(top: 150),
+                                  height: 550,
+                                  width: double.infinity,
+                                  margin: EdgeInsets.symmetric(horizontal: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      textfield(
+                                          hintText: carList[0].carmodel,
+                                          type: "CarName"),
+                                      textfield(
+                                          hintText: "For Sale",
+                                          type: "Status",
+                                          ForSale: carList[0].salestatus),
+                                      textfield(
+                                          hintText: carList[0].location,
+                                          type: "Location"),
+                                      textfield(
+                                          hintText: carList[0].phonenumber,
+                                          type: "PhoneNumber"),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
                         ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ]),
-    );
+                      ]),
+          );
   }
 }
 

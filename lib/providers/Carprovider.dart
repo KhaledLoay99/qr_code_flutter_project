@@ -10,7 +10,7 @@ class Carprovider with ChangeNotifier {
   }
   List<Carprofile> user = [];
   bool prog = true;
-  bool ForSale;
+  bool err = false;
   Future<void> fetchdata() async {
     const url = "https://dcode-bd3d1-default-rtdb.firebaseio.com/Car.json";
     try {
@@ -38,7 +38,10 @@ class Carprovider with ChangeNotifier {
       prog = false;
       notifyListeners();
     } catch (error) {
-      throw error;
+      prog = false;
+      err = true;
+      notifyListeners();
+      //throw error;
     }
   }
 }
