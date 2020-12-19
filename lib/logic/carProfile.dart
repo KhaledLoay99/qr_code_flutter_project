@@ -1,15 +1,24 @@
 class Carprofile {
-  String carmodel = "Nissan Sunny 2020";
-  String salestatus = "For Sale";
-  String location = "Egypt, Cairo, Masr el jadidah";
-  String phonenumber = "01125118300";
-  String carprofileImage = "images/car.png";
-
+  String id;
+  String carmodel;
+  bool salestatus;
+  String location;
+  String phonenumber;
+  String carprofileImage; //= "images/car.png";
+  String owner;
+  Carprofile(
+      {this.id,
+      this.carmodel,
+      this.salestatus,
+      this.location,
+      this.phonenumber,
+      this.carprofileImage,
+      this.owner});
   String get get_carmodel {
     return carmodel;
   }
 
-  String get get_salestatus {
+  bool get get_salestatus {
     return salestatus;
   }
 

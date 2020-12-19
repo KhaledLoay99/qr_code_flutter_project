@@ -10,6 +10,7 @@ import 'package:Dcode/ui/profile.dart';
 import 'package:Dcode/ui/carProfile.dart';
 import 'package:Dcode/providers/Userprovider.dart';
 import "package:provider/provider.dart";
+import 'package:Dcode/providers/Carprovider.dart';
 
 import 'chatlist.dart';
 
@@ -234,7 +235,9 @@ class homeState extends State<home> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => carProfile()),
+                  MaterialPageRoute(
+                      builder: (context) => ChangeNotifierProvider<Carprovider>(
+                          create: (_) => Carprovider(), child: carProfile())),
                 );
               }, // When the child is tapped, make an action
 

@@ -9,6 +9,7 @@ class Userprovider with ChangeNotifier {
     //print(user);
   }
   List<Userprofile> user = [];
+  bool prog = true;
   Future<void> fetchdata() async {
     const url = "https://dcode-bd3d1-default-rtdb.firebaseio.com/User.json";
     try {
@@ -36,7 +37,7 @@ class Userprovider with ChangeNotifier {
           qrImage: userData['qrImage'],
         ));
       });
-      print(user);
+      prog = false;
       notifyListeners();
     } catch (error) {
       throw error;

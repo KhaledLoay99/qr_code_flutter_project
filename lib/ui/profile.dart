@@ -177,6 +177,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     List<Userprofile> userList = Provider.of<Userprovider>(context).user;
+    bool prog = Provider.of<Userprovider>(context).prog;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: new AppBar(
@@ -259,103 +260,110 @@ class _ProfileState extends State<Profile> {
           ),
         ],
       ),
-      body: ListView(children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Stack(alignment: Alignment.topCenter, children: [
-              CustomPaint(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                ),
-                painter: HeaderCurvedContainer(),
-              ),
-              Container(
-                alignment: Alignment.topCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Text(
-                        "Profile",
-                        style: TextStyle(
-                          fontSize: 35,
-                          letterSpacing: 1.5,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
+      body: prog
+          ? Center(child: CircularProgressIndicator())
+          : ListView(children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Stack(alignment: Alignment.topCenter, children: [
+                    CustomPaint(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
                       ),
+                      painter: HeaderCurvedContainer(),
                     ),
-                    Stack(
-                      children: [
-                        Container(
-                          //padding: EdgeInsets.all(0.0),
-                          width: MediaQuery.of(context).size.width / 2,
-                          height: MediaQuery.of(context).size.width / 2,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 5),
-                              shape: BoxShape.circle,
-                              color: Colors.red,
-                              image: DecorationImage(
-                                  image: AssetImage("images/profile.jpg"))),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              top: 140,
-                              left: MediaQuery.of(context).size.width / 2.2),
-                          margin: EdgeInsets.only(bottom: 50),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.black54,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.edit,
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Text(
+                              "Profile",
+                              style: TextStyle(
+                                fontSize: 35,
+                                letterSpacing: 1.5,
                                 color: Colors.white,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
+                          Stack(
+                            children: [
+                              Container(
+                                //padding: EdgeInsets.all(0.0),
+                                width: MediaQuery.of(context).size.width / 2,
+                                height: MediaQuery.of(context).size.width / 2,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.white, width: 5),
+                                    shape: BoxShape.circle,
+                                    color: Colors.red,
+                                    image: DecorationImage(
+                                        image:
+                                            AssetImage("images/profile.jpg"))),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                    top: 140,
+                                    left: MediaQuery.of(context).size.width /
+                                        2.2),
+                                margin: EdgeInsets.only(bottom: 50),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.black54,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]),
+                  Container(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height / 5.5),
+                    height: MediaQuery.of(context).size.height / 1.5,
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        textfield(
+                            hintText: userList[0].first_name,
+                            qr: false,
+                            type: "FirstName"),
+                        textfield(
+                            hintText: userList[0].last_name,
+                            qr: false,
+                            type: "LastName"),
+                        textfield(
+                            hintText: userList[0].get_mail,
+                            qr: false,
+                            type: "Email"),
+                        textfield(
+                            hintText: userList[0].get_location,
+                            qr: false,
+                            type: "Location"),
+                        textfield(
+                          hintText: 'QR Code',
+                          qr: true,
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-            ]),
-            Container(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 5.5),
-              height: MediaQuery.of(context).size.height / 1.5,
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  textfield(
-                      hintText: userList[0].first_name,
-                      qr: false,
-                      type: "FirstName"),
-                  textfield(
-                      hintText: userList[0].last_name,
-                      qr: false,
-                      type: "LastName"),
-                  textfield(
-                      hintText: userList[0].get_mail, qr: false, type: "Email"),
-                  textfield(
-                      hintText: userList[0].get_location,
-                      qr: false,
-                      type: "Location"),
-                  textfield(
-                    hintText: 'QR Code',
-                    qr: true,
-                  ),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
-      ]),
+            ]),
     );
   }
 }

@@ -1,6 +1,11 @@
 import 'package:Dcode/logic/carProfile.dart';
+import 'package:Dcode/ui/chatlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/rendering.dart';
+import 'package:Dcode/providers/Carprovider.dart';
+import "package:provider/provider.dart";
+import 'package:toggle_switch/toggle_switch.dart';
 
 class carProfile extends StatefulWidget {
   @override
@@ -12,7 +17,7 @@ class _carProfileState extends State<carProfile> {
   final TextEditingController _controller = new TextEditingController();
   TextFormField test;
   bool _isEnabled;
-  var _val = false;
+  var val = false;
   static final validCharacters = RegExp(r"^[a-zA-Z]+$");
   static final validNumbers = RegExp('[0-9]');
   final _formKey = GlobalKey<FormState>();
@@ -113,8 +118,7 @@ class _carProfileState extends State<carProfile> {
         });
   }
 
-  Widget textfield({@required String hintText, String type}) {
-    //var val = false;
+  Widget textfield({@required String hintText, String type, bool ForSale}) {
     return Material(
         elevation: 4,
         shadowColor: Colors.grey,
@@ -140,19 +144,26 @@ class _carProfileState extends State<carProfile> {
             ),
             Row(children: [
               Container(
-                padding: EdgeInsets.only(left: 310, top: 10),
+                padding: EdgeInsets.only(
+                    left: type == "Status" ? 180 : 310, top: 10),
                 child: type == "Status"
                     ? Container(
-                        width: 60,
+                        width: 185,
                         height: 30,
-                        child: Switch(
-                          value: _val,
-                          onChanged: (value) {
-                            setState(() {
-                              _val = value;
-                            });
+                        child: ToggleSwitch(
+                          minWidth: 90.0,
+                          initialLabelIndex: ForSale ? 0 : 1,
+                          cornerRadius: 20.0,
+                          activeFgColor: Colors.white,
+                          inactiveBgColor: Colors.grey,
+                          inactiveFgColor: Colors.white,
+                          labels: ['Yes', 'No'],
+                          activeBgColors: [Colors.blue, Colors.pink],
+                          onToggle: (index) {
+                            print('switched to: $index');
                           },
-                        ))
+                        ),
+                      )
                     : IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () {
@@ -167,6 +178,9 @@ class _carProfileState extends State<carProfile> {
 
   @override
   Widget build(BuildContext context) {
+    List<Carprofile> carList = Provider.of<Carprovider>(context).user;
+    bool prog = Provider.of<Carprovider>(context).prog;
+    //bool ForSale = carList[0].salestatus;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: new AppBar(
@@ -179,103 +193,106 @@ class _carProfileState extends State<carProfile> {
         ),
         backgroundColor: const Color.fromRGBO(110, 204, 234, 1.0),
       ),
-      body: ListView(physics: const NeverScrollableScrollPhysics(), children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Stack(alignment: Alignment.topCenter, children: [
-              CustomPaint(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                ),
-                painter: HeaderCurvedContainer(),
-              ),
-              Container(
-                alignment: Alignment.topCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Text(
-                        "Car Profile",
-                        style: TextStyle(
-                          fontSize: 35,
-                          letterSpacing: 1.5,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
+      body: prog
+          ? Center(child: CircularProgressIndicator())
+          : ListView(physics: const NeverScrollableScrollPhysics(), children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Stack(alignment: Alignment.topCenter, children: [
+                    CustomPaint(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
                       ),
+                      painter: HeaderCurvedContainer(),
                     ),
-                    Stack(
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          //padding: EdgeInsets.all(0.0),
-                          width: MediaQuery.of(context).size.width / 2,
-                          height: MediaQuery.of(context).size.width / 2,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 5),
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      carprofileData.get_carprofileImage))),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              top: 140,
-                              left: MediaQuery.of(context).size.width / 2.2),
-                          margin: EdgeInsets.only(bottom: 50),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.black54,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.edit,
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Text(
+                              "Car Profile",
+                              style: TextStyle(
+                                fontSize: 35,
+                                letterSpacing: 1.5,
                                 color: Colors.white,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Stack(
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                //padding: EdgeInsets.all(0.0),
+                                width: MediaQuery.of(context).size.width / 2,
+                                height: MediaQuery.of(context).size.width / 2,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.white, width: 5),
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                        image: AssetImage("images/car.png"))),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                    top: 140,
+                                    left: MediaQuery.of(context).size.width /
+                                        2.2),
+                                margin: EdgeInsets.only(bottom: 50),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.black54,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
-            ]),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: 150),
-                  height: 550,
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  ]),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      textfield(
-                          hintText: carprofileData.get_carmodel,
-                          type: "CarName"),
-                      textfield(
-                          hintText: carprofileData.get_salestatus,
-                          type: "Status"),
-                      textfield(
-                          hintText: carprofileData.get_location,
-                          type: "Location"),
-                      textfield(
-                          hintText: carprofileData.get_phonenumber,
-                          type: "PhoneNumber"),
+                      Container(
+                        padding: EdgeInsets.only(top: 150),
+                        height: 550,
+                        width: double.infinity,
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            textfield(
+                                hintText: carList[0].carmodel, type: "CarName"),
+                            textfield(
+                                hintText: "For Sale",
+                                type: "Status",
+                                ForSale: carList[0].salestatus),
+                            textfield(
+                                hintText: carList[0].location,
+                                type: "Location"),
+                            textfield(
+                                hintText: carList[0].phonenumber,
+                                type: "PhoneNumber"),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ]),
+                ],
+              ),
+            ]),
     );
   }
 }
