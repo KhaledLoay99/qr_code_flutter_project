@@ -11,6 +11,23 @@ class Userprovider with ChangeNotifier {
   List<Userprofile> user = [];
   bool prog = true;
   bool err = false;
+  Future<void> updateData(String id) async {
+    const url = "https://dcode-bd3d1-default-rtdb.firebaseio.com/User.json";
+    final userIndex = user.indexWhere((element) => element.id == id);
+    await http.patch(url,
+        body: json.encode({
+          "Email": "RL9@gmail.com",
+          "FirstName": "Robert",
+          "LastName": "Lewandowski",
+          "FirstName": "Robert",
+          "Location": "Wursaw, Poland",
+          "FirstName": "Robert",
+          "profileImage": "images/profile.jpg",
+          "qrImage": "images/car.png",
+        }));
+    notifyListeners();
+  }
+
   Future<void> fetchdata() async {
     const url = "https://dcode-bd3d1-default-rtdb.firebaseio.com/User.json";
     try {
