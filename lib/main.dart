@@ -1,4 +1,3 @@
-import 'package:Dcode/ui/carProfile.dart';
 import 'package:Dcode/ui/intro.dart';
 import 'package:flutter/material.dart';
 
