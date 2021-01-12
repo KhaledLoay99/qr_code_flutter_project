@@ -3,6 +3,7 @@ import 'package:Dcode/ui/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:Dcode/ui/home.dart';
 import 'package:Dcode/ui/profile.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class scanQr extends StatefulWidget {
   @override
@@ -15,6 +16,16 @@ class scanQr extends StatefulWidget {
 class scanQrState extends State<scanQr> {
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
+  String _counter, _value = "";
+
+  Future _incrementCounter() async {
+    _counter = await FlutterBarcodeScanner.scanBarcode(
+        "#004297", "Cancel", true, ScanMode.DEFAULT);
+
+    setState(() {
+      _value = _counter;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,15 +121,20 @@ class scanQrState extends State<scanQr> {
                     fontSize: 15,
                     color: Colors.blue),
               ),
+              Text(
+                "Scanned:" + _value,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Colors.blue),
+              ),
               new Padding(padding: new EdgeInsets.all(20.0)),
             ],
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
+        onPressed: _incrementCounter,
         child: Icon(Icons.camera_alt),
         backgroundColor: Colors.lightBlue,
       ),
