@@ -31,42 +31,38 @@ class Userprovider with ChangeNotifier {
   }
 
   Future<void> fetchdata() async {
-    //const url = "https://dcode-bd3d1-default-rtdb.firebaseio.com/User.json";
     await Firebase.initializeApp();
-    var snaps = FirebaseFirestore.instance.collection('user');
+    //var snaps = FirebaseFirestore.instance.collection('user');
     try {
-      /*snaps.getDocuments().then((QuerySnapshot snapshot) {
-        snapshot.documents.forEach((DocumentSnapshot doc) {
-          print("Hello");
-          print(doc.data);
-        });
-        prog = false;
-        notifyL*/
+      var snaps = FirebaseFirestore.instance.collection('user');
       snaps.snapshots().listen((QuerySnapshot querySnapshot) {
-        print('Hello');
-        querySnapshot.documents.forEach((document) {
-          user.add(Userprofile(
-            id: document.documentID,
-            email: document.data()['username'],
-            firstname: document.data()['firstname'],
-            lastname: document.data()['lastname'],
-            location: document.data()['location'],
-            profileImage: document.data()['profileImage'],
-            qrImage: document.data()['qrImage'],
-          ));
-
-          document.data();
-        });
-        snaps.get().then((value) {
+        if (querySnapshot.size > 0) {
+          querySnapshot.documents.forEach((document) {
+            print(document.data());
+            user.add(Userprofile(
+              id: document.documentID,
+              email: document.data()['username'],
+              firstname: document.data()['firstname'],
+              lastname: document.data()['lastname'],
+              location: document.data()['location'],
+              profileImage: document.data()['profileImage'],
+              qrImage: document.data()['qrImage'],
+            ));
+          });
+          snaps.get().then((value) {
+            prog = false;
+            notifyListeners();
+          });
+        } else {
           prog = false;
+          err = true;
           notifyListeners();
-        });
+        }
       });
     } catch (error) {
       prog = false;
       err = true;
       notifyListeners();
-      //throw error;
     }
   }
 }
