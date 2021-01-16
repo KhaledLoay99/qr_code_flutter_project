@@ -24,13 +24,17 @@ class _ProfileState extends State<Profile> {
   Userprofile userProfileData = new Userprofile();
   //Userprovider userOn = new Userprovider();
 
-  createAlertDialog(BuildContext context, String type, String val) {
+  createAlertDialog(BuildContext context, String type, String val, var update) {
     _customController = new TextEditingController(text: val);
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Your $type"),
+            title: type == 'firstname'
+                ? Text("Your first name")
+                : type == 'lastname'
+                    ? Text("Your last name")
+                    : Text("Your $type"),
             content: Container(
               height: 125,
               width: 250,
@@ -40,7 +44,7 @@ class _ProfileState extends State<Profile> {
                   children: [
                     TextFormField(
                       validator: (value) {
-                        if (type == "FirstName") {
+                        if (type == "firstname") {
                           if (value.isEmpty) {
                             return 'Please Enter First Name';
                           }
@@ -55,7 +59,7 @@ class _ProfileState extends State<Profile> {
                           }
                           return null;
                         }
-                        if (type == "LastName") {
+                        if (type == "lastname") {
                           if (value.isEmpty) {
                             return 'Please Enter Last Name';
                           }
@@ -71,7 +75,7 @@ class _ProfileState extends State<Profile> {
                           }
                           return null;
                         }
-                        if (type == "Email") {
+                        if (type == "username") {
                           if (value.isEmpty) {
                             return 'Please Enter Username';
                           }
@@ -93,9 +97,21 @@ class _ProfileState extends State<Profile> {
                       elevation: 5.0,
                       child: Text('Submit'),
                       onPressed: () {
+                        //print(_customController.text);
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, Go to Home screen.
+                          update.updateData(
+                              "fWjVRpN5z0JeOyPJrxbK",
+                              type == 'firstname'
+                                  ? {'firstname': _customController.text}
+                                  : type == 'lastname'
+                                      ? {'lastname': _customController.text}
+                                      : type == 'username'
+                                          ? {'username': _customController.text}
+                                          : {
+                                              'location': _customController.text
+                                            });
                         }
+                        Navigator.pop(context);
                       },
                     )
                   ],
@@ -126,7 +142,8 @@ class _ProfileState extends State<Profile> {
         });
   }
 
-  Widget textfield({@required String hintText, bool qr, String type}) {
+  Widget textfield(
+      {@required String hintText, bool qr, String type, var update}) {
     return Material(
         elevation: 4,
         shadowColor: Colors.grey,
@@ -165,7 +182,7 @@ class _ProfileState extends State<Profile> {
                     : IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () {
-                          createAlertDialog(context, type, hintText);
+                          createAlertDialog(context, type, hintText, update);
                         },
                       ),
               )
@@ -176,7 +193,11 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    List<Userprofile> userList = Provider.of<Userprovider>(context).user;
+    List<Userprofile> userList =
+        Provider.of<Userprovider>(context, listen: true).user;
+    var update = Provider.of<Userprovider>(context);
+    /*Provider.of<Userprovider>(context)
+        .updateData("fWjVRpN5z0JeOyPJrxbK", {'firstname': "ISLAM"});*/
     bool prog = Provider.of<Userprovider>(context).prog;
     bool err = Provider.of<Userprovider>(context).err;
     return err
@@ -359,19 +380,23 @@ class _ProfileState extends State<Profile> {
                               textfield(
                                   hintText: userList[0].first_name,
                                   qr: false,
-                                  type: "FirstName"),
+                                  type: "firstname",
+                                  update: update),
                               textfield(
                                   hintText: userList[0].last_name,
                                   qr: false,
-                                  type: "LastName"),
+                                  type: "lastname",
+                                  update: update),
                               textfield(
                                   hintText: userList[0].get_mail,
                                   qr: false,
-                                  type: "Email"),
+                                  type: "username",
+                                  update: update),
                               textfield(
                                   hintText: userList[0].get_location,
                                   qr: false,
-                                  type: "Location"),
+                                  type: "location",
+                                  update: update),
                               textfield(
                                 hintText: 'QR Code',
                                 qr: true,

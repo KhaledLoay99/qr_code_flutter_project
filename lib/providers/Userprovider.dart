@@ -1,4 +1,6 @@
+import 'dart:collection';
 import 'dart:convert';
+import 'package:Dcode/ui/chatlist.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,20 +15,26 @@ class Userprovider with ChangeNotifier {
   List<Userprofile> user = [];
   bool prog = true;
   bool err = false;
-  Future<void> updateData(String id) async {
-    const url = "https://dcode-bd3d1-default-rtdb.firebaseio.com/User.json";
+  Future<void> updateData(String id, val) async {
     final userIndex = user.indexWhere((element) => element.id == id);
-    await http.patch(url,
-        body: json.encode({
-          "Email": "RL9@gmail.com",
-          "FirstName": "Robert",
-          "LastName": "Lewandowski",
-          "FirstName": "Robert",
-          "Location": "Wursaw, Poland",
-          "FirstName": "Robert",
-          "profileImage": "images/profile.jpg",
-          "qrImage": "images/car.png",
-        }));
+    var snaps = FirebaseFirestore.instance
+        .collection('user')
+        .document(id)
+        .updateData(val)
+        .catchError((e) {
+      print(e);
+    });
+
+    var nMap = Map<String, dynamic>.from(val);
+    print(nMap);
+    for (final key in nMap.keys) {
+      if (key == 'firstname') user[userIndex].firstname = nMap[key];
+      if (key == 'lastname') user[userIndex].lastname = nMap[key];
+      if (key == 'location') user[userIndex].location = nMap[key];
+      if (key == 'profileImage') user[userIndex].profileImage = nMap[key];
+      if (key == 'username') user[userIndex].email = nMap[key];
+      // prints entries like "AED,3.672940"
+    }
     notifyListeners();
   }
 
@@ -38,7 +46,7 @@ class Userprovider with ChangeNotifier {
       snaps.snapshots().listen((QuerySnapshot querySnapshot) {
         if (querySnapshot.size > 0) {
           querySnapshot.documents.forEach((document) {
-            print(document.data());
+            //print(document.data());
             user.add(Userprofile(
               id: document.documentID,
               email: document.data()['username'],
