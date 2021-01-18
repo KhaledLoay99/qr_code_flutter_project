@@ -6,6 +6,10 @@ import 'package:Dcode/ui/notification.dart';
 import 'package:Dcode/ui/home.dart';
 import 'package:Dcode/providers/Userprovider.dart';
 import "package:provider/provider.dart";
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -22,7 +26,28 @@ class _ProfileState extends State<Profile> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _customController;
   Userprofile userProfileData = new Userprofile();
-  //Userprovider userOn = new Userprovider();
+  List<Userprofile> userList;
+  bool prog;
+  bool err;
+  var update;
+  String _imageUrl;
+  File uImage;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    userList = Provider.of<Userprovider>(this.context, listen: true).user;
+    update = Provider.of<Userprovider>(this.context);
+    prog = Provider.of<Userprovider>(this.context).prog;
+    err = Provider.of<Userprovider>(this.context).err;
+    if (prog == false) {
+      var ref = FirebaseStorage.instance.ref().child(userList[0].profileImage);
+      ref.getDownloadURL().then((loc) {
+        setState(() {
+          _imageUrl = loc;
+        });
+      });
+    }
+  }
 
   createAlertDialog(BuildContext context, String type, String val, var update) {
     _customController = new TextEditingController(text: val);
@@ -124,7 +149,7 @@ class _ProfileState extends State<Profile> {
 
   show_Qr() {
     return showDialog(
-        context: context,
+        context: this.context,
         builder: (context) {
           return AlertDialog(
             title: Center(
@@ -182,7 +207,8 @@ class _ProfileState extends State<Profile> {
                     : IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () {
-                          createAlertDialog(context, type, hintText, update);
+                          createAlertDialog(
+                              this.context, type, hintText, update);
                         },
                       ),
               )
@@ -193,13 +219,18 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    List<Userprofile> userList =
-        Provider.of<Userprovider>(context, listen: true).user;
-    var update = Provider.of<Userprovider>(context);
-    /*Provider.of<Userprovider>(context)
-        .updateData("fWjVRpN5z0JeOyPJrxbK", {'firstname': "ISLAM"});*/
-    bool prog = Provider.of<Userprovider>(context).prog;
-    bool err = Provider.of<Userprovider>(context).err;
+    Future getImage() async {
+      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        uImage = image;
+      });
+      String filename = basename(uImage.path);
+      var firebaseStorageRef = FirebaseStorage.instance.ref().child(filename);
+      var uploadTask = firebaseStorageRef.putFile(uImage).then((loc) {
+        update.updateData("fWjVRpN5z0JeOyPJrxbK", {'profileImage': filename});
+      });
+    }
+
     return err
         ? Scaffold(
             body: new AlertDialog(
@@ -330,7 +361,6 @@ class _ProfileState extends State<Profile> {
                                 Stack(
                                   children: [
                                     Container(
-                                      //padding: EdgeInsets.all(0.0),
                                       width:
                                           MediaQuery.of(context).size.width / 2,
                                       height:
@@ -339,10 +369,14 @@ class _ProfileState extends State<Profile> {
                                           border: Border.all(
                                               color: Colors.white, width: 5),
                                           shape: BoxShape.circle,
-                                          color: Colors.red,
+                                          color: Colors.white,
                                           image: DecorationImage(
-                                              image: AssetImage(
-                                                  "images/profile.jpg"))),
+                                              image: _imageUrl != null
+                                                  ? uImage == null
+                                                      ? NetworkImage(_imageUrl)
+                                                      : FileImage(uImage)
+                                                  : AssetImage(
+                                                      "images/user.png"))),
                                     ),
                                     Container(
                                       padding: EdgeInsets.only(
@@ -359,6 +393,9 @@ class _ProfileState extends State<Profile> {
                                             Icons.edit,
                                             color: Colors.white,
                                           ),
+                                          onPressed: () {
+                                            getImage();
+                                          },
                                         ),
                                       ),
                                     ),

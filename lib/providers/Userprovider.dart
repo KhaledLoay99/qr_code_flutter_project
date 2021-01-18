@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:Dcode/logic/userProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Userprovider with ChangeNotifier {
   Userprovider() {
@@ -15,6 +16,7 @@ class Userprovider with ChangeNotifier {
   List<Userprofile> user = [];
   bool prog = true;
   bool err = false;
+  String imageUrl;
   Future<void> updateData(String id, val) async {
     final userIndex = user.indexWhere((element) => element.id == id);
     var snaps = FirebaseFirestore.instance
@@ -47,6 +49,7 @@ class Userprovider with ChangeNotifier {
         if (querySnapshot.size > 0) {
           querySnapshot.documents.forEach((document) {
             //print(document.data());
+
             user.add(Userprofile(
               id: document.documentID,
               email: document.data()['username'],

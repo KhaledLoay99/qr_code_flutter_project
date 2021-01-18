@@ -7,7 +7,7 @@ class Userprofile {
   String email;
   String location;
   String profileImage;
-  String qrImage = "images/car.png";
+  String qrImage;
   Userprofile({
     @required this.id,
     @required this.email,
