@@ -28,7 +28,7 @@ class Settings extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Colors.white,
                     image: DecorationImage(
-                        image: AssetImage(userprofileData.get_profileImage))),
+                        image: AssetImage('images/profile.jpg'))),
               ),
               Container(
                 width: MediaQuery.of(context).size.width / 2.4,
@@ -39,9 +39,7 @@ class Settings extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 15.0, top: 9.0),
                       child: Text(
-                        userprofileData.first_name +
-                            " " +
-                            userprofileData.last_name,
+                        "khaled" + " " + "Loay",
                         style: TextStyle(
                             letterSpacing: 2,
                             color: Colors.black54,
@@ -52,7 +50,8 @@ class Settings extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 25.0),
                       child: Text(
-                        userprofileData.get_mail,
+                        //userprofileData.get_mail,
+                        "khaled@dcode.com",
                         style: TextStyle(
                           letterSpacing: 2,
                           color: Colors.black54,
