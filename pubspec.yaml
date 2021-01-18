@@ -18,6 +18,9 @@ environment:
 
 dependencies:
   flutter_barcode_scanner:
+  gallery_saver:
+  qr_flutter:
+  screenshot:
   toggle_switch: "^0.1.8"
   flutter_spinkit:
   shared_preferences: ^0.5.12+4
