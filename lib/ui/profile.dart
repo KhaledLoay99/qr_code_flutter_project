@@ -5,6 +5,7 @@ import 'package:Dcode/ui/chatlist.dart';
 import 'package:Dcode/ui/notification.dart';
 import 'package:Dcode/ui/home.dart';
 import 'package:Dcode/providers/Userprovider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import "package:provider/provider.dart";
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -191,6 +192,13 @@ class _ProfileState extends State<Profile> {
                                 screenshotController
                                     .capture(delay: Duration(milliseconds: 10))
                                     .then((File image) async {
+                                  Map<Permission, PermissionStatus> statuses =
+                                      await [
+                                    Permission.storage,
+                                  ].request();
+                                  if (statuses[Permission.storage].isDenied) {
+                                    return Text("NEED A Permission");
+                                  }
                                   if (image != null && image.path != null) {
                                     setState(() {
                                       _loading = true;
