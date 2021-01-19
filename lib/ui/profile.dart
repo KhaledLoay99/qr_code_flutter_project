@@ -10,6 +10,10 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -32,6 +36,12 @@ class _ProfileState extends State<Profile> {
   var update;
   String _imageUrl;
   File uImage;
+  ScreenshotController screenshotController = ScreenshotController();
+  File _imageFile;
+  bool _loading = false;
+  bool save_done = true;
+  bool save_done2 = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -151,19 +161,76 @@ class _ProfileState extends State<Profile> {
     return showDialog(
         context: this.context,
         builder: (context) {
-          return AlertDialog(
-            title: Center(
-              child: Text("Your Qr Code"),
-            ),
-            content: Container(
-              height: 125,
-              width: 250,
-              child: Image.asset(
-                userProfileData.get_qrImage,
-                width: 70,
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              title: Center(
+                child: Text("Your Qr Code"),
               ),
-            ),
-          );
+              content: Container(
+                height: 350,
+                width: 250,
+                child: Column(
+                  children: [
+                    Screenshot(
+                      controller: screenshotController,
+                      child: Container(
+                        color: Colors.white,
+                        child: QrImage(
+                          data: userList[0].id,
+                          version: QrVersions.auto,
+                          size: 200.0,
+                        ),
+                      ),
+                    ),
+                    !_loading
+                        ? Visibility(
+                            visible: save_done,
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              onPressed: () {
+                                screenshotController
+                                    .capture(delay: Duration(milliseconds: 10))
+                                    .then((File image) async {
+                                  if (image != null && image.path != null) {
+                                    setState(() {
+                                      _loading = true;
+                                    });
+                                    GallerySaver.saveImage(image.path)
+                                        .then((value) => setState(() {
+                                              _loading = false;
+
+                                              save_done = false;
+                                              save_done2 = true;
+                                            }));
+                                  }
+                                }).catchError((onError) {
+                                  print(onError);
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(Icons.arrow_circle_down),
+                                  Text("Download Your Qr Code"),
+                                ],
+                              ),
+                            ))
+                        : CircularProgressIndicator(),
+                    Visibility(
+                        visible: save_done2,
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        )),
+                    Visibility(
+                      visible: save_done2,
+                      child: Text("Saved To Gallery"),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
         });
   }
 
