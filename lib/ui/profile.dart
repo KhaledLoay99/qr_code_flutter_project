@@ -13,7 +13,6 @@ import 'package:path/path.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class Profile extends StatefulWidget {
   @override
