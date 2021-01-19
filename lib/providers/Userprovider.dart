@@ -16,7 +16,6 @@ class Userprovider with ChangeNotifier {
   List<Userprofile> user = [];
   bool prog = true;
   bool err = false;
-  String imageUrl;
   Future<void> updateData(String id, val) async {
     final userIndex = user.indexWhere((element) => element.id == id);
     var snaps = FirebaseFirestore.instance
@@ -48,8 +47,6 @@ class Userprovider with ChangeNotifier {
       snaps.snapshots().listen((QuerySnapshot querySnapshot) {
         if (querySnapshot.size > 0) {
           querySnapshot.documents.forEach((document) {
-            //print(document.data());
-
             user.add(Userprofile(
               id: document.documentID,
               email: document.data()['username'],

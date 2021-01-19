@@ -6,6 +6,11 @@ import 'package:flutter/rendering.dart';
 import 'package:Dcode/providers/Carprovider.dart';
 import "package:provider/provider.dart";
 import 'package:toggle_switch/toggle_switch.dart';
+import "package:provider/provider.dart";
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
 
 class carProfile extends StatefulWidget {
   @override
@@ -18,11 +23,41 @@ class _carProfileState extends State<carProfile> {
   TextFormField test;
   bool _isEnabled;
   var val = false;
+  List carList;
   static final validCharacters = RegExp(r"^[a-zA-Z]+$");
   static final validNumbers = RegExp('[0-9]');
   final _formKey = GlobalKey<FormState>();
   TextEditingController _customController;
-  Carprofile carprofileData = new Carprofile();
+  bool prog = true;
+  bool err;
+  String _imageUrl;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (prog == false) {
+      print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+      var ref =
+          FirebaseStorage.instance.ref().child(carList[0].carprofileImage);
+      ref.getDownloadURL().then((loc) {
+        setState(() {
+          _imageUrl = loc;
+        });
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    Provider.of<Carprovider>(this.context, listen: false)
+        .fetchdata()
+        .then((value) {
+      prog = false;
+    });
+
+    //forSale = carList[0].salestatus;
+    super.initState();
+  }
+
   createAlertDialog(BuildContext context, String type, String val) {
     _customController = new TextEditingController(text: val);
     return showDialog(
@@ -83,21 +118,6 @@ class _carProfileState extends State<carProfile> {
                           }
                           return null;
                         }
-                        if (type == "PhoneNumber") {
-                          if (value.isEmpty) {
-                            return 'Please Enter your Phone Number';
-                          }
-                          if (value.length > 35) {
-                            return 'Phone Number is too long';
-                          }
-                          if (value.length < 11) {
-                            return 'Phone Number is too short';
-                          }
-                          if (!new RegExp(r'[0-9]$').hasMatch(value)) {
-                            return 'Phone Number should be in numbers only';
-                          }
-                          return null;
-                        }
                       },
                       controller: _customController,
                     ),
@@ -118,7 +138,10 @@ class _carProfileState extends State<carProfile> {
         });
   }
 
-  Widget textfield({@required String hintText, String type, bool ForSale}) {
+  Widget textfield({
+    @required String hintText,
+    String type,
+  }) {
     return Material(
         elevation: 4,
         shadowColor: Colors.grey,
@@ -152,7 +175,7 @@ class _carProfileState extends State<carProfile> {
                         height: 30,
                         child: ToggleSwitch(
                           minWidth: 90.0,
-                          initialLabelIndex: ForSale ? 0 : 1,
+                          initialLabelIndex: carList[0].salestatus ? 0 : 1,
                           cornerRadius: 20.0,
                           activeFgColor: Colors.white,
                           inactiveBgColor: Colors.grey,
@@ -160,6 +183,9 @@ class _carProfileState extends State<carProfile> {
                           labels: ['Yes', 'No'],
                           activeBgColors: [Colors.blue, Colors.pink],
                           onToggle: (index) {
+                            setState(() {
+                              carList[0].salestatus = !carList[0].salestatus;
+                            });
                             print('switched to: $index');
                           },
                         ),
@@ -167,7 +193,7 @@ class _carProfileState extends State<carProfile> {
                     : IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () {
-                          createAlertDialog(context, type, hintText);
+                          createAlertDialog(this.context, type, hintText);
                         },
                       ),
               )
@@ -178,10 +204,9 @@ class _carProfileState extends State<carProfile> {
 
   @override
   Widget build(BuildContext context) {
-    List<Carprofile> carList = Provider.of<Carprovider>(context).user;
-    bool prog = Provider.of<Carprovider>(context).prog;
-    bool err = Provider.of<Carprovider>(context).err;
-    //bool ForSale = carList[0].salestatus;
+    carList = Provider.of<Carprovider>(this.context, listen: true).car;
+    err = Provider.of<Carprovider>(this.context, listen: true).err;
+
     return err
         ? Scaffold(
             body: new AlertDialog(
@@ -261,8 +286,10 @@ class _carProfileState extends State<carProfile> {
                                               shape: BoxShape.circle,
                                               color: Colors.white,
                                               image: DecorationImage(
-                                                  image: AssetImage(
-                                                      "images/car.png"))),
+                                                  image: _imageUrl != null
+                                                      ? NetworkImage(_imageUrl)
+                                                      : AssetImage(
+                                                          "images/istockphoto-1144092062-612x612.jpg"))),
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(
@@ -304,15 +331,10 @@ class _carProfileState extends State<carProfile> {
                                           hintText: carList[0].carmodel,
                                           type: "CarName"),
                                       textfield(
-                                          hintText: "For Sale",
-                                          type: "Status",
-                                          ForSale: carList[0].salestatus),
+                                          hintText: "For Sale", type: "Status"),
                                       textfield(
                                           hintText: carList[0].location,
                                           type: "Location"),
-                                      textfield(
-                                          hintText: carList[0].phonenumber,
-                                          type: "PhoneNumber"),
                                     ],
                                   ),
                                 )
