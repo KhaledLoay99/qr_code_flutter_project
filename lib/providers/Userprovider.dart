@@ -34,7 +34,6 @@ class Userprovider with ChangeNotifier {
       if (key == 'location') user[userIndex].location = nMap[key];
       if (key == 'profileImage') user[userIndex].profileImage = nMap[key];
       if (key == 'username') user[userIndex].email = nMap[key];
-      // prints entries like "AED,3.672940"
     }
     notifyListeners();
   }

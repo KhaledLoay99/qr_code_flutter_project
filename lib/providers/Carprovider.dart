@@ -12,15 +12,36 @@ class Carprovider with ChangeNotifier {
   List<Carprofile> car = [];
   bool prog = true;
   bool err = false;
+  Future<void> updateData(String id, val) async {
+    final userIndex = car.indexWhere((element) => element.id == id);
+    var snaps = FirebaseFirestore.instance
+        .collection('car')
+        .document(id)
+        .updateData(val)
+        .catchError((e) {
+      print(e);
+    });
+
+    var nMap = Map<String, dynamic>.from(val);
+    print(nMap);
+    for (final key in nMap.keys) {
+      if (key == 'carModel') car[userIndex].carmodel = nMap[key];
+      if (key == 'SaleStatus') car[userIndex].salestatus = nMap[key];
+      if (key == 'Location') car[userIndex].location = nMap[key];
+      if (key == 'CarProfileImage') car[userIndex].carprofileImage = nMap[key];
+    }
+    notifyListeners();
+  }
+
   Future<void> fetchdata() async {
     await Firebase.initializeApp();
-    //var snaps = FirebaseFirestore.instance.collection('user');
     try {
       var snaps = FirebaseFirestore.instance.collection('car');
       snaps.snapshots().listen((QuerySnapshot querySnapshot) {
         if (querySnapshot.size > 0) {
           querySnapshot.documents.forEach((document) async {
             car.add(Carprofile(
+              id: await document.documentID,
               userid: await document.data()['userid'],
               location: await document.data()['Location'],
               salestatus: await document.data()['SaleStatus'],

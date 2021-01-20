@@ -30,12 +30,13 @@ class _carProfileState extends State<carProfile> {
   TextEditingController _customController;
   bool prog = true;
   bool err;
+  var update;
+  File uImage;
   String _imageUrl;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (prog == false) {
-      print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
       var ref =
           FirebaseStorage.instance.ref().child(carList[0].carprofileImage);
       ref.getDownloadURL().then((loc) {
@@ -53,7 +54,7 @@ class _carProfileState extends State<carProfile> {
         .then((value) {
       prog = false;
     });
-
+    update = Provider.of<Carprovider>(this.context, listen: false);
     //forSale = carList[0].salestatus;
     super.initState();
   }
@@ -64,7 +65,9 @@ class _carProfileState extends State<carProfile> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Your $type"),
+            title: type == 'carModel'
+                ? Text("Your car Model")
+                : Text("Your $type"),
             content: Container(
               height: 125,
               width: 250,
@@ -74,7 +77,7 @@ class _carProfileState extends State<carProfile> {
                   children: [
                     TextFormField(
                       validator: (value) {
-                        if (type == "CarName") {
+                        if (type == "carModel") {
                           if (value.isEmpty) {
                             return 'Please Enter Car Name';
                           }
@@ -87,22 +90,6 @@ class _carProfileState extends State<carProfile> {
                           if (new RegExp(r'[ !@#$%^&*(),.?":{}|<>]$')
                               .hasMatch(value)) {
                             return "Car Name shouldn't contain any symbols";
-                          }
-                          return null;
-                        }
-                        if (type == "Status") {
-                          if (value.isEmpty) {
-                            return 'Please Enter Status';
-                          }
-                          if (value.length < 3) {
-                            return 'Status is too short';
-                          }
-
-                          if (value.length > 18) {
-                            return 'Status is too long';
-                          }
-                          if (!validCharacters.hasMatch(value)) {
-                            return 'Status should be alphabets only';
                           }
                           return null;
                         }
@@ -126,8 +113,15 @@ class _carProfileState extends State<carProfile> {
                       child: Text('Submit'),
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, Go to Home screen.
+                          update.updateData(
+                              "QBxfRauy65voja7R63jP",
+                              type == 'carModel'
+                                  ? {'carModel': _customController.text}
+                                  : type == 'SaleStatus'
+                                      ? {'SaleStatus': _customController.text}
+                                      : {'Location': _customController.text});
                         }
+                        Navigator.pop(context);
                       },
                     )
                   ],
@@ -168,8 +162,8 @@ class _carProfileState extends State<carProfile> {
             Row(children: [
               Container(
                 padding: EdgeInsets.only(
-                    left: type == "Status" ? 180 : 310, top: 10),
-                child: type == "Status"
+                    left: type == "SaleStatus" ? 180 : 310, top: 10),
+                child: type == "SaleStatus"
                     ? Container(
                         width: 185,
                         height: 30,
@@ -186,6 +180,8 @@ class _carProfileState extends State<carProfile> {
                             setState(() {
                               carList[0].salestatus = !carList[0].salestatus;
                             });
+                            update.updateData("QBxfRauy65voja7R63jP",
+                                {'SaleStatus': carList[0].salestatus});
                             print('switched to: $index');
                           },
                         ),
@@ -206,6 +202,18 @@ class _carProfileState extends State<carProfile> {
   Widget build(BuildContext context) {
     carList = Provider.of<Carprovider>(this.context, listen: true).car;
     err = Provider.of<Carprovider>(this.context, listen: true).err;
+    Future getImage() async {
+      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        uImage = image;
+      });
+      String filename = basename(uImage.path);
+      var firebaseStorageRef = FirebaseStorage.instance.ref().child(filename);
+      var uploadTask = firebaseStorageRef.putFile(uImage).then((loc) {
+        update
+            .updateData("QBxfRauy65voja7R63jP", {'CarProfileImage': filename});
+      });
+    }
 
     return err
         ? Scaffold(
@@ -287,7 +295,10 @@ class _carProfileState extends State<carProfile> {
                                               color: Colors.white,
                                               image: DecorationImage(
                                                   image: _imageUrl != null
-                                                      ? NetworkImage(_imageUrl)
+                                                      ? uImage == null
+                                                          ? NetworkImage(
+                                                              _imageUrl)
+                                                          : FileImage(uImage)
                                                       : AssetImage(
                                                           "images/istockphoto-1144092062-612x612.jpg"))),
                                         ),
@@ -302,6 +313,9 @@ class _carProfileState extends State<carProfile> {
                                           child: CircleAvatar(
                                             backgroundColor: Colors.black54,
                                             child: IconButton(
+                                              onPressed: () {
+                                                getImage();
+                                              },
                                               icon: Icon(
                                                 Icons.edit,
                                                 color: Colors.white,
@@ -329,9 +343,10 @@ class _carProfileState extends State<carProfile> {
                                     children: [
                                       textfield(
                                           hintText: carList[0].carmodel,
-                                          type: "CarName"),
+                                          type: "carModel"),
                                       textfield(
-                                          hintText: "For Sale", type: "Status"),
+                                          hintText: "For Sale",
+                                          type: "SaleStatus"),
                                       textfield(
                                           hintText: carList[0].location,
                                           type: "Location"),
