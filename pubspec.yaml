@@ -22,6 +22,7 @@ dependencies:
   qr_flutter:
   screenshot:
   permission_handler: ^5.0.1+1
+  animated_splash_screen: ^1.0.1+2
   toggle_switch: "^0.1.8"
   flutter_spinkit:
   shared_preferences: ^0.5.12+4
@@ -42,6 +43,7 @@ dependencies:
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
+  flutter_native_splash: ^0.2.7
   flutter_test:
     sdk: flutter
 
@@ -79,6 +81,7 @@ flutter:
     - images/qrr.jpg
     - images/qr_code.png
     - images/istockphoto-1144092062-612x612.jpg
+    - images/logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -105,3 +108,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_native_splash:
+  color: "#6eccea"  # required parameter
+  image: images/logo.png 
