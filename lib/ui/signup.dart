@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:Dcode/ui/login.dart';
 
 class Signup extends StatefulWidget {
+  final void Function(
+          String email, String password, String username, BuildContext ctx)
+      submitFn;
+  final bool _isLoading;
+  Signup(this.submitFn, this._isLoading);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -14,6 +18,9 @@ class SignupState extends State<Signup> {
       110, 204, 234, 1.0); // fully transparent white (invisible)
   final _formKey = GlobalKey<FormState>();
   static final validCharacters = RegExp(r"^[a-zA-Z]+$");
+  var _email = new TextEditingController();
+  var _username = new TextEditingController();
+  var _password = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -45,71 +52,59 @@ class SignupState extends State<Signup> {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
+                      controller: _username,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please Enter First Name';
+                          return 'Please Enter a Username';
                         }
                         if (value.length < 3) {
-                          return 'First Name is too short';
+                          return 'Username is too short';
                         }
                         if (value.length > 18) {
-                          return 'First Name is too long';
+                          return 'Username is too long';
                         }
-                        if (!validCharacters.hasMatch(value)) {
-                          return 'First Name should be alphabets only';
-                        }
+                        // if (!validCharacters.hasMatch(value)) {
+                        //   return 'First Name should be alphabets only';
+                        // }
                         return null;
                       },
                       decoration: new InputDecoration(
-                        hintText: 'First Name',
+                        hintText: 'Username',
                         icon: new Icon(Icons.person),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                     new Padding(padding: new EdgeInsets.all(20.0)),
                     TextFormField(
+                      controller: _email,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please Enter Last Name';
+                          return 'Please Enter Email';
                         }
-                        if (value.length < 3) {
-                          return 'Last Name is too short';
-                        }
-
-                        if (value.length > 18) {
-                          return 'Last Name is too long';
-                        }
-
-                        if (!validCharacters.hasMatch(value)) {
-                          return 'Last Name should be alphabets only';
-                        }
-                        return null;
-                      },
-                      decoration: new InputDecoration(
-                          hintText: 'Last Name', icon: new Icon(Icons.person)),
-                    ),
-                    new Padding(padding: new EdgeInsets.all(20.0)),
-                    TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please Enter Username';
-                        }
-                        if (value.length > 25) {
-                          return 'Username is too long';
+                        if (value.length > 35) {
+                          return 'Email is too long';
                         }
                         if (value.length < 11) {
-                          return 'Username is too short';
+                          return 'Email is too short';
                         }
-                        if (!value.contains('@dcode.com')) {
-                          return 'username should end with @dcode.com';
+                        if (!value.contains('@')) {
+                          return 'Invalid Email';
+                        }
+                        if (!value.contains('.com')) {
+                          return 'Invalid Email';
                         }
                         return null;
                       },
+                      keyboardType: TextInputType.emailAddress,
                       decoration: new InputDecoration(
-                          hintText: 'Username',
-                          icon: new Icon(Icons.account_circle)),
+                        hintText: 'Email',
+                        icon: new Icon(Icons.account_circle),
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
                     new Padding(padding: new EdgeInsets.all(20.0)),
                     TextFormField(
+                      controller: _password,
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Please Enter Your Password';
@@ -123,35 +118,48 @@ class SignupState extends State<Signup> {
                         return null;
                       },
                       decoration: new InputDecoration(
-                          hintText: 'Password', icon: new Icon(Icons.lock)),
+                        hintText: 'Password',
+                        icon: new Icon(Icons.lock),
+                        border: const OutlineInputBorder(),
+                      ),
                       obscureText: true,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 26.0),
-                      child: SizedBox(
-                        width: 160,
-                        child: RaisedButton(
-                          onPressed: () {
-                            // Validate returns true if the form is valid, or false
-                            // otherwise.
-                            if (_formKey.currentState.validate()) {
-                              // If the form is valid, Go to Home screen.
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Login()),
-                              );
-                            }
-                          },
-                          child: Text('Sign Up'),
-                          color: Colors.cyan,
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100.0),
+                    widget._isLoading
+                        ? CircularProgressIndicator()
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 26.0),
+                            child: SizedBox(
+                              width: 160,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  // Validate returns true if the form is valid, or false
+                                  // otherwise.
+                                  if (_formKey.currentState.validate()) {
+                                    // If the form is valid, Go to Home screen.
+                                    widget.submitFn(
+                                      _username.text.trim(),
+                                      _email.text.trim(),
+                                      _password.text.trim(),
+                                      context,
+                                    );
+
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) => Login()),
+                                    // );
+
+                                  }
+                                },
+                                child: Text('Sign Up'),
+                                color: Colors.cyan,
+                                textColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),

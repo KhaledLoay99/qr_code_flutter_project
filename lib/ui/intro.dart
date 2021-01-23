@@ -1,6 +1,7 @@
-import 'package:Dcode/ui/login.dart';
-import 'package:Dcode/ui/signup.dart';
+import 'package:Dcode/ui/auth_screen_signup.dart';
 import 'package:flutter/material.dart';
+
+import 'auth_screen_login.dart';
 
 class intro extends StatelessWidget {
   @override
@@ -33,7 +34,7 @@ class intro extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Signup()),
+                        MaterialPageRoute(builder: (context) => AuthForm()),
                       );
                     },
                     child: Text("Sign UP".toUpperCase(),
@@ -59,7 +60,8 @@ class intro extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Login()),
+                        MaterialPageRoute(
+                            builder: (context) => AuthFormLogin()),
                       );
                     },
                     child: Text("Login".toUpperCase(),

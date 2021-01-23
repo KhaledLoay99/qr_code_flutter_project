@@ -1,6 +1,9 @@
 import 'package:Dcode/logic/userProfile.dart';
 import 'package:Dcode/ui/profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'intro.dart';
 
 class Settings extends StatelessWidget {
   Userprofile userprofileData = new Userprofile();
@@ -169,6 +172,9 @@ class Settings extends StatelessWidget {
                                 icon: Icon(Icons.logout),
                                 alignment: Alignment.topCenter,
                                 onPressed: () {
+                                  FirebaseAuth.instance.signOut();
+                                  print("KHALOOd");
+
                                   // Navigator.push(
                                   //   context,
                                   //   MaterialPageRoute(

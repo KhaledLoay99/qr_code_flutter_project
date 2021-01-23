@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:Dcode/ui/home.dart';
-import 'package:Dcode/ui/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
+  final void Function(String email, String password, BuildContext ctx) submitFn;
+  final bool _isLoading;
+  Login(this.submitFn, this._isLoading);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -86,15 +88,19 @@ class LoginState extends State<Login> {
                     controller: _usernameField,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter Username';
+                        return 'Please enter Email';
                       }
-                      if (!value.contains('@dcode.com')) {
-                        return 'username should end with @dcode.com';
+                      if (!value.contains('.com')) {
+                        return 'Invalid Email';
+                      }
+                      if (!value.contains('@')) {
+                        return 'Invalid Email';
                       }
                       return null;
                     },
+                    keyboardType: TextInputType.emailAddress,
                     decoration: new InputDecoration(
-                      hintText: 'Username',
+                      hintText: 'Email',
                       icon: new Icon(Icons.person),
                       border: const OutlineInputBorder(),
                     ),
@@ -125,30 +131,38 @@ class LoginState extends State<Login> {
                     ),
                     obscureText: !this._showPassword,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 26.0),
-                    child: RaisedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false
-                        // otherwise.
-                        if (_formKey.currentState.validate()) {
-                          // If the form is valid, Go to Home screen.
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => home()),
-                          );
+                  widget._isLoading
+                      ? CircularProgressIndicator()
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 26.0),
+                          child: RaisedButton(
+                            onPressed: () {
+                              // Validate returns true if the form is valid, or false
+                              // otherwise.
+                              if (_formKey.currentState.validate()) {
+                                widget.submitFn(
+                                  _usernameField.text.trim(),
+                                  _passwordField.text.trim(),
+                                  context,
+                                );
+                                // If the form is valid, Go to Home screen.
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(builder: (context) => home()),
+                                // );
 
-                          _saveData(_usernameField.text, _passwordField.text);
-                        }
-                      },
-                      child: Text('Login'),
-                      color: Colors.cyan,
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                    ),
-                  ),
+                                _saveData(
+                                    _usernameField.text, _passwordField.text);
+                              }
+                            },
+                            child: Text('Login'),
+                            color: Colors.cyan,
+                            textColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100.0),
+                            ),
+                          ),
+                        ),
                 ],
               ),
             ),
