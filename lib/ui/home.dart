@@ -1,18 +1,21 @@
 import 'package:Dcode/ui/notification.dart';
 import 'package:Dcode/ui/privateChat.dart';
 import 'package:Dcode/ui/settings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:Dcode/ui/login.dart';
 import 'package:Dcode/ui/scanQr.dart';
-import 'package:Dcode/ui/signup.dart';
+import 'package:Dcode/ui/intro.dart';
+
 import 'package:Dcode/ui/profile.dart';
 import 'package:Dcode/ui/carProfile.dart';
 import 'package:Dcode/providers/Userprovider.dart';
 import "package:provider/provider.dart";
 import 'package:Dcode/providers/Carprovider.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'chatlist.dart';
+import 'intro.dart';
 
 class home extends StatefulWidget {
   @override
@@ -23,10 +26,17 @@ class home extends StatefulWidget {
 }
 
 class homeState extends State<home> {
+  var user = FirebaseAuth.instance.currentUser;
+  var name, email, photoUrl, uid, emailVerified;
+
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
   @override
   Widget build(BuildContext context) {
+    if (user != null) {
+      email = user.email;
+      uid = user.uid;
+    }
     // TODO: implement build
     return new Scaffold(
       resizeToAvoidBottomInset: false,
@@ -111,6 +121,7 @@ class homeState extends State<home> {
       body: ListView(
         children: [
           new Column(children: <Widget>[
+            Text('Hello $email,'),
             new Padding(padding: new EdgeInsets.all(50.0)),
 
             new Row(children: <Widget>[
@@ -143,7 +154,7 @@ class homeState extends State<home> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Settings()),
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
                   );
                 }, // When the child is tapped, make an action
                 child: new Container(

@@ -23,8 +23,16 @@ class AuthFormLoginState extends State<AuthFormLogin> {
       setState(() {
         _isLoading = true;
       });
+
       _authResult = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+      // Navigator.of(context).pushReplacement(
+      //     new MaterialPageRoute(builder: (BuildContext context) => home()));
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => home()),
+        (Route<dynamic> route) => false, // remove back arrow
+      );
     } on FirebaseAuthException catch (e) {
       String message = "error Occured";
       if (e.code == 'user-not-found') {

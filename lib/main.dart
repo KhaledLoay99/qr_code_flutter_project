@@ -18,20 +18,7 @@ class MyApp extends StatelessWidget {
         future: _initialization,
         builder: (context, appSnapshot) {
           return MaterialApp(
-            title: 'MIUChat',
-            theme: ThemeData(
-              primarySwatch: Colors.lightBlue,
-              backgroundColor: Colors.lightBlue[200],
-              accentColor: Colors.blueAccent,
-              accentColorBrightness: Brightness.dark,
-              buttonTheme: ButtonTheme.of(context).copyWith(
-                buttonColor: Colors.blue,
-                textTheme: ButtonTextTheme.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ),
+            title: 'Dcode App',
             debugShowCheckedModeBanner: false,
             home: appSnapshot.connectionState != ConnectionState.done
                 ? SplashScreen()
@@ -42,6 +29,7 @@ class MyApp extends StatelessWidget {
                           ConnectionState.waiting) {
                         return SplashScreen();
                       }
+
                       if (userSnapshot.hasData) {
                         return home();
                       }

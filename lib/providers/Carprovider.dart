@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:Dcode/logic/carProfile.dart';
@@ -12,7 +13,11 @@ class Carprovider with ChangeNotifier {
   List<Carprofile> car = [];
   bool prog = true;
   bool err = false;
+  // var userTake = FirebaseAuth.instance.currentUser;
+  // var user_id;
+  // user_id = userTake.uid;
   Future<void> updateData(String id, val) async {
+    //put line 18 here as example to intialize the user_id
     final userIndex = car.indexWhere((element) => element.id == id);
     var snaps = FirebaseFirestore.instance
         .collection('car')

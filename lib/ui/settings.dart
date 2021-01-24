@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'intro.dart';
 
-class Settings extends StatelessWidget {
+class SettingsPage extends StatelessWidget {
   Userprofile userprofileData = new Userprofile();
   @override
   Widget build(BuildContext context) {
@@ -173,7 +173,13 @@ class Settings extends StatelessWidget {
                                 alignment: Alignment.topCenter,
                                 onPressed: () {
                                   FirebaseAuth.instance.signOut();
-                                  print("KHALOOd");
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => intro()),
+                                    (Route<dynamic> route) =>
+                                        false, // remove back arrow
+                                  );
 
                                   // Navigator.push(
                                   //   context,

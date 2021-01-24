@@ -1,3 +1,5 @@
+import 'package:Dcode/ui/home.dart';
+import 'package:Dcode/ui/intro.dart';
 import 'package:Dcode/ui/signup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +18,13 @@ class AuthFormState extends State<AuthForm> {
   final _auth = FirebaseAuth.instance;
   UserCredential userCredential;
   bool _isLoading = false;
+  String location = "No Location Added";
+  String profileImage = "user.png";
+
+  String carProfileImage = "image_picker8519557799228687686.jpg";
+  String car_location = "";
+  String saleStatus = "";
+  String carModel = "";
   void _submitAuthForm(
       String username, String email, String password, BuildContext ctx) async {
     try {
@@ -27,7 +36,28 @@ class AuthFormState extends State<AuthForm> {
       FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user.uid)
-          .set({'username': username});
+          .set({
+        'username': username,
+        'location': location,
+        'profileImage': profileImage
+      });
+
+      FirebaseFirestore.instance
+          .collection('cars')
+          .doc(userCredential.user.uid)
+          .set({
+        'userid': userCredential.user.uid,
+        'CarProfileImage': carProfileImage,
+        'Location': car_location,
+        'SaleStatus': saleStatus,
+        'carModel': carModel
+      });
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => home()),
+        (Route<dynamic> route) => false, // remove back arrow
+      );
     } on FirebaseAuthException catch (e) {
       String message = "error Occured";
       if (e.code == 'weak-password') {

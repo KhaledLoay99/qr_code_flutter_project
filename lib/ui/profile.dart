@@ -1,4 +1,5 @@
 import 'package:Dcode/logic/userProfile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:Dcode/ui/chatlist.dart';
@@ -79,37 +80,6 @@ class _ProfileState extends State<Profile> {
                   children: [
                     TextFormField(
                       validator: (value) {
-                        if (type == "firstname") {
-                          if (value.isEmpty) {
-                            return 'Please Enter First Name';
-                          }
-                          if (value.length < 3) {
-                            return 'First Name is too short';
-                          }
-                          if (value.length > 18) {
-                            return 'First Name is too long';
-                          }
-                          if (!validCharacters.hasMatch(value)) {
-                            return 'First Name should be alphabets only';
-                          }
-                          return null;
-                        }
-                        if (type == "lastname") {
-                          if (value.isEmpty) {
-                            return 'Please Enter Last Name';
-                          }
-                          if (value.length < 3) {
-                            return 'Last Name is too short';
-                          }
-
-                          if (value.length > 18) {
-                            return 'Last Name is too long';
-                          }
-                          if (!validCharacters.hasMatch(value)) {
-                            return 'Last Name should be alphabets only';
-                          }
-                          return null;
-                        }
                         if (type == "username") {
                           if (value.isEmpty) {
                             return 'Please Enter Username';
@@ -158,6 +128,8 @@ class _ProfileState extends State<Profile> {
   }
 
   show_Qr() {
+    var userTake = FirebaseAuth.instance.currentUser;
+    var user_id;
     return showDialog(
         context: this.context,
         builder: (context) {
@@ -176,7 +148,7 @@ class _ProfileState extends State<Profile> {
                       child: Container(
                         color: Colors.white,
                         child: QrImage(
-                          data: userList[0].id,
+                          data: userTake.uid,
                           version: QrVersions.auto,
                           size: 200.0,
                         ),
@@ -489,17 +461,7 @@ class _ProfileState extends State<Profile> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               textfield(
-                                  hintText: userList[0].first_name,
-                                  qr: false,
-                                  type: "firstname",
-                                  update: update),
-                              textfield(
-                                  hintText: userList[0].last_name,
-                                  qr: false,
-                                  type: "lastname",
-                                  update: update),
-                              textfield(
-                                  hintText: userList[0].get_mail,
+                                  hintText: userList[0].get_username,
                                   qr: false,
                                   type: "username",
                                   update: update),
