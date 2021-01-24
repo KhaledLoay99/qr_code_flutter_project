@@ -13,14 +13,11 @@ class Carprovider with ChangeNotifier {
   List<Carprofile> car = [];
   bool prog = true;
   bool err = false;
-  // var userTake = FirebaseAuth.instance.currentUser;
-  // var user_id;
-  // user_id = userTake.uid;
   Future<void> updateData(String id, val) async {
     //put line 18 here as example to intialize the user_id
     final userIndex = car.indexWhere((element) => element.id == id);
     var snaps = FirebaseFirestore.instance
-        .collection('car')
+        .collection('cars')
         .document(id)
         .updateData(val)
         .catchError((e) {
@@ -41,7 +38,7 @@ class Carprovider with ChangeNotifier {
   Future<void> fetchdata() async {
     await Firebase.initializeApp();
     try {
-      var snaps = FirebaseFirestore.instance.collection('car');
+      var snaps = FirebaseFirestore.instance.collection('cars');
       snaps.snapshots().listen((QuerySnapshot querySnapshot) {
         if (querySnapshot.size > 0) {
           querySnapshot.documents.forEach((document) async {

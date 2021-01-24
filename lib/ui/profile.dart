@@ -42,6 +42,9 @@ class _ProfileState extends State<Profile> {
   bool _loading = false;
   bool save_done = true;
   bool save_done2 = false;
+  var user_id;
+  int userIndex;
+  var ref;
 
   @override
   void didChangeDependencies() {
@@ -51,12 +54,20 @@ class _ProfileState extends State<Profile> {
     prog = Provider.of<Userprovider>(this.context).prog;
     err = Provider.of<Userprovider>(this.context).err;
     if (prog == false) {
-      var ref = FirebaseStorage.instance.ref().child(userList[0].profileImage);
-      ref.getDownloadURL().then((loc) {
-        setState(() {
-          _imageUrl = loc;
+      user_id = FirebaseAuth.instance.currentUser.uid;
+      userIndex = userList.indexWhere((element) => element.id == user_id);
+      try {
+        ref = FirebaseStorage.instance
+            .ref()
+            .child(userList[userIndex].profileImage);
+        ref.getDownloadURL().then((loc) {
+          setState(() {
+            _imageUrl = loc;
+          });
         });
-      });
+      } catch (error) {
+        _imageUrl = null;
+      }
     }
   }
 
@@ -105,7 +116,7 @@ class _ProfileState extends State<Profile> {
                         //print(_customController.text);
                         if (_formKey.currentState.validate()) {
                           update.updateData(
-                              "fWjVRpN5z0JeOyPJrxbK",
+                              user_id,
                               type == 'firstname'
                                   ? {'firstname': _customController.text}
                                   : type == 'lastname'
@@ -273,7 +284,7 @@ class _ProfileState extends State<Profile> {
       String filename = basename(uImage.path);
       var firebaseStorageRef = FirebaseStorage.instance.ref().child(filename);
       var uploadTask = firebaseStorageRef.putFile(uImage).then((loc) {
-        update.updateData("fWjVRpN5z0JeOyPJrxbK", {'profileImage': filename});
+        update.updateData(user_id, {'profileImage': filename});
       });
     }
 
@@ -461,12 +472,12 @@ class _ProfileState extends State<Profile> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               textfield(
-                                  hintText: userList[0].get_username,
+                                  hintText: userList[userIndex].get_username,
                                   qr: false,
                                   type: "username",
                                   update: update),
                               textfield(
-                                  hintText: userList[0].get_location,
+                                  hintText: userList[userIndex].get_location,
                                   qr: false,
                                   type: "location",
                                   update: update),

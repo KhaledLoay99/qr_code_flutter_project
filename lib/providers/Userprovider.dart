@@ -17,14 +17,14 @@ class Userprovider with ChangeNotifier {
   List<Userprofile> user = [];
   bool prog = true;
   bool err = false;
-  var userTake = FirebaseAuth.instance.currentUser;
-  var user_id;
+  //var userTake = FirebaseAuth.instance.currentUser;
+  //var user_id;
   Future<void> updateData(String id, val) async {
-    user_id = userTake.uid;
+    //user_id = userTake.uid;
     final userIndex = user.indexWhere((element) => element.id == id);
     var snaps = FirebaseFirestore.instance
         .collection('users')
-        .document(user_id)
+        .document(id)
         .updateData(val)
         .catchError((e) {
       print(e);
@@ -50,7 +50,7 @@ class Userprovider with ChangeNotifier {
         if (querySnapshot.size > 0) {
           querySnapshot.documents.forEach((document) {
             user.add(Userprofile(
-              id: user_id,
+              id: document.documentID,
               email: document.data()['email'],
               username: document.data()['username'],
               location: document.data()['location'],

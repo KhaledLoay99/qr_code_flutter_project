@@ -11,6 +11,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class carProfile extends StatefulWidget {
   @override
@@ -29,14 +30,18 @@ class _carProfileState extends State<carProfile> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _customController;
   bool prog = true;
-  bool err;
+  bool err = false;
   var update;
   File uImage;
   String _imageUrl;
+  var user_id;
+  int carIndex;
+  var ref;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (prog == false) {
+    /* if (prog == false) {
+      //err = Provider.of<Carprovider>(this.context, listen: true).err;
       var ref =
           FirebaseStorage.instance.ref().child(carList[0].carprofileImage);
       ref.getDownloadURL().then((loc) {
@@ -44,7 +49,7 @@ class _carProfileState extends State<carProfile> {
           _imageUrl = loc;
         });
       });
-    }
+    }*/
   }
 
   @override
@@ -55,7 +60,6 @@ class _carProfileState extends State<carProfile> {
       prog = false;
     });
     update = Provider.of<Carprovider>(this.context, listen: false);
-    //forSale = carList[0].salestatus;
     super.initState();
   }
 
@@ -114,7 +118,7 @@ class _carProfileState extends State<carProfile> {
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
                           update.updateData(
-                              "QBxfRauy65voja7R63jP",
+                              user_id,
                               type == 'carModel'
                                   ? {'carModel': _customController.text}
                                   : type == 'SaleStatus'
@@ -180,8 +184,8 @@ class _carProfileState extends State<carProfile> {
                             setState(() {
                               carList[0].salestatus = !carList[0].salestatus;
                             });
-                            update.updateData("QBxfRauy65voja7R63jP",
-                                {'SaleStatus': carList[0].salestatus});
+                            update.updateData(
+                                user_id, {'SaleStatus': carList[0].salestatus});
                             print('switched to: $index');
                           },
                         ),
@@ -200,8 +204,26 @@ class _carProfileState extends State<carProfile> {
 
   @override
   Widget build(BuildContext context) {
+    if (prog == false) {
+      if (carList.isEmpty) {
+        err = true;
+      }
+      user_id = FirebaseAuth.instance.currentUser.uid;
+      carIndex = carList.indexWhere((element) => element.id == user_id);
+      try {
+        ref = FirebaseStorage.instance
+            .ref()
+            .child(carList[carIndex].carprofileImage);
+        ref.getDownloadURL().then((loc) {
+          setState(() {
+            _imageUrl = loc;
+          });
+        });
+      } catch (error) {
+        _imageUrl = null;
+      }
+    }
     carList = Provider.of<Carprovider>(this.context, listen: true).car;
-    err = Provider.of<Carprovider>(this.context, listen: true).err;
     Future getImage() async {
       var image = await ImagePicker.pickImage(source: ImageSource.gallery);
       setState(() {
@@ -210,8 +232,7 @@ class _carProfileState extends State<carProfile> {
       String filename = basename(uImage.path);
       var firebaseStorageRef = FirebaseStorage.instance.ref().child(filename);
       var uploadTask = firebaseStorageRef.putFile(uImage).then((loc) {
-        update
-            .updateData("QBxfRauy65voja7R63jP", {'CarProfileImage': filename});
+        update.updateData(user_id, {'CarProfileImage': filename});
       });
     }
 
@@ -342,13 +363,13 @@ class _carProfileState extends State<carProfile> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       textfield(
-                                          hintText: carList[0].carmodel,
+                                          hintText: carList[carIndex].carmodel,
                                           type: "carModel"),
                                       textfield(
                                           hintText: "For Sale",
                                           type: "SaleStatus"),
                                       textfield(
-                                          hintText: carList[0].location,
+                                          hintText: carList[carIndex].location,
                                           type: "Location"),
                                     ],
                                   ),
