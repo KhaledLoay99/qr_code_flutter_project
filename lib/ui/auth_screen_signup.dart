@@ -21,10 +21,10 @@ class AuthFormState extends State<AuthForm> {
   String location = "No Location Added";
   String profileImage = "user.png";
 
-  String carProfileImage = "image_picker8519557799228687686.jpg";
-  String car_location = "";
-  String saleStatus = "";
-  String carModel = "";
+  String carProfileImage = "car.jpg";
+  String car_location = "No Location Added";
+  bool saleStatus = false;
+  String carModel = "No Car Model Added";
   void _submitAuthForm(
       String username, String email, String password, BuildContext ctx) async {
     try {
