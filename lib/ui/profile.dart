@@ -30,7 +30,6 @@ class _ProfileState extends State<Profile> {
   static final validCharacters = RegExp(r"^[a-zA-Z]+$");
   final _formKey = GlobalKey<FormState>();
   TextEditingController _customController;
-  Userprofile userProfileData = new Userprofile();
   List<Userprofile> userList;
   bool prog = true;
   bool err = false;
@@ -45,6 +44,7 @@ class _ProfileState extends State<Profile> {
   var user_id;
   int userIndex;
   var ref;
+  List userNames = [];
 
   @override
   void initState() {
@@ -82,6 +82,28 @@ class _ProfileState extends State<Profile> {
                           }
                           if (value.length < 3) {
                             return 'Username is too short';
+                          }
+
+                          userList.forEach((user) {
+                            if (user.id != userList[userIndex].id) {
+                              userNames.add(user.get_username);
+                            }
+                          });
+                          if (userNames.contains(value)) {
+                            return 'Username already taken';
+                          }
+
+                          return null;
+                        }
+                        if (type == "location") {
+                          if (value.isEmpty) {
+                            return 'Please Enter your location';
+                          }
+                          if (value.length > 15) {
+                            return 'Location is too long';
+                          }
+                          if (value.length < 5) {
+                            return 'Location is too short';
                           }
                           return null;
                         }
