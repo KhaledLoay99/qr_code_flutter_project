@@ -32,8 +32,8 @@ class _ProfileState extends State<Profile> {
   TextEditingController _customController;
   Userprofile userProfileData = new Userprofile();
   List<Userprofile> userList;
-  bool prog;
-  bool err;
+  bool prog = true;
+  bool err = false;
   var update;
   String _imageUrl;
   File uImage;
@@ -47,28 +47,14 @@ class _ProfileState extends State<Profile> {
   var ref;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    userList = Provider.of<Userprovider>(this.context, listen: true).user;
-    update = Provider.of<Userprovider>(this.context);
-    prog = Provider.of<Userprovider>(this.context).prog;
-    err = Provider.of<Userprovider>(this.context).err;
-    if (prog == false) {
-      user_id = FirebaseAuth.instance.currentUser.uid;
-      userIndex = userList.indexWhere((element) => element.id == user_id);
-      try {
-        ref = FirebaseStorage.instance
-            .ref()
-            .child(userList[userIndex].profileImage);
-        ref.getDownloadURL().then((loc) {
-          setState(() {
-            _imageUrl = loc;
-          });
-        });
-      } catch (error) {
-        _imageUrl = null;
-      }
-    }
+  void initState() {
+    Provider.of<Userprovider>(this.context, listen: false)
+        .fetchdata()
+        .then((value) {
+      prog = false;
+    });
+    update = Provider.of<Userprovider>(this.context, listen: false);
+    super.initState();
   }
 
   createAlertDialog(BuildContext context, String type, String val, var update) {
@@ -77,11 +63,7 @@ class _ProfileState extends State<Profile> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: type == 'firstname'
-                ? Text("Your first name")
-                : type == 'lastname'
-                    ? Text("Your last name")
-                    : Text("Your $type"),
+            title: Text("Your $type"),
             content: Container(
               height: 125,
               width: 250,
@@ -98,11 +80,8 @@ class _ProfileState extends State<Profile> {
                           if (value.length > 25) {
                             return 'Username is too long';
                           }
-                          if (value.length < 11) {
+                          if (value.length < 3) {
                             return 'Username is too short';
-                          }
-                          if (!value.contains('@dcode.com')) {
-                            return 'username should end with @decode.com';
                           }
                           return null;
                         }
@@ -113,21 +92,14 @@ class _ProfileState extends State<Profile> {
                       elevation: 5.0,
                       child: Text('Submit'),
                       onPressed: () {
-                        //print(_customController.text);
                         if (_formKey.currentState.validate()) {
                           update.updateData(
                               user_id,
-                              type == 'firstname'
-                                  ? {'firstname': _customController.text}
-                                  : type == 'lastname'
-                                      ? {'lastname': _customController.text}
-                                      : type == 'username'
-                                          ? {'username': _customController.text}
-                                          : {
-                                              'location': _customController.text
-                                            });
+                              type == 'username'
+                                  ? {'username': _customController.text}
+                                  : {'location': _customController.text});
+                          Navigator.pop(context);
                         }
-                        Navigator.pop(context);
                       },
                     )
                   ],
@@ -276,8 +248,29 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    if (prog == false) {
+      if (userList.isEmpty) {
+        err = true;
+      }
+      user_id = FirebaseAuth.instance.currentUser.uid;
+      userIndex = userList.indexWhere((element) => element.id == user_id);
+      try {
+        ref = FirebaseStorage.instance
+            .ref()
+            .child(userList[userIndex].profileImage);
+        ref.getDownloadURL().then((loc) {
+          setState(() {
+            _imageUrl = loc;
+          });
+        });
+      } catch (error) {
+        _imageUrl = null;
+      }
+    }
+    userList = Provider.of<Userprovider>(this.context, listen: true).user;
     Future getImage() async {
-      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+      var image = await ImagePicker.pickImage(
+          source: ImageSource.gallery, maxWidth: 600);
       setState(() {
         uImage = image;
       });

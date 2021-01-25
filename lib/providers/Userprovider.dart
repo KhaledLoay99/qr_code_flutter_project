@@ -10,17 +10,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class Userprovider with ChangeNotifier {
-  Userprovider() {
-    fetchdata();
-    //print(user);
-  }
+  Userprovider() {}
   List<Userprofile> user = [];
   bool prog = true;
   bool err = false;
-  //var userTake = FirebaseAuth.instance.currentUser;
-  //var user_id;
   Future<void> updateData(String id, val) async {
-    //user_id = userTake.uid;
+    print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
     final userIndex = user.indexWhere((element) => element.id == id);
     var snaps = FirebaseFirestore.instance
         .collection('users')
@@ -43,23 +38,21 @@ class Userprovider with ChangeNotifier {
 
   Future<void> fetchdata() async {
     await Firebase.initializeApp();
-    //var snaps = FirebaseFirestore.instance.collection('user');
     try {
       var snaps = FirebaseFirestore.instance.collection('users');
       snaps.snapshots().listen((QuerySnapshot querySnapshot) {
         if (querySnapshot.size > 0) {
-          querySnapshot.documents.forEach((document) {
+          querySnapshot.documents.forEach((document) async {
             user.add(Userprofile(
               id: document.documentID,
-              email: document.data()['email'],
-              username: document.data()['username'],
-              location: document.data()['location'],
-              profileImage: document.data()['profileImage'],
-              qrImage: document.data()['qrImage'],
+              email: await document.data()['email'],
+              username: await document.data()['username'],
+              location: await document.data()['location'],
+              profileImage: await document.data()['profileImage'],
+              qrImage: await document.data()['qrImage'],
             ));
           });
           snaps.get().then((value) {
-            prog = false;
             notifyListeners();
           });
         } else {

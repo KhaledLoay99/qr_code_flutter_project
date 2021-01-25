@@ -37,20 +37,6 @@ class _carProfileState extends State<carProfile> {
   var user_id;
   int carIndex;
   var ref;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    /* if (prog == false) {
-      //err = Provider.of<Carprovider>(this.context, listen: true).err;
-      var ref =
-          FirebaseStorage.instance.ref().child(carList[0].carprofileImage);
-      ref.getDownloadURL().then((loc) {
-        setState(() {
-          _imageUrl = loc;
-        });
-      });
-    }*/
-  }
 
   @override
   void initState() {
@@ -124,8 +110,8 @@ class _carProfileState extends State<carProfile> {
                                   : type == 'SaleStatus'
                                       ? {'SaleStatus': _customController.text}
                                       : {'Location': _customController.text});
+                          Navigator.pop(context);
                         }
-                        Navigator.pop(context);
                       },
                     )
                   ],
@@ -173,7 +159,8 @@ class _carProfileState extends State<carProfile> {
                         height: 30,
                         child: ToggleSwitch(
                           minWidth: 90.0,
-                          initialLabelIndex: carList[0].salestatus ? 0 : 1,
+                          initialLabelIndex:
+                              carList[carIndex].salestatus ? 0 : 1,
                           cornerRadius: 20.0,
                           activeFgColor: Colors.white,
                           inactiveBgColor: Colors.grey,
@@ -182,10 +169,11 @@ class _carProfileState extends State<carProfile> {
                           activeBgColors: [Colors.blue, Colors.pink],
                           onToggle: (index) {
                             setState(() {
-                              carList[0].salestatus = !carList[0].salestatus;
+                              carList[carIndex].salestatus =
+                                  !carList[carIndex].salestatus;
                             });
-                            update.updateData(
-                                user_id, {'SaleStatus': carList[0].salestatus});
+                            update.updateData(user_id,
+                                {'SaleStatus': carList[carIndex].salestatus});
                             print('switched to: $index');
                           },
                         ),
@@ -225,7 +213,8 @@ class _carProfileState extends State<carProfile> {
     }
     carList = Provider.of<Carprovider>(this.context, listen: true).car;
     Future getImage() async {
-      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+      var image = await ImagePicker.pickImage(
+          source: ImageSource.gallery, maxWidth: 600);
       setState(() {
         uImage = image;
       });

@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final Future<FirebaseApp> _initialization = Firebase.initializeApp();
     return FutureBuilder(
-        // Initialize FlutterFire:
         future: _initialization,
         builder: (context, appSnapshot) {
           return MaterialApp(

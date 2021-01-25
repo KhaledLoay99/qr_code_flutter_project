@@ -7,14 +7,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class Carprovider with ChangeNotifier {
-  Carprovider() {
-    //fetchdata();
-  }
+  Carprovider() {}
   List<Carprofile> car = [];
   bool prog = true;
   bool err = false;
   Future<void> updateData(String id, val) async {
-    //put line 18 here as example to intialize the user_id
     final userIndex = car.indexWhere((element) => element.id == id);
     var snaps = FirebaseFirestore.instance
         .collection('cars')
@@ -52,7 +49,6 @@ class Carprovider with ChangeNotifier {
             ));
           });
           snaps.get().then((value) {
-            //prog = false;
             notifyListeners();
           });
         } else {
