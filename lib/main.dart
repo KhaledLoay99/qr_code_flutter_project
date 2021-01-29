@@ -1,3 +1,4 @@
+import 'package:Dcode/ui/navigatorBar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
                       }
 
                       if (userSnapshot.hasData) {
-                        return home();
+                        return HomePage();
                       }
                       return intro();
                     }),

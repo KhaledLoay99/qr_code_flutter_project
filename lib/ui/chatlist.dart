@@ -79,97 +79,32 @@ class UserListState extends State<UserList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Text('Chats '),
-            Image.asset(
-              'images/chat.png',
-              height: 40,
-            ),
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        return Navigator.canPop(context); // avoid app from exiting
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            children: [
+              Text('Chats '),
+              Image.asset(
+                'images/chat.png',
+                height: 40,
+              ),
+            ],
+          ),
+          backgroundColor: c1,
         ),
-        backgroundColor: c1,
-      ),
-      backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: c1,
-        onTap: (value) {
-          // Respond to item press.
-          if (value == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => home()),
-            );
-          } else if (value == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => notify()),
-            );
-          } else if (value == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => chatlist()),
-            );
-          } else if (value == 3) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Profile()),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            title: Text(
-              'Home',
-              style: TextStyle(color: Colors.black45),
-            ),
-            icon: Icon(
-              Icons.home,
-              color: Colors.black45,
-            ),
-          ),
-          BottomNavigationBarItem(
-            title: Text(
-              'Notifications',
-              style: TextStyle(color: Colors.black45),
-            ),
-            icon: Icon(
-              Icons.notifications,
-              color: Colors.black45,
-            ),
-          ),
-          BottomNavigationBarItem(
-              title: Text(
-                'Recent Chats',
-                style: TextStyle(color: Colors.white),
-              ),
-              icon: Icon(
-                Icons.chat,
-                color: Colors.white,
-              ),
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-            title: Text(
-              'My Profile',
-              style: TextStyle(color: Colors.black45),
-            ),
-            icon: Icon(
-              Icons.account_circle,
-              color: Colors.black45,
-            ),
-          ),
-        ],
-      ),
-      body: _buildChatList(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        child: Icon(Icons.chat),
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.white,
+        body: _buildChatList(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Add your onPressed code here!
+          },
+          child: Icon(Icons.chat),
+          backgroundColor: Colors.lightBlue,
+        ),
       ),
     );
   }

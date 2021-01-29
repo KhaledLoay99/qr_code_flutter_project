@@ -1,5 +1,6 @@
 import 'package:Dcode/ui/home.dart';
 import 'package:Dcode/ui/intro.dart';
+import 'package:Dcode/ui/navigatorBar.dart';
 import 'package:Dcode/ui/signup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,9 +20,9 @@ class AuthFormState extends State<AuthForm> {
   UserCredential userCredential;
   bool _isLoading = false;
   String location = "No Location Added";
-  String profileImage = "user.png";
+  String profileImage = null;
 
-  String carProfileImage = "car.jpg";
+  String carProfileImage = null;
   String car_location = "No Location Added";
   bool saleStatus = false;
   String carModel = "No Car Model Added";
@@ -55,7 +56,7 @@ class AuthFormState extends State<AuthForm> {
 
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => home()),
+        MaterialPageRoute(builder: (context) => HomePage()),
         (Route<dynamic> route) => false, // remove back arrow
       );
     } on FirebaseAuthException catch (e) {

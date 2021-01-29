@@ -1,4 +1,5 @@
 import 'package:Dcode/ui/login.dart';
+import 'package:Dcode/ui/navigatorBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ class AuthFormLoginState extends State<AuthFormLogin> {
       //     new MaterialPageRoute(builder: (BuildContext context) => home()));
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => home()),
+        MaterialPageRoute(builder: (context) => HomePage()),
         (Route<dynamic> route) => false, // remove back arrow
       );
     } on FirebaseAuthException catch (e) {

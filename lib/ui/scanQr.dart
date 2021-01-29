@@ -38,56 +38,56 @@ class scanQrState extends State<scanQr> {
         backgroundColor: c1,
       ),
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: c1,
-        selectedItemColor: Colors.black45,
-//        unselectedItemColor: Colors.white.withOpacity(.60),
-//        selectedFontSize: 14,
-//        unselectedFontSize: 14,
-        onTap: (value) {
-          // Respond to item press.
-          if (value == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => home()),
-            );
-          } else if (value == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => notify()),
-            );
-          } else if (value == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => chatlist()),
-            );
-          } else if (value == 3) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Profile()),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            title: Text('Home'),
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            title: Text('Notifications'),
-            icon: Icon(Icons.notifications),
-          ),
-          BottomNavigationBarItem(
-            title: Text('Recent Chats'),
-            icon: Icon(Icons.chat),
-          ),
-          BottomNavigationBarItem(
-            title: Text('My Profile'),
-            icon: Icon(Icons.account_circle),
-          ),
-        ],
-      ),
+//       bottomNavigationBar: BottomNavigationBar(
+//         type: BottomNavigationBarType.fixed,
+//         backgroundColor: c1,
+//         selectedItemColor: Colors.black45,
+// //        unselectedItemColor: Colors.white.withOpacity(.60),
+// //        selectedFontSize: 14,
+// //        unselectedFontSize: 14,
+//         onTap: (value) {
+//           // Respond to item press.
+//           if (value == 0) {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => home()),
+//             );
+//           } else if (value == 1) {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => notify()),
+//             );
+//           } else if (value == 2) {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => chatlist()),
+//             );
+//           } else if (value == 3) {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => Profile()),
+//             );
+//           }
+//         },
+//         items: [
+//           BottomNavigationBarItem(
+//             title: Text('Home'),
+//             icon: Icon(Icons.home),
+//           ),
+//           BottomNavigationBarItem(
+//             title: Text('Notifications'),
+//             icon: Icon(Icons.notifications),
+//           ),
+//           BottomNavigationBarItem(
+//             title: Text('Recent Chats'),
+//             icon: Icon(Icons.chat),
+//           ),
+//           BottomNavigationBarItem(
+//             title: Text('My Profile'),
+//             icon: Icon(Icons.account_circle),
+//           ),
+//         ],
+//       ),
       body: new ListView(
         //alignment: Alignment.topCenter,
         children: [

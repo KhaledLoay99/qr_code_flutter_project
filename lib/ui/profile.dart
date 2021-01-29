@@ -304,208 +304,151 @@ class _ProfileState extends State<Profile> {
     }
 
     return err
-        ? Scaffold(
-            body: new AlertDialog(
-              title: new Text('Error'),
-              content: new Text('Error while fetching data!'),
-              actions: <Widget>[
-                new FlatButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: new Text('Exit'),
-                ),
-              ],
+        ? WillPopScope(
+            onWillPop: () async {
+              return Navigator.canPop(context); // avoid app from exiting
+            },
+            child: Scaffold(
+              body: new AlertDialog(
+                title: new Text('Error'),
+                content: new Text('Error while fetching data!'),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: new Text('Exit'),
+                  ),
+                ],
+              ),
             ),
           )
-        : Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: new AppBar(
-              title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+        : WillPopScope(
+            onWillPop: () async {
+              return Navigator.canPop(context); // avoid app from exiting
+            },
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              appBar: new AppBar(
+                title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
+                // leading: IconButton(
+                //   icon: Icon(Icons.arrow_back),
+                //   onPressed: () {
+                //     Navigator.of(context).pop();
+                //   },
+                // ),
+                backgroundColor: const Color.fromRGBO(110, 204, 234, 1.0),
               ),
-              backgroundColor: const Color.fromRGBO(110, 204, 234, 1.0),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: c1,
-              onTap: (value) {
-                // Respond to item press.
-                if (value == 0) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => home()),
-                  );
-                } else if (value == 1) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => notify()),
-                  );
-                } else if (value == 2) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => chatlist()),
-                  );
-                } else if (value == 3) {
-                  /*Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Profile()),
-            );*/
-                }
-              },
-              items: [
-                BottomNavigationBarItem(
-                  title: Text(
-                    'Home',
-                    style: TextStyle(color: Colors.black45),
-                  ),
-                  icon: Icon(
-                    Icons.home,
-                    color: Colors.black45,
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  title: Text(
-                    'Notifications',
-                    style: TextStyle(color: Colors.black45),
-                  ),
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.black45,
-                  ),
-                ),
-                BottomNavigationBarItem(
-                    title: Text(
-                      'Recent Chats',
-                      style: TextStyle(color: Colors.black45),
-                    ),
-                    icon: Icon(
-                      Icons.chat,
-                      color: Colors.black45,
-                    ),
-                    backgroundColor: Colors.white),
-                BottomNavigationBarItem(
-                  title: Text(
-                    'My Profile',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  icon: Icon(
-                    Icons.account_circle,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            body: prog
-                ? Center(child: CircularProgressIndicator())
-                : ListView(children: [
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Stack(alignment: Alignment.topCenter, children: [
-                          CustomPaint(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
+              body: prog
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView(children: [
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Stack(alignment: Alignment.topCenter, children: [
+                            CustomPaint(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                              ),
+                              painter: HeaderCurvedContainer(),
                             ),
-                            painter: HeaderCurvedContainer(),
-                          ),
-                          Container(
-                            alignment: Alignment.topCenter,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: Text(
-                                    "Profile",
-                                    style: TextStyle(
-                                      fontSize: 35,
-                                      letterSpacing: 1.5,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                Stack(
-                                  children: [
-                                    Container(
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      height:
-                                          MediaQuery.of(context).size.width / 2,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.white, width: 5),
-                                          shape: BoxShape.circle,
-                                          color: Colors.white,
-                                          image: DecorationImage(
-                                              image: _imageUrl != null
-                                                  ? uImage == null
-                                                      ? NetworkImage(_imageUrl)
-                                                      : FileImage(uImage)
-                                                  : AssetImage(
-                                                      "images/user.png"))),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                          top: 140,
-                                          left: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2.2),
-                                      margin: EdgeInsets.only(bottom: 50),
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.black54,
-                                        child: IconButton(
-                                          icon: Icon(
-                                            Icons.edit,
-                                            color: Colors.white,
-                                          ),
-                                          onPressed: () {
-                                            getImage();
-                                          },
-                                        ),
+                            Container(
+                              alignment: Alignment.topCenter,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: Text(
+                                      "Profile",
+                                      style: TextStyle(
+                                        fontSize: 35,
+                                        letterSpacing: 1.5,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                  ],
+                                  ),
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        height:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.white, width: 5),
+                                            shape: BoxShape.circle,
+                                            color: Colors.white,
+                                            image: DecorationImage(
+                                                image: _imageUrl != null
+                                                    ? uImage == null
+                                                        ? NetworkImage(
+                                                            _imageUrl)
+                                                        : FileImage(uImage)
+                                                    : AssetImage(
+                                                        "images/user.png"))),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                            top: 140,
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.2),
+                                        margin: EdgeInsets.only(bottom: 50),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.black54,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () {
+                                              getImage();
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]),
+                          Container(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height / 5.5),
+                            height: MediaQuery.of(context).size.height / 1.5,
+                            width: double.infinity,
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                textfield(
+                                    hintText: userList[userIndex].get_username,
+                                    qr: false,
+                                    type: "username",
+                                    update: update),
+                                textfield(
+                                    hintText: userList[userIndex].get_location,
+                                    qr: false,
+                                    type: "location",
+                                    update: update),
+                                textfield(
+                                  hintText: 'QR Code',
+                                  qr: true,
                                 ),
                               ],
                             ),
-                          ),
-                        ]),
-                        Container(
-                          padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height / 5.5),
-                          height: MediaQuery.of(context).size.height / 1.5,
-                          width: double.infinity,
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              textfield(
-                                  hintText: userList[userIndex].get_username,
-                                  qr: false,
-                                  type: "username",
-                                  update: update),
-                              textfield(
-                                  hintText: userList[userIndex].get_location,
-                                  qr: false,
-                                  type: "location",
-                                  update: update),
-                              textfield(
-                                hintText: 'QR Code',
-                                qr: true,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ]),
+                          )
+                        ],
+                      ),
+                    ]),
+            ),
           );
   }
 }
