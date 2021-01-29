@@ -161,7 +161,8 @@ class _carProfileState extends State<carProfile> {
                         width: MediaQuery.of(this.context).size.width / 4,
                         height: 30,
                         child: ToggleSwitch(
-                          minWidth: 50.0,
+                          minWidth:
+                              MediaQuery.of(this.context).size.width / 8.5,
                           initialLabelIndex:
                               carList[carIndex].salestatus ? 0 : 1,
                           cornerRadius: 20.0,
