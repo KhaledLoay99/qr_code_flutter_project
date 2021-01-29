@@ -152,7 +152,10 @@ class _carProfileState extends State<carProfile> {
             Row(children: [
               Container(
                 padding: EdgeInsets.only(
-                    left: type == "SaleStatus" ? 180 : 310, top: 10),
+                    left: type == "SaleStatus"
+                        ? MediaQuery.of(this.context).size.width / 2.25
+                        : MediaQuery.of(this.context).size.width / 1.25,
+                    top: 10),
                 child: type == "SaleStatus"
                     ? Container(
                         width: 185,
