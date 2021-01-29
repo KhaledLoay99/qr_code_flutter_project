@@ -394,7 +394,10 @@ class _ProfileState extends State<Profile> {
                                       ),
                                       Container(
                                         padding: EdgeInsets.only(
-                                            top: 140,
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                6.2,
                                             left: MediaQuery.of(context)
                                                     .size
                                                     .width /

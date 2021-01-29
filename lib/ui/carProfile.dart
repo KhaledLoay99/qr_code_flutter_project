@@ -153,15 +153,15 @@ class _carProfileState extends State<carProfile> {
               Container(
                 padding: EdgeInsets.only(
                     left: type == "SaleStatus"
-                        ? MediaQuery.of(this.context).size.width / 2.25
+                        ? MediaQuery.of(this.context).size.width / 1.5
                         : MediaQuery.of(this.context).size.width / 1.25,
                     top: 10),
                 child: type == "SaleStatus"
                     ? Container(
-                        width: 185,
+                        width: MediaQuery.of(this.context).size.width / 4,
                         height: 30,
                         child: ToggleSwitch(
-                          minWidth: 90.0,
+                          minWidth: 50.0,
                           initialLabelIndex:
                               carList[carIndex].salestatus ? 0 : 1,
                           cornerRadius: 20.0,
@@ -317,7 +317,10 @@ class _carProfileState extends State<carProfile> {
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(
-                                              top: 140,
+                                              top: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  6.2,
                                               left: MediaQuery.of(context)
                                                       .size
                                                       .width /
