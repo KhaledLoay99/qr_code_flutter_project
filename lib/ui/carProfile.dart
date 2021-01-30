@@ -169,7 +169,7 @@ class _carProfileState extends State<carProfile> {
                           activeFgColor: Colors.white,
                           inactiveBgColor: Colors.grey,
                           inactiveFgColor: Colors.white,
-                          labels: ['Yes', 'No'],
+                          labels: ['Y', 'N'],
                           activeBgColors: [Colors.blue, Colors.pink],
                           onToggle: (index) {
                             setState(() {
