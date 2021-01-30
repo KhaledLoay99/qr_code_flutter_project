@@ -46,7 +46,9 @@ class UserListState extends State<UserList> {
         if (snapshot.connectionState == ConnectionState.active) {
           var courseDocument = snapshot.data.data;
           var sections = courseDocument()['chatlist'];
-
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
           return ListView.separated(
             padding: const EdgeInsets.all(16.0),
             itemBuilder: /*1*/ (context, index) {
