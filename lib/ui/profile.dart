@@ -283,6 +283,7 @@ class _ProfileState extends State<Profile> {
         ref.getDownloadURL().then((loc) {
           setState(() {
             _imageUrl = loc;
+            print(_imageUrl);
           });
         });
       } catch (error) {

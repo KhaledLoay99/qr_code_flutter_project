@@ -1,10 +1,13 @@
 import 'package:Dcode/logic/chatlist.dart';
 import 'package:Dcode/ui/privateChat.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:async';
 import 'home.dart';
 import 'notification.dart';
 import 'profile.dart';
+import 'dart:developer';
 
 void main() => runApp(chatlist());
 
@@ -27,55 +30,31 @@ class UserListState extends State<UserList> {
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
   final _biggerFont = const TextStyle(fontSize: 18.0);
-  final chatlistNames chatlistLogic = chatlistNames();
 
   // #enddocregion RWS-var
 
   // #docregion _buildSuggestions
-  Widget _buildChatList() {
-    return ListView.separated(
-      padding: const EdgeInsets.all(16.0),
-      itemBuilder: /*1*/ (context, i) {
-        return _buildRow(chatlistLogic.getNames()[i]);
-      },
-      separatorBuilder: (context, index) {
-        return Divider();
-      },
-      itemCount: chatlistLogic.getNames().length,
-    );
-  }
+  Widget _buildChatList() {}
   // #enddocregion _buildSuggestions
 
   // #docregion _buildRow
-  Widget _buildRow(String name) {
-    return ListTile(
-      leading: CircleAvatar(
-        child: Row(
-          children: <Widget>[
-            Image.asset(
-              'images/user.png',
-              height: 40,
-            ),
-          ],
-        ),
-      ),
-      title: Text(
-        name,
-        style: _biggerFont,
-      ),
-      trailing: Icon(Icons.arrow_right),
-      onTap: () {
-        // send to chat screen
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => privateChat()),
-        );
-      },
-    );
-  }
+
   // #enddocregion _buildRow
 
   // #docregion RWS-build
+  String loadAsset(String imagepath) {
+    var imageUrl;
+    try {
+      var ref = FirebaseStorage.instance.ref().child(imagepath);
+      ref.getDownloadURL().then((loc) {
+        imageUrl = loc;
+      });
+    } catch (error) {
+      imageUrl = null;
+    }
+
+    return imageUrl;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,13 +77,6 @@ class UserListState extends State<UserList> {
         ),
         backgroundColor: Colors.white,
         body: _buildChatList(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // Add your onPressed code here!
-          },
-          child: Icon(Icons.chat),
-          backgroundColor: Colors.lightBlue,
-        ),
       ),
     );
   }
