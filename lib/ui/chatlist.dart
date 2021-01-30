@@ -34,7 +34,58 @@ class UserListState extends State<UserList> {
   // #enddocregion RWS-var
 
   // #docregion _buildSuggestions
-  Widget _buildChatList() {}
+  Widget _buildChatList() {
+    var imageUrl;
+    return StreamBuilder<DocumentSnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('users')
+          .doc('4au4PFwK3mRrkG77pwLZU9EusFs1')
+          .snapshots(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          var courseDocument = snapshot.data.data;
+          var sections = courseDocument()['chatlist'];
+
+          return ListView.separated(
+            padding: const EdgeInsets.all(16.0),
+            itemBuilder: /*1*/ (context, index) {
+              return ListTile(
+                leading: CircleAvatar(
+                  child: Row(
+                    children: <Widget>[
+                      (imageUrl == null)
+                          ? Image.asset('images/chat.png')
+                          : Image.network(imageUrl)
+                    ],
+                  ),
+                ),
+                title: Text(
+                  sections[index]['username'],
+                  style: _biggerFont,
+                ),
+                trailing: Icon(Icons.arrow_right),
+                onTap: () {
+                  // send to chat screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => privateChat()),
+                  );
+                },
+              );
+              ;
+            },
+            separatorBuilder: (context, index) {
+              return Divider();
+            },
+            itemCount: sections.length,
+          );
+        } else {
+          return Container();
+        }
+      },
+    );
+  }
   // #enddocregion _buildSuggestions
 
   // #docregion _buildRow
