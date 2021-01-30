@@ -115,19 +115,20 @@ class UserListState extends State<UserList> {
   // #enddocregion _buildRow
 
   // #docregion RWS-build
-  String loadAsset(String imagepath) {
-    var imageUrl;
-    try {
-      var ref = FirebaseStorage.instance.ref().child(imagepath);
-      ref.getDownloadURL().then((loc) {
-        imageUrl = loc;
-      });
-    } catch (error) {
-      imageUrl = null;
-    }
 
-    return imageUrl;
-  }
+  // String loadAsset(String imagepath) {
+  //   var imageUrl;
+  //   try {
+  //     var ref = FirebaseStorage.instance.ref().child(imagepath);
+  //     ref.getDownloadURL().then((loc) {
+  //       imageUrl = loc;
+  //     });
+  //   } catch (error) {
+  //     imageUrl = null;
+  //   }
+
+  //   return imageUrl;
+  // }
 
   @override
   Widget build(BuildContext context) {
