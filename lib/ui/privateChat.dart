@@ -25,6 +25,8 @@ class privateChat extends StatefulWidget {
 }
 
 class privateChatState extends State<privateChat> {
+  var _usernameField = new TextEditingController();
+
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
   final _formKey = GlobalKey<FormState>();
