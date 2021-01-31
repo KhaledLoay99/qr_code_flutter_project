@@ -14,6 +14,10 @@ import 'package:Dcode/ui/home.dart';
 
 class privateChat extends StatefulWidget {
   @override
+  var user;
+  privateChat({var user}) {
+    this.user = user;
+  }
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return privateChatState();
