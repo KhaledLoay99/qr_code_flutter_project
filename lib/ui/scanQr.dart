@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:Dcode/ui/home.dart';
 import 'package:Dcode/ui/profile.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class scanQr extends StatefulWidget {
   @override
@@ -16,14 +20,19 @@ class scanQr extends StatefulWidget {
 class scanQrState extends State<scanQr> {
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
-  String _counter, _value = "";
+  String _userid, _value = "";
 
-  Future _incrementCounter() async {
-    _counter = await FlutterBarcodeScanner.scanBarcode(
+  Future scanUser() async {
+    _userid = await FlutterBarcodeScanner.scanBarcode(
         "#004297", "Cancel", true, ScanMode.DEFAULT);
 
     setState(() {
-      _value = _counter;
+      _value = _userid;
+      openChat(FirebaseAuth.instance.currentUser.uid, _userid);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => chatlist()),
+      );
     });
   }
 
@@ -134,7 +143,7 @@ class scanQrState extends State<scanQr> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: scanUser,
         child: Icon(Icons.camera_alt),
         backgroundColor: Colors.lightBlue,
       ),
