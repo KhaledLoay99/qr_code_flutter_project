@@ -118,7 +118,7 @@ class privateChatState extends State<privateChat> {
                   onPressed: () {
                     if (_usernameField.text != "") {
                       sendMessage(currentUser, widget.user["userid"],
-                         _usernameField.text);
+                          _usernameField.text);
                       _usernameField.text = "";
                     }
                     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -139,8 +139,8 @@ class privateChatState extends State<privateChat> {
           ]);
         });
   }
-}
- Future<void> sendMessage(String myid, String userid, String text) async {
+
+  Future<void> sendMessage(String myid, String userid, String text) async {
     await Firebase.initializeApp();
     var list = [myid, userid];
     list.sort();
