@@ -36,6 +36,19 @@ class scanQrState extends State<scanQr> {
     });
   }
 
+  Future<void> openChat(String myid, String userid) async {
+    await Firebase.initializeApp();
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection('user');
+    var list = [myid, userid];
+    list.sort();
+    DocumentSnapshot variable = await collectionReference.doc(userid).get();
+    DocumentSnapshot variable2 = await collectionReference.doc(myid).get();
+
+    var username = variable['username'];
+    var myusername = variable2['username'];
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
