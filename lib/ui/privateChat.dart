@@ -2,6 +2,7 @@ import 'package:Dcode/logic/chatlist.dart';
 import 'package:Dcode/logic/privatechat.dart';
 import 'package:Dcode/ui/chatlist.dart';
 import 'package:Dcode/ui/notification.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,10 @@ import 'package:Dcode/ui/signup.dart';
 import 'package:Dcode/ui/profile.dart';
 import 'package:Dcode/ui/carProfile.dart';
 import 'package:Dcode/ui/home.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
 
 class privateChat extends StatefulWidget {
   @override
@@ -59,5 +64,15 @@ class privateChatState extends State<privateChat> {
     );
   }
 
-  Widget chat() {}
+  Widget chat() {
+    var currentUser = FirebaseAuth.instance.currentUser.uid;
+    var list = [currentUser, widget.user["userid"]];
+
+    list.sort();
+    Query users = FirebaseFirestore.instance
+        .collection('messages')
+        .where("userid1", isEqualTo: list[0])
+        .where("userid2", isEqualTo: list[1])
+        .orderBy('date');
+  }
 }
