@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 
 class scanQr extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class scanQrState extends State<scanQr> {
   Future<void> openChat(String myid, String userid) async {
     await Firebase.initializeApp();
     CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection('user');
+        FirebaseFirestore.instance.collection('users');
     var list = [myid, userid];
     list.sort();
     DocumentSnapshot variable = await collectionReference.doc(userid).get();

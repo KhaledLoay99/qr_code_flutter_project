@@ -40,7 +40,7 @@ class UserListState extends State<UserList> {
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
           .collection('users')
-          .doc("4au4PFwK3mRrkG77pwLZU9EusFs1")
+          .doc(FirebaseAuth.instance.currentUser.uid)
           .snapshots(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
