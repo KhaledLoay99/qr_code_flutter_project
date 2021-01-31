@@ -76,7 +76,16 @@ class privateChatState extends State<privateChat> {
         .orderBy('date');
     return StreamBuilder<QuerySnapshot>(
         stream: users.snapshots(),
-        builder:
-            (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {});
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState != ConnectionState.active) {
+            return Container();
+          }
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+        });
   }
 }
