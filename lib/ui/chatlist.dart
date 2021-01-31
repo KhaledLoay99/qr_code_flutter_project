@@ -8,6 +8,7 @@ import 'home.dart';
 import 'notification.dart';
 import 'profile.dart';
 import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(chatlist());
 
@@ -39,10 +40,14 @@ class UserListState extends State<UserList> {
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
           .collection('users')
-          .doc('4au4PFwK3mRrkG77pwLZU9EusFs1')
+          .doc("4au4PFwK3mRrkG77pwLZU9EusFs1")
           .snapshots(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData || snapshot.data == null) {
+          return Container();
+        }
+
         if (snapshot.connectionState == ConnectionState.active) {
           var courseDocument = snapshot.data.data;
           var sections = courseDocument()['chatlist'];
@@ -69,9 +74,9 @@ class UserListState extends State<UserList> {
               //     .ref()
               //     .child(sections[index]['imagepath']);
               imageUrl =
-                  "https://firebasestorage.googleapis.com/v0/b/dcode-bd3d1.appspot.com/o/" +
-                      sections[index]['imagepath'] +
-                      "?alt=media";
+                  "https://firebasestorage.googleapis.com/v0/b/dcode-bd3d1.appspot.com/o/user" +
+                      sections[index]['userid'] +
+                      ".png?alt=media";
               return ListTile(
                 leading: CircleAvatar(
                   child: Row(
@@ -91,7 +96,14 @@ class UserListState extends State<UserList> {
                   // send to chat screen
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => privateChat()),
+                    MaterialPageRoute(
+                        builder: (context) => privateChat(
+                              // user: {
+                              //   "username": sections[index]['username'],
+                              //   "imagepath": imageUrl,
+                              //   "userid": sections[index]['userid']
+                              // },
+                            )),
                   );
                 },
               );
@@ -100,7 +112,9 @@ class UserListState extends State<UserList> {
             separatorBuilder: (context, index) {
               return Divider();
             },
-            itemCount: sections.length,
+            itemCount: sections.runtimeType.toString() == "List<dynamic>"
+                ? sections.length
+                : 0,
           );
         } else {
           return Container();
