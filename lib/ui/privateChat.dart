@@ -117,8 +117,8 @@ class privateChatState extends State<privateChat> {
                 FloatingActionButton(
                   onPressed: () {
                     if (_usernameField.text != "") {
-                      //sendMessage(currentUser, widget.user["userid"],
-                      //   _usernameField.text);
+                      sendMessage(currentUser, widget.user["userid"],
+                         _usernameField.text);
                       _usernameField.text = "";
                     }
                     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -138,5 +138,19 @@ class privateChatState extends State<privateChat> {
             )
           ]);
         });
+  }
+}
+ Future<void> sendMessage(String myid, String userid, String text) async {
+    await Firebase.initializeApp();
+    var list = [myid, userid];
+    list.sort();
+    Map<String, dynamic> messageInfo = {
+      'date': FieldValue.serverTimestamp(),
+      'sentby': myid,
+      'text': text,
+      "userid1": list[0],
+      'userid2': list[1]
+    };
+ 
   }
 }
