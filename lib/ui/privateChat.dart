@@ -74,5 +74,9 @@ class privateChatState extends State<privateChat> {
         .where("userid1", isEqualTo: list[0])
         .where("userid2", isEqualTo: list[1])
         .orderBy('date');
+    return StreamBuilder<QuerySnapshot>(
+        stream: users.snapshots(),
+        builder:
+            (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {});
   }
 }
