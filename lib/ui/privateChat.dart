@@ -119,6 +119,31 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    var list = [currentUser, widget.user["userid"]];
+    list.sort();
+    Query users = FirebaseFirestore.instance
+        .collection('messages')
+        .where("userid1", isEqualTo: list[0])
+        .where("userid2", isEqualTo: list[1])
+        .orderBy('date');
+    return StreamBuilder<QuerySnapshot>(
+        stream: users.snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState != ConnectionState.active) {
+            return Container();
+          }
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+          final docs = snapshot.data.docs;
+        });
+  }
+
   Future<void> sendMessage(String myid, String userid, String text) async {
     await Firebase.initializeApp();
     var list = [myid, userid];
