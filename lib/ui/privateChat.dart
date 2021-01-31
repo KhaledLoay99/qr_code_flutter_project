@@ -70,6 +70,39 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  Widget _buildMessage(String message, bool isMe) {
+    final msg = Container(
+      width: 300,
+      margin: isMe
+          ? EdgeInsets.only(top: 8.0, bottom: 8.0, left: 80.0)
+          : EdgeInsets.only(top: 8.0, bottom: 8.0, right: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+      decoration: BoxDecoration(
+        color: isMe ? Theme.of(context).accentColor : Color(0xFFFFEFEE),
+        borderRadius: isMe
+            ? BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                bottomLeft: Radius.circular(15.0),
+              )
+            : BorderRadius.only(
+                topRight: Radius.circular(15.0),
+                bottomRight: Radius.circular(15.0),
+              ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(message,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w600,
+                color: Colors.blueGrey,
+              )),
+        ],
+      ),
+    );
+  }
+
   Future<void> sendMessage(String myid, String userid, String text) async {
     await Firebase.initializeApp();
     var list = [myid, userid];
