@@ -29,7 +29,32 @@ class Userprovider with ChangeNotifier {
     for (final key in nMap.keys) {
       if (key == 'username') {
         user[userIndex].username = nMap[key];
-        var xsnaps = FirebaseFirestore.instance.collection('users');
+        var mysnaps = FirebaseFirestore.instance
+            .collection('users')
+            .document(FirebaseAuth.instance.currentUser.uid);
+        mysnaps.get().then((value) {
+          value['chatlist'].forEach((users) {
+            users['userid'];
+            var csnaps = FirebaseFirestore.instance
+                .collection('users')
+                .document(users['userid'])
+                .get()
+                .then((cusers) {
+              var chatList = cusers['chatlist'];
+              chatList.forEach((chats) {
+                if (chats['userid'] == FirebaseAuth.instance.currentUser.uid) {
+                  chats['username'] = nMap[key];
+                  data = chatList;
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .document(users['userid'])
+                      .updateData({'chatlist': data});
+                }
+              });
+            });
+          });
+        });
+        /*var xsnaps = FirebaseFirestore.instance.collection('users');
         xsnaps.snapshots().listen((QuerySnapshot querySnapshot) {
           querySnapshot.documents.forEach((document) {
             if (document.data()['chatlist'] != null) {
@@ -46,12 +71,8 @@ class Userprovider with ChangeNotifier {
               });
             }
           });
-          xsnaps.get().then((value) {
-            print(
-                'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
-            print(data);
-          });
-        });
+          xsnaps.get().then((value) {});
+        });*/
       }
       if (key == 'location') user[userIndex].location = nMap[key];
       if (key == 'profileImage') user[userIndex].profileImage = nMap[key];
