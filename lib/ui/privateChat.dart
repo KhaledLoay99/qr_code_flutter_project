@@ -141,6 +141,68 @@ class _ChatScreenState extends State<ChatScreen> {
             return Text("Loading");
           }
           final docs = snapshot.data.docs;
+
+          return Scaffold(
+            backgroundColor: Theme.of(context).primaryColor,
+            appBar: AppBar(
+              elevation: 0.0,
+              leading: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.arrow_back),
+              ),
+              title: Center(
+                child: Text(
+                  widget.user['username'],
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.more_horiz, size: 30.0),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            body: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 20.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(30.0),
+                          topLeft: Radius.circular(30.0),
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(30.0),
+                          topLeft: Radius.circular(30.0),
+                        ),
+                        child: ListView.builder(
+                            controller: _scrollController,
+                            padding: EdgeInsets.only(top: 15.0),
+                            itemCount: docs.length,
+                            itemBuilder: (context, index) {
+                              final bool isMe =
+                                  currentUser == docs[index]['sentby'];
+                              return _buildMessage(docs[index]['text'], isMe);
+                            }),
+                      ),
+                    ),
+                  ),
+                  _buildMessageComposer(),
+                ],
+              ),
+            ),
+          );
         });
   }
 
