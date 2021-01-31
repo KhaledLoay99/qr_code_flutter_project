@@ -99,6 +99,22 @@ class privateChatState extends State<privateChat> {
                   ),
                 );
               }).toList(),
+            ),
+            Container(
+              height: 70.0,
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(children: [
+                Expanded(
+                    child: TextField(
+                  controller: _usernameField,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: InputDecoration(
+                    hintText: "Send a message ...",
+                    border: InputBorder.none,
+                  ),
+                )),
+              ]),
             )
           ]);
         });
