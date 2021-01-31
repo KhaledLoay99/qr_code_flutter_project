@@ -98,11 +98,11 @@ class UserListState extends State<UserList> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => privateChat(
-                              // user: {
-                              //   "username": sections[index]['username'],
-                              //   "imagepath": imageUrl,
-                              //   "userid": sections[index]['userid']
-                              // },
+                              user: {
+                                "username": sections[index]['username'],
+                                "imagepath": imageUrl,
+                                "userid": sections[index]['userid']
+                              },
                             )),
                   );
                 },
