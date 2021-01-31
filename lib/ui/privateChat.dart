@@ -114,6 +114,26 @@ class privateChatState extends State<privateChat> {
                     border: InputBorder.none,
                   ),
                 )),
+                FloatingActionButton(
+                  onPressed: () {
+                    if (_usernameField.text != "") {
+                      //sendMessage(currentUser, widget.user["userid"],
+                      //   _usernameField.text);
+                      _usernameField.text = "";
+                    }
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
+                  },
+                  child: Icon(
+                    Icons.send,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                  backgroundColor: Colors.blue,
+                  elevation: 0,
+                ),
               ]),
             )
           ]);
