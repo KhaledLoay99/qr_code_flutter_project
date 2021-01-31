@@ -120,8 +120,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => privateChat()),
+                              MaterialPageRoute(builder: (context) => home()),
                             );
                           },
                         )
