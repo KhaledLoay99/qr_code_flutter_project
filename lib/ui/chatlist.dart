@@ -97,7 +97,7 @@ class UserListState extends State<UserList> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => privateChat(
+                        builder: (context) => ChatScreen(
                               user: {
                                 "username": sections[index]['username'],
                                 "imagepath": imageUrl,
