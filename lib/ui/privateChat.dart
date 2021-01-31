@@ -151,6 +151,8 @@ class privateChatState extends State<privateChat> {
       "userid1": list[0],
       'userid2': list[1]
     };
- 
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection('messages');
+    collectionReference.add(messageInfo);
   }
 }
