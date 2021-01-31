@@ -5,7 +5,9 @@ class privatechat {
 
   privatechat() {
     message m1 = new message("how my friend", "3:00PM");
-    message m2 = new message("hello,how are you man? ", "3:04PM");
+    message m2 = new message(
+        "hello,how are you mdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadsaadsassadadsdsan? ",
+        "3:04PM");
     message m3 = new message("I am fine thanks", "3:04PM");
     message m4 = new message("what is the lecture time", "3:05PM");
     userchat.add(m1);
