@@ -86,6 +86,21 @@ class privateChatState extends State<privateChat> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Loading");
           }
+          final docs = snapshot.data.docs;
+          return Stack(children: <Widget>[
+            new ListView(
+              children: snapshot.data.docs.map((DocumentSnapshot document) {
+                return new ListTile(
+                  title: new Text(
+                    document.data()['text'],
+                    textAlign: document.data()['sentby'] == currentUser
+                        ? TextAlign.right
+                        : TextAlign.left,
+                  ),
+                );
+              }).toList(),
+            )
+          ]);
         });
   }
 }
