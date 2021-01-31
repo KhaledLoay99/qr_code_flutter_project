@@ -15,7 +15,6 @@ class Userprovider with ChangeNotifier {
   bool prog = true;
   bool err = false;
   Future<void> updateData(String id, val) async {
-    print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
     final userIndex = user.indexWhere((element) => element.id == id);
     var snaps = FirebaseFirestore.instance
         .collection('users')
@@ -26,9 +25,34 @@ class Userprovider with ChangeNotifier {
     });
 
     var nMap = Map<String, dynamic>.from(val);
-    print(nMap);
+    var data;
     for (final key in nMap.keys) {
-      if (key == 'username') user[userIndex].username = nMap[key];
+      if (key == 'username') {
+        user[userIndex].username = nMap[key];
+        var xsnaps = FirebaseFirestore.instance.collection('users');
+        xsnaps.snapshots().listen((QuerySnapshot querySnapshot) {
+          querySnapshot.documents.forEach((document) {
+            if (document.data()['chatlist'] != null) {
+              var chatList = document.data()['chatlist'];
+              chatList.forEach((element) {
+                if (element['userid'] ==
+                    FirebaseAuth.instance.currentUser.uid) {
+                  element['username'] = nMap[key];
+                  data = chatList;
+                  xsnaps
+                      .document(document.documentID)
+                      .updateData({'chatlist': data});
+                }
+              });
+            }
+          });
+          xsnaps.get().then((value) {
+            print(
+                'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
+            print(data);
+          });
+        });
+      }
       if (key == 'location') user[userIndex].location = nMap[key];
       if (key == 'profileImage') user[userIndex].profileImage = nMap[key];
       if (key == 'email') user[userIndex].email = nMap[key];
@@ -40,6 +64,27 @@ class Userprovider with ChangeNotifier {
     await Firebase.initializeApp();
     try {
       var snaps = FirebaseFirestore.instance.collection('users');
+      /*var xsnaps = FirebaseFirestore.instance.collection('users');
+      List uname = [];
+      int count = 0;
+      xsnaps.snapshots().listen((QuerySnapshot querySnapshot) {
+        querySnapshot.documents.forEach((document) {
+          if (document.data()['chatlist'] != null) count++;
+          uname = document.data()['chatlist'];
+        });
+        xsnaps.get().then((value) {
+          print(
+              'KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKLKKKKKKKKKKKKKKKKKK');
+          print(uname);
+          uname.forEach((element) {
+            print(element['userid']);
+            if (element['userid'] == 'Uk8BJa6ipVXu4RLmZV85Yyc5naZ2')
+              element['username'] = 'TEEEEST';
+          });
+          print(uname);
+          print(count);
+        });
+      });*/
       snaps.snapshots().listen((QuerySnapshot querySnapshot) {
         if (querySnapshot.size > 0) {
           querySnapshot.documents.forEach((document) async {
