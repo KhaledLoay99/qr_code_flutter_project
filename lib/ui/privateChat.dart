@@ -101,6 +101,22 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
     );
+
+    if (isMe) return msg;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        msg,
+        IconButton(
+          icon: Icon(
+            true ? Icons.favorite : Icons.favorite_border_outlined,
+            size: 30.0,
+            color: true ? Theme.of(context).primaryColor : Colors.blueGrey,
+          ),
+          onPressed: () {},
+        ),
+      ],
+    );
   }
 
   Future<void> sendMessage(String myid, String userid, String text) async {
