@@ -47,6 +47,19 @@ class scanQrState extends State<scanQr> {
 
     var username = variable['username'];
     var myusername = variable2['username'];
+
+    Map<String, dynamic> chatlist = {
+      'chatlist': FieldValue.arrayUnion([
+        {'userid': myid, 'username': myusername}
+      ])
+    };
+    collectionReference.doc(userid).update(chatlist);
+    Map<String, dynamic> chatlist2 = {
+      'chatlist': FieldValue.arrayUnion([
+        {'userid': userid, 'username': username}
+      ])
+    };
+    collectionReference.doc(myid).update(chatlist2);
   }
 
   @override
