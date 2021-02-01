@@ -83,7 +83,18 @@ class UserListState extends State<UserList> {
                     children: <Widget>[
                       (imageUrl == null)
                           ? Image.asset('images/chat.png')
-                          : Image.network(imageUrl)
+                          : Expanded(
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: NetworkImage(imageUrl),
+                                      fit: BoxFit.fill),
+                                ),
+                              ),
+                            )
                     ],
                   ),
                 ),

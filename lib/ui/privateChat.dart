@@ -131,6 +131,10 @@ class _ChatScreenState extends State<ChatScreen> {
         .where("userid1", isEqualTo: list[0])
         .where("userid2", isEqualTo: list[1])
         .orderBy('date');
+    var imageUrl =
+        "https://firebasestorage.googleapis.com/v0/b/dcode-bd3d1.appspot.com/o/user" +
+            widget.user["userid"] +
+            ".png?alt=media";
     return StreamBuilder<QuerySnapshot>(
         stream: users.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -156,11 +160,29 @@ class _ChatScreenState extends State<ChatScreen> {
                 icon: Icon(Icons.arrow_back),
               ),
               title: Center(
-                child: Text(
-                  widget.user['username'],
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Row(
+                  children: [
+                    (imageUrl == null)
+                        ? Image.asset('images/chat.png')
+                        : Expanded(
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage(imageUrl),
+                                    fit: BoxFit.fill),
+                              ),
+                            ),
+                          ),
+                    Text(
+                      widget.user['username'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               actions: [
