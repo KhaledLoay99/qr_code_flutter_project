@@ -50,20 +50,9 @@ class _ChatScreenState extends State<ChatScreen> {
             color: Theme.of(context).primaryColor,
             iconSize: 25.0,
             onPressed: () {
-              if (_messagefield.text != "") {
-                sendMessage(
-                    currentUser, widget.user["userid"], _messagefield.text);
-                _messagefield.text = "";
-                _scrollController.animateTo(
-                    _scrollController.position.maxScrollExtent,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeOut);
-                // FocusScope.of(context).unfocus();
-              }
-              Future.delayed(Duration(microseconds: 500), () {
-                //FocusScope.of(context).unfocus();
-                //call back after 500  microseconds
-              });
+              //FocusScope.of(context).unfocus();
+              //call back after 500  microseconds
+
               //FocusScope.of(context).unfocus();
               // FocusScopeNode currentFocus = FocusScope.of(context);
               // if (!currentFocus.hasPrimaryFocus) {
@@ -277,12 +266,15 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         child: ListView.builder(
                             controller: _scrollController,
+                            reverse: true,
                             padding: EdgeInsets.only(top: 15.0),
                             itemCount: docs.length,
                             itemBuilder: (context, index) {
-                              final bool isMe =
-                                  currentUser == docs[index]['sentby'];
-                              return _buildMessage(docs[index]['text'], isMe);
+                              final bool isMe = currentUser ==
+                                  docs[(docs.length - 1) - index]['sentby'];
+                              return _buildMessage(
+                                  docs[(docs.length - 1) - index]['text'],
+                                  isMe);
                             }),
                       ),
                     ),
