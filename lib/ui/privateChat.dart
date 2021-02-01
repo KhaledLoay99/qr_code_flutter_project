@@ -50,6 +50,13 @@ class _ChatScreenState extends State<ChatScreen> {
             color: Theme.of(context).primaryColor,
             iconSize: 25.0,
             onPressed: () {
+              if (_messagefield.text != "") {
+                sendMessage(
+                    currentUser, widget.user["userid"], _messagefield.text);
+                _messagefield.text = "";
+
+                // FocusScope.of(context).unfocus();
+              }
               //FocusScope.of(context).unfocus();
               //call back after 500  microseconds
 
