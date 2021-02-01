@@ -16,10 +16,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 class carProfile extends StatefulWidget {
   @override
   static Pattern pattern;
-  _carProfileState createState() => _carProfileState();
+  final String nUser;
+  _carProfileState createState() => _carProfileState(nUser);
+  carProfile({Key key, this.nUser}) : super(key: key);
 }
 
 class _carProfileState extends State<carProfile> {
+  String nUser;
+  _carProfileState(this.nUser);
   final TextEditingController _controller = new TextEditingController();
   TextFormField test;
   bool _isEnabled;
@@ -46,6 +50,21 @@ class _carProfileState extends State<carProfile> {
       prog = false;
     });
     update = Provider.of<Carprovider>(this.context, listen: false);
+    var uPic;
+    if (nUser == null)
+      uPic = FirebaseAuth.instance.currentUser.uid;
+    else
+      uPic = nUser;
+    try {
+      ref = FirebaseStorage.instance.ref().child('car' + uPic + '.png');
+      ref.getDownloadURL().then((loc) {
+        setState(() {
+          _imageUrl = loc;
+        });
+      });
+    } catch (error) {
+      _imageUrl = null;
+    }
     super.initState();
   }
 
@@ -160,34 +179,40 @@ class _carProfileState extends State<carProfile> {
                     ? Container(
                         width: MediaQuery.of(this.context).size.width / 4,
                         height: 30,
-                        child: ToggleSwitch(
-                          minWidth:
-                              MediaQuery.of(this.context).size.width / 8.5,
-                          initialLabelIndex:
-                              carList[carIndex].salestatus ? 0 : 1,
-                          cornerRadius: 20.0,
-                          activeFgColor: Colors.white,
-                          inactiveBgColor: Colors.grey,
-                          inactiveFgColor: Colors.white,
-                          labels: ['Y', 'N'],
-                          activeBgColors: [Colors.blue, Colors.pink],
-                          onToggle: (index) {
-                            setState(() {
-                              carList[carIndex].salestatus =
-                                  !carList[carIndex].salestatus;
-                            });
-                            update.updateData(user_id,
-                                {'SaleStatus': carList[carIndex].salestatus});
-                            print('switched to: $index');
-                          },
-                        ),
+                        child: (nUser == null)
+                            ? ToggleSwitch(
+                                minWidth:
+                                    MediaQuery.of(this.context).size.width /
+                                        8.5,
+                                initialLabelIndex:
+                                    carList[carIndex].salestatus ? 0 : 1,
+                                cornerRadius: 20.0,
+                                activeFgColor: Colors.white,
+                                inactiveBgColor: Colors.grey,
+                                inactiveFgColor: Colors.white,
+                                labels: ['Y', 'N'],
+                                activeBgColors: [Colors.blue, Colors.pink],
+                                onToggle: (index) {
+                                  setState(() {
+                                    carList[carIndex].salestatus =
+                                        !carList[carIndex].salestatus;
+                                  });
+                                  update.updateData(user_id, {
+                                    'SaleStatus': carList[carIndex].salestatus
+                                  });
+                                  print('switched to: $index');
+                                },
+                              )
+                            : null,
                       )
-                    : IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          createAlertDialog(this.context, type, hintText);
-                        },
-                      ),
+                    : (nUser == null)
+                        ? IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              createAlertDialog(this.context, type, hintText);
+                            },
+                          )
+                        : null,
               )
             ])
           ]),
@@ -200,9 +225,13 @@ class _carProfileState extends State<carProfile> {
       if (carList.isEmpty) {
         err = true;
       }
-      user_id = FirebaseAuth.instance.currentUser.uid;
+      if (nUser == null) {
+        user_id = FirebaseAuth.instance.currentUser.uid;
+      } else {
+        user_id = nUser;
+      }
       carIndex = carList.indexWhere((element) => element.id == user_id);
-      try {
+      /*try {
         ref = FirebaseStorage.instance
             .ref()
             .child(carList[carIndex].carprofileImage);
@@ -213,7 +242,7 @@ class _carProfileState extends State<carProfile> {
         });
       } catch (error) {
         _imageUrl = null;
-      }
+      }*/
     }
     carList = Provider.of<Carprovider>(this.context, listen: true).car;
     Future getImage() async {
@@ -222,7 +251,7 @@ class _carProfileState extends State<carProfile> {
       setState(() {
         uImage = image;
       });
-      String filename = basename(uImage.path);
+      String filename = "car" + user_id + '.png';
       var firebaseStorageRef = FirebaseStorage.instance.ref().child(filename);
       var uploadTask = firebaseStorageRef.putFile(uImage).then((loc) {
         update.updateData(user_id, {'CarProfileImage': filename});
@@ -316,30 +345,34 @@ class _carProfileState extends State<carProfile> {
                                                       : AssetImage(
                                                           "images/istockphoto-1144092062-612x612.jpg"))),
                                         ),
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                              top: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  6.2,
-                                              left: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2.2),
-                                          margin: EdgeInsets.only(bottom: 50),
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.black54,
-                                            child: IconButton(
-                                              onPressed: () {
-                                                getImage();
-                                              },
-                                              icon: Icon(
-                                                Icons.edit,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                        (nUser == null)
+                                            ? Container(
+                                                padding: EdgeInsets.only(
+                                                    top: MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        6.2,
+                                                    left: MediaQuery.of(context)
+                                                            .size
+                                                            .width /
+                                                        2.2),
+                                                margin:
+                                                    EdgeInsets.only(bottom: 50),
+                                                child: CircleAvatar(
+                                                  backgroundColor:
+                                                      Colors.black54,
+                                                  child: IconButton(
+                                                    onPressed: () {
+                                                      getImage();
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.edit,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : Text(''),
                                       ],
                                     ),
                                   ],
@@ -362,7 +395,11 @@ class _carProfileState extends State<carProfile> {
                                           hintText: carList[carIndex].carmodel,
                                           type: "carModel"),
                                       textfield(
-                                          hintText: "For Sale",
+                                          hintText: (nUser == null)
+                                              ? "For Sale"
+                                              : carList[carIndex].salestatus
+                                                  ? "Car is listed for sale."
+                                                  : "Car is not Listed for sale",
                                           type: "SaleStatus"),
                                       textfield(
                                           hintText: carList[carIndex].location,

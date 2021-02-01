@@ -11,6 +11,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Dcode/ui/profile.dart';
 import 'package:Dcode/providers/Userprovider.dart';
 import "package:provider/provider.dart";
+import 'package:Dcode/ui/carProfile.dart';
+import 'package:Dcode/providers/Carprovider.dart';
 
 class ChatScreen extends StatefulWidget {
   var user;
@@ -239,10 +241,15 @@ class _ChatScreenState extends State<ChatScreen> {
                       }
 
                       if (itemIdentifier == 'carProfile') {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => home()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ChangeNotifierProvider<Carprovider>(
+                                      create: (_) => Carprovider(),
+                                      child: carProfile(
+                                          nUser: widget.user['userid']))),
+                        );
                       }
                     })
               ],
