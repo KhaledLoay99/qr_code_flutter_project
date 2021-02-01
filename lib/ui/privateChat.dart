@@ -1,3 +1,4 @@
+import 'package:Dcode/ui/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,9 @@ class _ChatScreenState extends State<ChatScreen> {
           : EdgeInsets.only(top: 8.0, bottom: 8.0, right: 10.0),
       padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
       decoration: BoxDecoration(
-        color: isMe ? Theme.of(context).accentColor : Color(0xFFFFEFEE),
+        color: isMe
+            ? Theme.of(context).accentColor
+            : Color.fromRGBO(28, 160, 83, 1.0), //other user container color
         borderRadius: isMe
             ? BorderRadius.only(
                 topLeft: Radius.circular(15.0),
@@ -96,7 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
-                color: Colors.blueGrey,
+                color: Colors.white,
               )),
         ],
       ),
@@ -107,14 +110,14 @@ class _ChatScreenState extends State<ChatScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         msg,
-        IconButton(
-          icon: Icon(
-            true ? Icons.favorite : Icons.favorite_border_outlined,
-            size: 30.0,
-            color: true ? Theme.of(context).primaryColor : Colors.blueGrey,
-          ),
-          onPressed: () {},
-        ),
+        // IconButton(
+        //   icon: Icon(
+        //     true ? Icons.favorite : Icons.favorite_border_outlined,
+        //     size: 30.0,
+        //     color: true ? Theme.of(context).primaryColor : Colors.blueGrey,
+        //   ),
+        //   onPressed: () {},
+        // ),
       ],
     );
   }
@@ -143,6 +146,8 @@ class _ChatScreenState extends State<ChatScreen> {
           final docs = snapshot.data.docs;
 
           return Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Theme.of(context).primaryColor,
             appBar: AppBar(
               elevation: 0.0,
@@ -159,10 +164,57 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
               actions: [
-                IconButton(
-                  icon: Icon(Icons.more_horiz, size: 30.0),
-                  onPressed: () {},
-                ),
+                // IconButton(
+                //   icon: Icon(Icons.more_horiz, size: 30.0),
+                //   onPressed: () {},
+                // ),
+                DropdownButton(
+                    icon: Icon(
+                      Icons.more_vert_outlined,
+                      size: 30.0,
+                      color: Colors.white,
+                    ),
+                    items: [
+                      DropdownMenuItem(
+                        child: Row(
+                          children: [
+                            Icon(Icons.account_circle_outlined),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(widget.user['username'] + ' Profile'),
+                          ],
+                        ),
+                        value: 'userProfile',
+                      ),
+                      DropdownMenuItem(
+                        child: Row(
+                          children: [
+                            Icon(Icons.directions_car),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(widget.user['username'] + ' Car Profile'),
+                          ],
+                        ),
+                        value: 'carProfile',
+                      )
+                    ],
+                    onChanged: (itemIdentifier) {
+                      if (itemIdentifier == 'userProfile') {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => home()),
+                        // );
+                      }
+
+                      if (itemIdentifier == 'carProfile') {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => home()),
+                        // );
+                      }
+                    })
               ],
             ),
             body: GestureDetector(
