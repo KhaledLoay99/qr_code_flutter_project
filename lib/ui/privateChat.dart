@@ -95,6 +95,13 @@ class _ChatScreenState extends State<ChatScreen> {
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               )),
+          SizedBox(height: 8.0),
+          Text("23:10",
+              style: TextStyle(
+                fontSize: 10.0,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              )),
         ],
       ),
     );
@@ -176,13 +183,6 @@ class _ChatScreenState extends State<ChatScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text("30.0",
-                        style: TextStyle(
-                          fontSize: 10.0,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.blueGrey,
-                        )),
-                    SizedBox(height: 8.0),
                   ],
                 ),
               ),
