@@ -20,9 +20,7 @@ class Userprovider with ChangeNotifier {
         .collection('users')
         .document(id)
         .updateData(val)
-        .catchError((e) {
-      print(e);
-    });
+        .catchError((e) {});
 
     var nMap = Map<String, dynamic>.from(val);
     var data;

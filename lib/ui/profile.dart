@@ -19,10 +19,14 @@ import 'package:screenshot/screenshot.dart';
 class Profile extends StatefulWidget {
   @override
   static Pattern pattern;
-  _ProfileState createState() => _ProfileState();
+  final String nUser;
+  _ProfileState createState() => _ProfileState(nUser);
+  Profile({Key key, this.nUser}) : super(key: key);
 }
 
 class _ProfileState extends State<Profile> {
+  String nUser;
+  _ProfileState(this.nUser);
   final TextEditingController _controller = new TextEditingController();
   Color c1 = const Color.fromRGBO(110, 204, 234, 1.0);
   TextFormField test;
@@ -54,6 +58,21 @@ class _ProfileState extends State<Profile> {
       prog = false;
     });
     update = Provider.of<Userprovider>(this.context, listen: false);
+    var uPic;
+    if (nUser == null)
+      uPic = FirebaseAuth.instance.currentUser.uid;
+    else
+      uPic = nUser;
+    try {
+      ref = FirebaseStorage.instance.ref().child('user' + uPic + '.png');
+      ref.getDownloadURL().then((loc) {
+        setState(() {
+          _imageUrl = loc;
+        });
+      });
+    } catch (error) {
+      _imageUrl = null;
+    }
     super.initState();
   }
 
@@ -162,43 +181,47 @@ class _ProfileState extends State<Profile> {
                     !_loading
                         ? Visibility(
                             visible: save_done,
-                            child: RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              onPressed: () {
-                                screenshotController
-                                    .capture(delay: Duration(milliseconds: 10))
-                                    .then((File image) async {
-                                  Map<Permission, PermissionStatus> statuses =
-                                      await [
-                                    Permission.storage,
-                                  ].request();
-                                  if (statuses[Permission.storage].isDenied) {
-                                    return Text("NEED A Permission");
-                                  }
-                                  if (image != null && image.path != null) {
-                                    setState(() {
-                                      _loading = true;
-                                    });
-                                    GallerySaver.saveImage(image.path)
-                                        .then((value) => setState(() {
-                                              _loading = false;
+                            child: (nUser == null)
+                                ? RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    onPressed: () {
+                                      screenshotController
+                                          .capture(
+                                              delay: Duration(milliseconds: 10))
+                                          .then((File image) async {
+                                        Map<Permission, PermissionStatus>
+                                            statuses = await [
+                                          Permission.storage,
+                                        ].request();
+                                        if (statuses[Permission.storage]
+                                            .isDenied) {
+                                          return Text("NEED A Permission");
+                                        }
+                                        if (image != null &&
+                                            image.path != null) {
+                                          setState(() {
+                                            _loading = true;
+                                          });
+                                          GallerySaver.saveImage(image.path)
+                                              .then((value) => setState(() {
+                                                    _loading = false;
 
-                                              save_done = false;
-                                              save_done2 = true;
-                                            }));
-                                  }
-                                }).catchError((onError) {
-                                  print(onError);
-                                });
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(Icons.arrow_circle_down),
-                                  Text("Download Your Qr Code"),
-                                ],
-                              ),
-                            ))
+                                                    save_done = false;
+                                                    save_done2 = true;
+                                                  }));
+                                        }
+                                      }).catchError((onError) {});
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.arrow_circle_down),
+                                        Text("Download Your Qr Code"),
+                                      ],
+                                    ),
+                                  )
+                                : Text('QR'))
                         : CircularProgressIndicator(),
                     Visibility(
                         visible: save_done2,
@@ -255,13 +278,15 @@ class _ProfileState extends State<Profile> {
                           show_Qr();
                         },
                       )
-                    : IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          createAlertDialog(
-                              this.context, type, hintText, update);
-                        },
-                      ),
+                    : (nUser == null)
+                        ? IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              createAlertDialog(
+                                  this.context, type, hintText, update);
+                            },
+                          )
+                        : null,
               )
             ])
           ]),
@@ -274,21 +299,24 @@ class _ProfileState extends State<Profile> {
       if (userList.isEmpty) {
         err = true;
       }
-      user_id = FirebaseAuth.instance.currentUser.uid;
+      if (nUser == null) {
+        user_id = FirebaseAuth.instance.currentUser.uid;
+      } else {
+        user_id = nUser;
+      }
       userIndex = userList.indexWhere((element) => element.id == user_id);
-      try {
+      /*try {
         ref = FirebaseStorage.instance
             .ref()
             .child(userList[userIndex].profileImage);
         ref.getDownloadURL().then((loc) {
           setState(() {
             _imageUrl = loc;
-            print(_imageUrl);
           });
         });
       } catch (error) {
         _imageUrl = null;
-      }
+      }*/
     }
     userList = Provider.of<Userprovider>(this.context, listen: true).user;
     Future getImage() async {
@@ -298,8 +326,6 @@ class _ProfileState extends State<Profile> {
         uImage = image;
       });
       String filename = "user" + user_id + '.png';
-      //print(filename.substring(0, filename.indexOf('.')));
-      //filename = filename.substring(0, filename.indexOf('.')) + '.png';
       var firebaseStorageRef = FirebaseStorage.instance.ref().child(filename);
       var uploadTask = firebaseStorageRef.putFile(uImage).then((loc) {
         update.updateData(user_id, {'profileImage': filename});
@@ -395,30 +421,33 @@ class _ProfileState extends State<Profile> {
                                                     : AssetImage(
                                                         "images/user.png"))),
                                       ),
-                                      Container(
-                                        padding: EdgeInsets.only(
-                                            top: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                6.2,
-                                            left: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                2.2),
-                                        margin: EdgeInsets.only(bottom: 50),
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.black54,
-                                          child: IconButton(
-                                            icon: Icon(
-                                              Icons.edit,
-                                              color: Colors.white,
-                                            ),
-                                            onPressed: () {
-                                              getImage();
-                                            },
-                                          ),
-                                        ),
-                                      ),
+                                      (nUser == null)
+                                          ? Container(
+                                              padding: EdgeInsets.only(
+                                                  top: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      6.2,
+                                                  left: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2.2),
+                                              margin:
+                                                  EdgeInsets.only(bottom: 50),
+                                              child: CircleAvatar(
+                                                backgroundColor: Colors.black54,
+                                                child: IconButton(
+                                                  icon: Icon(
+                                                    Icons.edit,
+                                                    color: Colors.white,
+                                                  ),
+                                                  onPressed: () {
+                                                    getImage();
+                                                  },
+                                                ),
+                                              ),
+                                            )
+                                          : Text(''),
                                     ],
                                   ),
                                 ],

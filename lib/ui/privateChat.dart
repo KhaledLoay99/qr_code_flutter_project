@@ -8,6 +8,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:Dcode/ui/profile.dart';
+import 'package:Dcode/providers/Userprovider.dart';
+import "package:provider/provider.dart";
 
 class ChatScreen extends StatefulWidget {
   var user;
@@ -224,10 +227,15 @@ class _ChatScreenState extends State<ChatScreen> {
                     ],
                     onChanged: (itemIdentifier) {
                       if (itemIdentifier == 'userProfile') {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => home()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ChangeNotifierProvider<Userprovider>(
+                                      create: (_) => Userprovider(),
+                                      child: Profile(
+                                          nUser: widget.user['userid']))),
+                        );
                       }
 
                       if (itemIdentifier == 'carProfile') {
