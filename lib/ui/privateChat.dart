@@ -176,6 +176,13 @@ class _ChatScreenState extends State<ChatScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    Text("30.0",
+                        style: TextStyle(
+                          fontSize: 10.0,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.blueGrey,
+                        )),
+                    SizedBox(height: 8.0),
                   ],
                 ),
               ),
