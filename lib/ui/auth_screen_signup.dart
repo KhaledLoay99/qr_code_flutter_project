@@ -56,7 +56,7 @@ class AuthFormState extends State<AuthForm> {
 
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => HomePage('')),
         (Route<dynamic> route) => false, // remove back arrow
       );
     } on FirebaseAuthException catch (e) {

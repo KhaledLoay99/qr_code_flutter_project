@@ -31,7 +31,7 @@ class AuthFormLoginState extends State<AuthFormLogin> {
       //     new MaterialPageRoute(builder: (BuildContext context) => home()));
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => HomePage('')),
         (Route<dynamic> route) => false, // remove back arrow
       );
     } on FirebaseAuthException catch (e) {

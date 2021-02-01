@@ -1,4 +1,5 @@
 import 'package:Dcode/ui/chatlist.dart';
+import 'package:Dcode/ui/navigatorBar.dart';
 import 'package:Dcode/ui/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:Dcode/ui/home.dart';
@@ -30,9 +31,10 @@ class scanQrState extends State<scanQr> {
     setState(() {
       _value = _userid;
       openChat(FirebaseAuth.instance.currentUser.uid, _userid);
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => chatlist()),
+        MaterialPageRoute(builder: (context) => HomePage('something')),
+        (Route<dynamic> route) => false,
       );
     });
   }

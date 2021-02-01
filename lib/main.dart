@@ -8,7 +8,7 @@ import 'ui/splash_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(MyApp()); 
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
                       }
 
                       if (userSnapshot.hasData) {
-                        return HomePage();
+                        return HomePage('');
                       }
                       return intro();
                     }),

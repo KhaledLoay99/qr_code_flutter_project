@@ -7,12 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
+  String something;
+  HomePage(this.something);
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(this.something);
 }
 
 class _HomePageState extends State<HomePage> {
+  String something;
+  _HomePageState(this.something);
   int selectedPage = 0;
+
   Color c1 = const Color.fromRGBO(110, 204, 234, 1.0);
   final _pageOptions = [
     home(),
@@ -21,6 +26,13 @@ class _HomePageState extends State<HomePage> {
     ChangeNotifierProvider<Userprovider>(
         create: (_) => Userprovider(), child: Profile()),
   ];
+  @override
+  void initState() {
+    super.initState();
+    if (something == 'something') {
+      selectedPage = 2;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

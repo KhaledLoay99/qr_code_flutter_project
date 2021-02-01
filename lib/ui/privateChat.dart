@@ -27,6 +27,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   ScrollController _scrollController = new ScrollController();
 
+  Color c1 = const Color.fromRGBO(110, 204, 234, 1.0);
   var _messagefield = new TextEditingController();
   var currentUser = FirebaseAuth.instance.currentUser.uid;
   Widget _buildMessageComposer() {
@@ -160,38 +161,39 @@ class _ChatScreenState extends State<ChatScreen> {
           return Scaffold(
             resizeToAvoidBottomInset: false,
             resizeToAvoidBottomPadding: false,
-            backgroundColor: Theme.of(context).primaryColor,
+            //backgroundColor: c1,
             appBar: AppBar(
+              backgroundColor: c1,
               elevation: 0.0,
               leading: IconButton(
                 onPressed: () => Navigator.pop(context),
                 icon: Icon(Icons.arrow_back),
               ),
-              title: Center(
-                child: Row(
-                  children: [
-                    (imageUrl == null)
-                        ? Image.asset('images/chat.png')
-                        : Expanded(
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: NetworkImage(imageUrl),
-                                    fit: BoxFit.fill),
-                              ),
-                            ),
+              title: Row(
+                children: [
+                  (imageUrl == null)
+                      ? Image.asset('images/chat.png')
+                      : Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: NetworkImage(imageUrl),
+                                fit: BoxFit.fill),
                           ),
-                    Text(
-                      widget.user['username'],
+                        ),
+                  Flexible(
+                    child: Text(
+                      ' ' + widget.user['username'],
+                      maxLines: 5,
+                      overflow: TextOverflow.visible,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               actions: [
                 // IconButton(
@@ -268,10 +270,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       margin: EdgeInsets.only(top: 20.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(30.0),
-                          topLeft: Radius.circular(30.0),
-                        ),
+                        // borderRadius: BorderRadius.only(
+                        //   topRight: Radius.circular(80.0),
+                        //   topLeft: Radius.circular(80.0),
+                        // ),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
