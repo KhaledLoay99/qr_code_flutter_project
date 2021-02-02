@@ -27,16 +27,17 @@ class scanQrState extends State<scanQr> {
   Future scanUser() async {
     _userid = await FlutterBarcodeScanner.scanBarcode(
         "#004297", "Cancel", true, ScanMode.DEFAULT);
-
-    setState(() {
-      _value = _userid;
-      openChat(FirebaseAuth.instance.currentUser.uid, _userid);
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage('something')),
-        (Route<dynamic> route) => false,
-      );
-    });
+    if (_userid.toString() != "-1") {
+      setState(() {
+        _value = _userid;
+        openChat(FirebaseAuth.instance.currentUser.uid, _userid);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage('something')),
+          (Route<dynamic> route) => false,
+        );
+      });
+    }
   }
 
   Future<void> openChat(String myid, String userid) async {
