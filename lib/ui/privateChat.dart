@@ -291,14 +291,20 @@ class _ChatScreenState extends State<ChatScreen> {
                             padding: EdgeInsets.only(top: 15.0),
                             itemCount: docs.length,
                             itemBuilder: (context, index) {
-                              String timeString =
-                                  docs[(docs.length - 1) - index]['date']
-                                      .toDate()
-                                      .toString();
-                              DateTime date = DateTime.parse(timeString);
-                              String time =
-                                  DateFormat('hh:mm a').format(date).toString();
+                              var timeString;
+                              String time = "";
+                              if (docs[(docs.length - 1) - index]['date'] !=
+                                  null) {
+                                timeString = docs[(docs.length - 1) - index]
+                                        ['date']
+                                    .toDate()
+                                    .toString();
 
+                                DateTime date = DateTime.parse(timeString);
+                                time = DateFormat('hh:mm a')
+                                    .format(date)
+                                    .toString();
+                              }
                               //log(DateFormat('hh:mm').format(date));
 
                               final bool isMe = currentUser ==
