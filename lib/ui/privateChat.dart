@@ -55,6 +55,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 sendMessage(
                     currentUser, widget.user["userid"], _messagefield.text);
                 _messagefield.text = "";
+                _scrollController
+                    .jumpTo(_scrollController.position.minScrollExtent);
 
                 // FocusScope.of(context).unfocus();
               }
