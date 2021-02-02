@@ -13,6 +13,8 @@ import 'package:Dcode/providers/Userprovider.dart';
 import "package:provider/provider.dart";
 import 'package:Dcode/ui/carProfile.dart';
 import 'package:Dcode/providers/Carprovider.dart';
+import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
   var user;
@@ -75,7 +77,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildMessage(String message, bool isMe) {
+  Widget _buildMessage(String message, bool isMe, String time) {
     final msg = Container(
       width: 300,
       margin: isMe
@@ -106,7 +108,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: Colors.white,
               )),
           SizedBox(height: 8.0),
-          Text("23:10",
+          Text(time,
               style: TextStyle(
                 fontSize: 10.0,
                 fontWeight: FontWeight.w600,
@@ -146,6 +148,7 @@ class _ChatScreenState extends State<ChatScreen> {
         "https://firebasestorage.googleapis.com/v0/b/dcode-bd3d1.appspot.com/o/user" +
             widget.user["userid"] +
             ".png?alt=media";
+
     return StreamBuilder<QuerySnapshot>(
         stream: users.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -288,11 +291,22 @@ class _ChatScreenState extends State<ChatScreen> {
                             padding: EdgeInsets.only(top: 15.0),
                             itemCount: docs.length,
                             itemBuilder: (context, index) {
+                              String timeString =
+                                  docs[(docs.length - 1) - index]['date']
+                                      .toDate()
+                                      .toString();
+                              DateTime date = DateTime.parse(timeString);
+                              String time =
+                                  DateFormat('hh:mm a').format(date).toString();
+
+                              //log(DateFormat('hh:mm').format(date));
+
                               final bool isMe = currentUser ==
                                   docs[(docs.length - 1) - index]['sentby'];
                               return _buildMessage(
                                   docs[(docs.length - 1) - index]['text'],
-                                  isMe);
+                                  isMe,
+                                  time);
                             }),
                       ),
                     ),
