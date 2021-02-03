@@ -3,7 +3,7 @@ const admin= require('firebase-admin');
 
 admin.initializeApp();
 
-exports.myFunction= functions.firestore.document('messages/{m}').onCreate((snapshot,context)=>
+exports.myFunction= functions.firestore.document('messages/{message}').onCreate((snapshot,context)=>
 {
 
 	return admin.messaging().sendToTopic('messages',{
