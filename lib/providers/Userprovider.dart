@@ -80,6 +80,7 @@ class Userprovider with ChangeNotifier {
   }
 
   Future<void> fetchdata() async {
+    print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
     await Firebase.initializeApp();
     try {
       var snaps = FirebaseFirestore.instance.collection('users');
