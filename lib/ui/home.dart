@@ -100,7 +100,8 @@ class homeState extends State<home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SettingsPage()),
+                              builder: (context) =>   ChangeNotifierProvider<Userprovider>(
+        create: (_) => Userprovider(), child: SettingsPage())),
                         );
                       }, // When the child is tapped, make an action
                       child: new Container(
