@@ -40,15 +40,15 @@ class _ChatScreenState extends State<ChatScreen> {
     void initstate(){
     final fbm=FirebaseMessaging();
     fbm.requestNotificationPermissions();
-    fbm.configure(onMessage: (msg){
-      print(msg);
+    fbm.configure(onMessage: (Map<String, dynamic> message){
+      print(message);
       return;
     },
-    onLaunch: (msg){
-      print(msg);
+    onLaunch: (Map<String, dynamic> message){
+      print(message);
       return;
-    },onResume: (msg){
-      print(msg);
+    },onResume: (Map<String, dynamic> message){
+      print(message);
       return;
     });
     fbm.subscribeToTopic('messages');
