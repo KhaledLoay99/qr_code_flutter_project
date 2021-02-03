@@ -119,8 +119,13 @@ class _SettingsPageState extends State<SettingsPage> {
                               child: Column(
                                 children: [
                                   Padding(
-                                    padding:
-                                        EdgeInsets.only(bottom: 15.0, top: 9.0),
+                                    padding: EdgeInsets.only(
+                                        bottom:
+                                            MediaQuery.of(context).size.height /
+                                                70,
+                                        top:
+                                            MediaQuery.of(context).size.height /
+                                                60),
                                     child: Text(
                                       userList[userIndex].get_username,
                                       style: TextStyle(
