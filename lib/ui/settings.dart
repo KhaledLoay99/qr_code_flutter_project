@@ -1,22 +1,101 @@
+
+
 import 'package:Dcode/logic/userProfile.dart';
 import 'package:Dcode/ui/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:Dcode/providers/Userprovider.dart';
+import 'package:path/path.dart';
+
+import "package:provider/provider.dart";
+import 'dart:io';
+
+
+
 
 import 'intro.dart';
-
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+class _SettingsPageState extends  State<SettingsPage> {
   Userprofile userprofileData = new Userprofile();
+   bool prog = true;
+  bool err = false;
+  var user_id;
+  var ref;
+  String _imageUrl;
+  List<Userprofile> userList;
+
+  int userIndex;
+    @override
+  void initState() {
+    Provider.of<Userprovider>(this.context, listen: false)
+        .fetchdata()
+        .then((value) {
+      prog = false;
+    });
+    var uPic;
+ 
+    try {
+      ref = FirebaseStorage.instance.ref().child('user' + uPic + '.png');
+      ref.getDownloadURL().then((loc) {
+        setState(() {
+          _imageUrl = loc;
+        });
+      });
+    } catch (error) {
+      _imageUrl = null;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+        if (prog == false) {
+      if (userList.isEmpty) {
+        err = true;
+      }
+      user_id = FirebaseAuth.instance.currentUser.uid;
+      userIndex = userList.indexWhere((element) => element.id == user_id);
+      userList = Provider.of<Userprovider>(this.context, listen: true).user;
+
+    return err
+        ? WillPopScope(
+            onWillPop: () async {
+              return Navigator.canPop(context); // avoid app from exiting
+            },
+            child: Scaffold(
+              body: new AlertDialog(
+                title: new Text('Error'),
+                content: new Text('Error while fetching data!'),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: new Text('Exit'),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : WillPopScope(
+            onWillPop: () async {
+              return Navigator.canPop(context); // avoid app from exiting
+            },
+            child:
+ Scaffold(
         appBar: new AppBar(
           //kkkk
           title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
 //          title: new Text("Login"),
           backgroundColor: const Color.fromRGBO(110, 204, 234, 1.0),
         ),
-        body: Container(
+        body:prog
+                  ? Center(child: CircularProgressIndicator()):
+
+         Container(
             child: ListView(children: [
           Row(
             children: [
@@ -31,7 +110,13 @@ class SettingsPage extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Colors.white,
                     image: DecorationImage(
-                        image: AssetImage('images/profile.jpg'))),
+                                                image: _imageUrl != null
+                                                    
+                                                        ? NetworkImage(
+                                                            _imageUrl)
+                                                      
+                                                    : AssetImage(
+                                                        "images/user.png"))),
               ),
               Container(
                 width: MediaQuery.of(context).size.width / 2.4,
@@ -42,7 +127,7 @@ class SettingsPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 15.0, top: 9.0),
                       child: Text(
-                        "khaled" + " " + "Loay",
+                        userList[userIndex].get_username,
                         style: TextStyle(
                             letterSpacing: 2,
                             color: Colors.black54,
@@ -54,7 +139,7 @@ class SettingsPage extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 25.0),
                       child: Text(
                         //userprofileData.get_mail,
-                        "khaled@dcode.com",
+                      FirebaseAuth.instance.currentUser.email,
                         style: TextStyle(
                           letterSpacing: 2,
                           color: Colors.black54,
@@ -87,7 +172,8 @@ class SettingsPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Profile()),
+                            MaterialPageRoute(builder: (context) =>   ChangeNotifierProvider<Userprovider>(
+        create: (_) => Userprovider(), child: Profile())),
                           );
                         },
                       ),
@@ -284,6 +370,8 @@ class SettingsPage extends StatelessWidget {
                   )
                 ],
               ))
-        ])));
+        ]))));
   }
+}
+
 }
