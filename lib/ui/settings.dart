@@ -252,7 +252,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ListTile(
                                     title: Center(
                                       child: Text(
-                                        "You Have 4 Contacts",
+                                        "You Have ${userList[userIndex].get_noOfChats} Contacts",
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w500),
