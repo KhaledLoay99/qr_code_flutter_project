@@ -66,12 +66,14 @@ class homeState extends State<home> {
                           fontWeight: FontWeight.bold,
                           fontSize: 20),
                     ),
-                    Text(
-                      '$email',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
+                    Expanded(
+                      child: Text(
+                        '$email',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
                     ),
                   ],
                 ),
