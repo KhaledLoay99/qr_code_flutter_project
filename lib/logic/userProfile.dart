@@ -7,6 +7,7 @@ class Userprofile {
   String location;
   String profileImage;
   String qrImage;
+  int noOfChats;
   Userprofile({
     @required this.id,
     @required this.email,
@@ -14,6 +15,7 @@ class Userprofile {
     @required this.location,
     @required this.profileImage,
     @required this.qrImage,
+    @required this.noOfChats,
   });
 
   String get get_username {
@@ -30,5 +32,9 @@ class Userprofile {
 
   String get get_profileImage {
     return profileImage;
+  }
+
+  int get get_noOfChats {
+    return noOfChats;
   }
 }
