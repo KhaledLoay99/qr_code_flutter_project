@@ -66,6 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
               return Navigator.canPop(context); // avoid app from exiting
             },
             child: Scaffold(
+              backgroundColor: Colors.white,
               body: new AlertDialog(
                 title: new Text('Error'),
                 content: new Text('Error while fetching data!'),
@@ -83,331 +84,226 @@ class _SettingsPageState extends State<SettingsPage> {
               return Navigator.canPop(context); // avoid app from exiting
             },
             child: Scaffold(
+                backgroundColor: Colors.white,
                 appBar: new AppBar(
-                  //kkkk
-                  title:
-                      Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
-//          title: new Text("Login"),
+                  title: Row(
+                    children: [
+                      Text('Settings '),
+                      Image.asset(
+                        'images/settings.png',
+                        height: 30,
+                      ),
+                    ],
+                  ),
                   backgroundColor: const Color.fromRGBO(110, 204, 234, 1.0),
                 ),
                 body: prog
                     ? Center(child: CircularProgressIndicator())
                     : Container(
                         child: ListView(children: [
-                        Row(
-                          children: [
-                            Container(
-                              alignment: Alignment.topLeft,
-                              margin: EdgeInsets.only(left: 20.0, top: 20.0),
-                              padding: EdgeInsets.all(10.0),
-                              width: MediaQuery.of(context).size.width / 2.5,
-                              height: MediaQuery.of(context).size.width / 2.5,
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.white, width: 5),
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                  image: DecorationImage(
-                                      image: _imageUrl != null
-                                          ? NetworkImage(_imageUrl)
-                                          : AssetImage("images/user.png"))),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2.4,
-                              alignment: Alignment.topRight,
-                              height: MediaQuery.of(context).size.height / 6,
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 20,
+                                blurRadius: 20,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          margin: EdgeInsets.all(8.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0))),
+                            child: InkWell(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ChangeNotifierProvider<Userprovider>(
+                                            create: (_) => Userprovider(),
+                                            child: Profile())),
+                              ),
                               child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        bottom:
-                                            MediaQuery.of(context).size.height /
-                                                70,
-                                        top:
-                                            MediaQuery.of(context).size.height /
-                                                60),
-                                    child: Text(
-                                      userList[userIndex].get_username,
-                                      style: TextStyle(
-                                          letterSpacing: 2,
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13),
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.stretch, // add this
+                                children: <Widget>[
+                                  // Align(
+                                  //   alignment: Alignment.topRight,
+                                  //   child: Icon(
+                                  //     Icons.account_circle,
+                                  //     color: Colors.blueGrey,
+                                  //     size: 50.0,
+                                  //   ),
+                                  // ),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(48.0),
+                                      topRight: Radius.circular(48.0),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 25.0),
-                                    child: Text(
-                                      //userprofileData.get_mail,
-                                      FirebaseAuth.instance.currentUser.email,
-                                      style: TextStyle(
-                                        letterSpacing: 2,
-                                        color: Colors.black54,
-                                        fontWeight: FontWeight.bold,
+                                    child: Container(
+                                      margin: EdgeInsets.all(20),
+                                      width: 150,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: _imageUrl != null
+                                                ? NetworkImage(_imageUrl)
+                                                : AssetImage(
+                                                    "images/user.png")),
                                       ),
                                     ),
                                   ),
-                                  Container(
-                                    height:
-                                        MediaQuery.of(context).size.height / 30,
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.9,
-                                    child: RaisedButton(
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Edit Profile",
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                  ListTile(
+                                    title: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.account_circle,
+                                          color: Colors.blueGrey,
+                                          size: 30.0,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            ' ' +
+                                                userList[userIndex]
+                                                    .get_username,
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                            ),
                                           ),
-                                          Spacer(
-                                            flex: 1,
-                                          ),
-                                          Icon(
-                                            Icons.edit,
-                                            color: Colors.blueGrey,
-                                          ),
-                                        ],
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      color: Color.fromRGBO(110, 204, 234, 1.0),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChangeNotifierProvider<
-                                                          Userprovider>(
-                                                      create: (_) =>
-                                                          Userprovider(),
-                                                      child: Profile())),
-                                        );
-                                      },
+                                        )
+                                      ],
                                     ),
-                                  )
+                                    subtitle: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.email,
+                                          color: Colors.blueGrey,
+                                          size: 30.0,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            ' ' +
+                                                FirebaseAuth
+                                                    .instance.currentUser.email,
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                          ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
                         ),
                         Container(
-                            /*decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.black),
-                ),
-              ),*/
-                            padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width / 15,
-                                top: MediaQuery.of(context).size.height / 40),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 20,
+                                blurRadius: 20,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          margin: EdgeInsets.all(8.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0))),
+                            child: InkWell(
+                              // onTap: () =>
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.stretch, // add this
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(48.0),
+                                      topRight: Radius.circular(48.0),
+                                    ),
+                                    child: Container(
+                                      margin: EdgeInsets.all(20),
+                                      width: 150,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "images/qr-code.png")),
+                                      ),
+                                    ),
+                                  ),
+                                  ListTile(
+                                    title: Center(
+                                      child: Text(
+                                        "You Have 4 Contacts",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        SizedBox(
+                          child: RaisedButton(
+                            onPressed: () {
+                              FirebaseAuth.instance.signOut();
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => intro()),
+                                (Route<dynamic> route) =>
+                                    false, // remove back arrow
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  "General Settings",
-                                  style: TextStyle(fontSize: 25),
+                                Text("Logout ".toUpperCase(),
+                                    style: TextStyle(fontSize: 25)),
+                                Icon(
+                                  Icons.logout,
+                                  color: Colors.white,
+                                  size: 25.0,
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width /
-                                          90),
-                                  width:
-                                      MediaQuery.of(context).size.width / 4.3,
-                                  child: Divider(
-                                    color: Colors.black,
-                                    thickness: 2,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: MediaQuery.of(context).size.height /
-                                          35,
-                                      left: MediaQuery.of(context).size.width /
-                                          15),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                14,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Help",
-                                              style: TextStyle(fontSize: 18),
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.help),
-                                              alignment: Alignment.topCenter,
-                                              onPressed: () {
-                                                // Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //       builder: (context) => logout()),
-                                                // );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                65),
-                                        child: Divider(
-                                          color: Colors.black,
-                                          thickness: 2,
-                                        ),
-                                      ),
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                14,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Logout",
-                                              style: TextStyle(fontSize: 18),
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.logout),
-                                              alignment: Alignment.topCenter,
-                                              onPressed: () {
-                                                FirebaseAuth.instance.signOut();
-                                                Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          intro()),
-                                                  (Route<dynamic> route) =>
-                                                      false, // remove back arrow
-                                                );
-
-                                                // Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //       builder: (context) => logout()),
-                                                // );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Divider(
-                                        color: Colors.black,
-                                        thickness: 2,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: MediaQuery.of(context).size.height /
-                                          30),
-                                  child: Text(
-                                    "Miscellaneous",
-                                    style: TextStyle(fontSize: 25),
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width /
-                                          90),
-                                  width:
-                                      MediaQuery.of(context).size.width / 4.3,
-                                  child: Divider(
-                                    color: Colors.black,
-                                    thickness: 2,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: MediaQuery.of(context).size.height /
-                                          35,
-                                      left: MediaQuery.of(context).size.width /
-                                          20),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                14,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Report a problem",
-                                              style: TextStyle(fontSize: 18),
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.report),
-                                              alignment: Alignment.topCenter,
-                                              onPressed: () {
-                                                // Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //       builder: (context) => logout()),
-                                                // );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                65),
-                                        child: Divider(
-                                          color: Colors.black,
-                                          thickness: 2,
-                                        ),
-                                      ),
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                14,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Share the application",
-                                              style: TextStyle(fontSize: 18),
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.share),
-                                              alignment: Alignment.topCenter,
-                                              onPressed: () {
-                                                // Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //       builder: (context) => logout()),
-                                                // );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Divider(
-                                        color: Colors.black,
-                                        thickness: 2,
-                                      ),
-                                    ],
-                                  ),
-                                )
                               ],
-                            ))
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100.0),
+                              side: BorderSide(color: Colors.cyan),
+                            ),
+                            color: Colors.cyan,
+                            textColor: Colors.white,
+                          ),
+                          width: 10,
+                          height: 50,
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
                       ]))));
   }
 }

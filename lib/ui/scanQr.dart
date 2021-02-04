@@ -145,7 +145,7 @@ class scanQrState extends State<scanQr> {
                 height: 100,
                 width: 100,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).buttonColor,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(8.0),
                     image: new DecorationImage(
                       image: new AssetImage("images/qr-code.png"),
