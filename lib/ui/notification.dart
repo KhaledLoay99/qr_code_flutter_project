@@ -100,7 +100,15 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
 
                   //sections[index]['date'],
                   onTap: () {
-                    // send to profile screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ChangeNotifierProvider<Userprovider>(
+                                  create: (_) => Userprovider(),
+                                  child: Profile(
+                                      nUser: sections[index]['userid']))),
+                    );
                   },
                 ),
               );
