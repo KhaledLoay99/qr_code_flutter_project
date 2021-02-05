@@ -148,13 +148,13 @@ class _ChatScreenState extends State<ChatScreen> {
         "https://firebasestorage.googleapis.com/v0/b/dcode-bd3d1.appspot.com/o/user" +
             widget.user["userid"] +
             ".png?alt=media";
-
     return StreamBuilder<QuerySnapshot>(
         stream: users.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState != ConnectionState.active) {
             return Container();
           }
+
           if (snapshot.hasError) {
             return Text('Something went wrong');
           }
