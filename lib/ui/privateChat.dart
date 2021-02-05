@@ -36,18 +36,23 @@ class _ChatScreenState extends State<ChatScreen> {
   Color c1 = const Color.fromRGBO(110, 204, 234, 1.0);
   var _messagefield = new TextEditingController();
   var currentUser = FirebaseAuth.instance.currentUser.uid;
-
+final FirebaseMessaging fbm = FirebaseMessaging();
   void initstate() {
-    final fbm = FirebaseMessaging();
+
     fbm.requestNotificationPermissions();
-    fbm.configure(onMessage: (Map<String, dynamic> message) {
-      print(message);
+    fbm.configure(onMessage: (Map<String, dynamic> msg)async {
+      print("onMessage: $msg");
+      
+      return ;
+    }, onLaunch: (Map<String, dynamic> msg) async{
+      print(msg);
+            print("onLaunch: $msg");
+
+      
       return;
-    }, onLaunch: (Map<String, dynamic> message) {
-      print(message);
-      return;
-    }, onResume: (Map<String, dynamic> message) {
-      print(message);
+    }, onResume: (Map<String, dynamic> msg)async {
+      print(msg);
+             print("onResume: $msg");
       return;
     });
     fbm.subscribeToTopic('messages');
@@ -361,5 +366,6 @@ class _ChatScreenState extends State<ChatScreen> {
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection('messages');
     collectionReference.add(messageInfo);
+    fbm.subscribeToTopic('messages');
   }
 }
