@@ -53,11 +53,9 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarItem(
               title: Text(
-                'Notifications',
+                'Scan History',
               ),
-              icon: Icon(
-                Icons.notifications,
-              ),
+              icon: Icon(Icons.qr_code_scanner_sharp),
             ),
             BottomNavigationBarItem(
               title: Text(

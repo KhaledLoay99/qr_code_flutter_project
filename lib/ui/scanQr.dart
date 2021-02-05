@@ -51,16 +51,25 @@ class scanQrState extends State<scanQr> {
 
     var username = variable['username'];
     var myusername = variable2['username'];
+    var now = new DateTime.now();
 
     Map<String, dynamic> chatlist = {
       'chatlist': FieldValue.arrayUnion([
-        {'userid': myid, 'username': myusername}
+        {
+          'userid': myid,
+          'username': myusername,
+          'date': now,
+        }
       ])
     };
     collectionReference.doc(userid).update(chatlist);
     Map<String, dynamic> chatlist2 = {
       'chatlist': FieldValue.arrayUnion([
-        {'userid': userid, 'username': username}
+        {
+          'userid': userid,
+          'username': username,
+          'date': now,
+        }
       ])
     };
     collectionReference.doc(myid).update(chatlist2);
@@ -145,7 +154,7 @@ class scanQrState extends State<scanQr> {
                 height: 100,
                 width: 100,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).buttonColor,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(8.0),
                     image: new DecorationImage(
                       image: new AssetImage("images/qr-code.png"),
