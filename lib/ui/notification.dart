@@ -23,6 +23,8 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
   final notifylogic Notification = notifylogic();
   AnimationController _animationController;
   final _biggerFont = const TextStyle(fontSize: 18.0);
+  int chatNumber = 0;
+  int number;
 
   @override
   void initState() {
@@ -30,6 +32,17 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
         AnimationController(vsync: this, duration: Duration(milliseconds: 500))
           ..repeat();
     // TODO: implement initState
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .get()
+        .then((value) {
+      setState(() {
+        chatNumber = value['chatlist'].length;
+        print('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+        print(chatNumber);
+      });
+    });
     super.initState();
   }
 
@@ -56,6 +69,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
         if (snapshot.connectionState == ConnectionState.active) {
           var courseDocument = snapshot.data.data;
           var sections = courseDocument()['chatlist'];
+          print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Loading");
           }
@@ -134,30 +148,29 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
         return Navigator.canPop(context); //avoid app from exiting
       },
       child: Scaffold(
-        appBar: new AppBar(
-          backgroundColor: c1,
-          title: Row(
-            children: <Widget>[
-              Text('Your Scan History '),
-              RotationTransition(
-                turns: Tween(begin: 0.0, end: -.1)
-                    .chain(CurveTween(curve: Curves.elasticIn))
-                    .animate(_animationController),
-                child: Badge(
-                  badgeContent:
-                      Text('3', style: TextStyle(color: Colors.white)),
-                  child: Icon(
-                    Icons.qr_code,
-                    color: Colors.black,
+          appBar: new AppBar(
+            backgroundColor: c1,
+            title: Row(
+              children: <Widget>[
+                Text('Your Scan History '),
+                RotationTransition(
+                  turns: Tween(begin: 0.0, end: -.1)
+                      .chain(CurveTween(curve: Curves.elasticIn))
+                      .animate(_animationController),
+                  child: Badge(
+                    badgeContent: Text(chatNumber.toString(),
+                        style: TextStyle(color: Colors.white)),
+                    child: Icon(
+                      Icons.qr_code,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 //          title: new Text("Login"),
-        ),
-        body: _buildChatList(),
-      ),
+          ),
+          body: _buildChatList()),
     );
   }
 }
