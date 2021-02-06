@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:provider/provider.dart';
 import 'profile.dart';
+import 'package:intl/intl.dart';
 
 class notify extends StatefulWidget {
   @override
@@ -43,6 +44,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
         print(chatNumber);
       });
     });
+
     super.initState();
   }
 
@@ -80,6 +82,17 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                   "https://firebasestorage.googleapis.com/v0/b/dcode-bd3d1.appspot.com/o/user" +
                       sections[index]['userid'] +
                       ".png?alt=media";
+              if ((sections[index]['date'] != null)) {}
+              var timeString;
+              String time = "";
+              var scandate = "";
+
+              timeString = sections[index]['date'].toDate().toString();
+
+              DateTime date = DateTime.parse(timeString);
+              time = DateFormat('hh:mm a').format(date).toString();
+              scandate = DateFormat('yMd').format(date).toString();
+
               return Card(
                 child: ListTile(
                   leading: CircleAvatar(
@@ -115,9 +128,10 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                     sections[index]['username'],
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text(
-                    "Scanned At: ",
-                  ),
+
+                  subtitle: (sections[index]['date'] != null)
+                      ? Text("Scanned At: " + scandate + ' ' + time)
+                      : Text("-"),
 
                   trailing: Icon(Icons.access_time_sharp),
 
