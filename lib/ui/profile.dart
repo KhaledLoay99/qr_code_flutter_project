@@ -263,12 +263,9 @@ class _ProfileState extends State<Profile> {
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide.none)),
             ),
-            Row(children: [
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
               Container(
-                width: MediaQuery.of(this.context).size.width * 0.8,
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(this.context).size.width / 1.25,
-                    top: 10),
+                padding: EdgeInsets.only(top: 10),
                 child: qr
                     ? IconButton(
                         icon: Icon(Icons.qr_code),
