@@ -1,11 +1,8 @@
-import 'package:Dcode/ui/home.dart';
-import 'package:Dcode/ui/intro.dart';
 import 'package:Dcode/ui/navigatorBar.dart';
 import 'package:Dcode/ui/signup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:Dcode/ui/auth_screen_login.dart';
 
 class AuthForm extends StatefulWidget {
   @override

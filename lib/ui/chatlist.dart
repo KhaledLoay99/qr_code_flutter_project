@@ -1,13 +1,7 @@
-import 'package:Dcode/logic/chatlist.dart';
 import 'package:Dcode/ui/privateChat.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'home.dart';
-import 'notification.dart';
-import 'profile.dart';
-import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(chatlist());

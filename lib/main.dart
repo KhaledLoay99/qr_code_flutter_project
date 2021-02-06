@@ -2,7 +2,6 @@ import 'package:Dcode/ui/navigatorBar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'ui/home.dart';
 import 'ui/intro.dart';
 import 'ui/splash_screen.dart';
 

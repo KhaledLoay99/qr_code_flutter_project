@@ -1,15 +1,10 @@
-import 'package:Dcode/ui/chatlist.dart';
 import 'package:Dcode/ui/navigatorBar.dart';
-import 'package:Dcode/ui/notification.dart';
 import 'package:flutter/material.dart';
-import 'package:Dcode/ui/home.dart';
-import 'package:Dcode/ui/profile.dart';
+
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:developer';
 
 class scanQr extends StatefulWidget {
   @override

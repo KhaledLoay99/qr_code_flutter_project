@@ -1,22 +1,13 @@
-import 'package:Dcode/ui/navigatorBar.dart';
-import 'package:Dcode/ui/notification.dart';
-import 'package:Dcode/ui/privateChat.dart';
 import 'package:Dcode/ui/settings.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:Dcode/ui/scanQr.dart';
-import 'package:Dcode/ui/intro.dart';
 
-import 'package:Dcode/ui/profile.dart';
 import 'package:Dcode/ui/carProfile.dart';
 import 'package:Dcode/providers/Userprovider.dart';
 import "package:provider/provider.dart";
 import 'package:Dcode/providers/Carprovider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'chatlist.dart';
-import 'intro.dart';
 
 class home extends StatefulWidget {
   @override

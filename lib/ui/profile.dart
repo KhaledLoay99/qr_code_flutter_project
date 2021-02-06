@@ -2,16 +2,13 @@ import 'package:Dcode/logic/userProfile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:Dcode/ui/chatlist.dart';
-import 'package:Dcode/ui/notification.dart';
-import 'package:Dcode/ui/home.dart';
+
 import 'package:Dcode/providers/Userprovider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import "package:provider/provider.dart";
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';

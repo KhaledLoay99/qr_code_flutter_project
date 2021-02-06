@@ -1,15 +1,8 @@
-import 'dart:ffi';
-
-import 'package:Dcode/logic/message.dart';
-import 'package:Dcode/ui/home.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Dcode/ui/profile.dart';
@@ -18,7 +11,6 @@ import "package:provider/provider.dart";
 import 'package:Dcode/ui/carProfile.dart';
 import 'package:Dcode/providers/Carprovider.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
   var user;

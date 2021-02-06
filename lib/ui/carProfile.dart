@@ -1,16 +1,11 @@
-import 'package:Dcode/logic/carProfile.dart';
-import 'package:Dcode/ui/chatlist.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/rendering.dart';
 import 'package:Dcode/providers/Carprovider.dart';
 import "package:provider/provider.dart";
 import 'package:toggle_switch/toggle_switch.dart';
-import "package:provider/provider.dart";
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class carProfile extends StatefulWidget {

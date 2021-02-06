@@ -1,10 +1,6 @@
 import 'package:Dcode/logic/notifications.dart';
-import 'package:Dcode/providers/Carprovider.dart';
 import 'package:Dcode/providers/Userprovider.dart';
-import 'package:Dcode/ui/carProfile.dart';
-import 'package:Dcode/ui/chatlist.dart';
-import 'package:Dcode/ui/home.dart';
-import 'package:Dcode/ui/privateChat.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +78,6 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                   "https://firebasestorage.googleapis.com/v0/b/dcode-bd3d1.appspot.com/o/user" +
                       sections[index]['userid'] +
                       ".png?alt=media";
-              if ((sections[index]['date'] != null)) {}
               var timeString;
               String time = "";
               var scandate = "";

@@ -2,13 +2,10 @@ import 'package:Dcode/logic/userProfile.dart';
 import 'package:Dcode/ui/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:Dcode/providers/Userprovider.dart';
-import 'package:path/path.dart';
 
 import "package:provider/provider.dart";
-import 'dart:io';
 
 import 'intro.dart';
 

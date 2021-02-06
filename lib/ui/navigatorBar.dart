@@ -1,7 +1,7 @@
 import 'package:Dcode/providers/Userprovider.dart';
 import 'package:Dcode/ui/chatlist.dart';
 import 'package:Dcode/ui/home.dart';
-import 'package:Dcode/ui/notification.dart';
+import 'package:Dcode/ui/scanHistory.dart';
 import 'package:Dcode/ui/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
