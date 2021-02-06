@@ -36,8 +36,6 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
         .then((value) {
       setState(() {
         chatNumber = value['chatlist'].length;
-        print('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
-        print(chatNumber);
       });
     });
 
@@ -52,6 +50,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
 
   Widget _buildChatList() {
     var imageUrl;
+    var img;
 
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
@@ -67,7 +66,6 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
         if (snapshot.connectionState == ConnectionState.active) {
           var courseDocument = snapshot.data.data;
           var sections = courseDocument()['chatlist'];
-          print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Loading");
           }
@@ -78,22 +76,30 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                   "https://firebasestorage.googleapis.com/v0/b/dcode-bd3d1.appspot.com/o/user" +
                       sections[index]['userid'] +
                       ".png?alt=media";
+              /*try {
+                img = NetworkImage(imageUrl);
+              } on NetworkImageLoadException catch (error) {
+                img = AssetImage('images/user.png');
+              }*/
               var timeString;
               String time = "";
               var scandate = "";
-
-              timeString = sections[index]['date'].toDate().toString();
-
-              DateTime date = DateTime.parse(timeString);
-              time = DateFormat('hh:mm a').format(date).toString();
-              scandate = DateFormat('yMd').format(date).toString();
+              try {
+                timeString = sections[index]['date'].toDate().toString();
+                DateTime date = DateTime.parse(timeString);
+                time = DateFormat('hh:mm a').format(date).toString();
+                scandate = DateFormat('yMd').format(date).toString();
+              } catch (error) {
+                timeString = null;
+              }
+              ;
 
               return Card(
                 child: ListTile(
                   leading: CircleAvatar(
                     child: Row(
                       children: <Widget>[
-                        (imageUrl == null)
+                        /*(imageUrl == null)
                             ? Container(
                                 width: 50,
                                 height: 50,
@@ -104,18 +110,19 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                                       fit: BoxFit.fill),
                                 ),
                               )
-                            : Expanded(
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        image: NetworkImage(imageUrl),
-                                        fit: BoxFit.fill),
-                                  ),
-                                ),
-                              )
+                            :*/
+                        Expanded(
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            color: Colors.white,
+                            child: ClipOval(
+                              child: FadeInImage(
+                                  placeholder: AssetImage('images/user.png'),
+                                  image: NetworkImage(imageUrl)),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
