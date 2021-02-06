@@ -204,14 +204,16 @@ class _ChatScreenState extends State<ChatScreen> {
                                 fit: BoxFit.fill),
                           ),
                         )
-                      : Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: NetworkImage(imageUrl),
-                                fit: BoxFit.fill),
+                      : Flexible(
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: NetworkImage(imageUrl),
+                                  fit: BoxFit.fill),
+                            ),
                           ),
                         ),
                   Flexible(
