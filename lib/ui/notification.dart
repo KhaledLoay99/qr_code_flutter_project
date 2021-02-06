@@ -86,7 +86,16 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
                     child: Row(
                       children: <Widget>[
                         (imageUrl == null)
-                            ? Image.asset('images/chat.png')
+                            ? Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: AssetImage('images/user.png'),
+                                      fit: BoxFit.fill),
+                                ),
+                              )
                             : Expanded(
                                 child: Container(
                                   width: 50,

@@ -36,23 +36,21 @@ class _ChatScreenState extends State<ChatScreen> {
   Color c1 = const Color.fromRGBO(110, 204, 234, 1.0);
   var _messagefield = new TextEditingController();
   var currentUser = FirebaseAuth.instance.currentUser.uid;
-final FirebaseMessaging fbm = FirebaseMessaging();
+  final FirebaseMessaging fbm = FirebaseMessaging();
   void initstate() {
-
     fbm.requestNotificationPermissions();
-    fbm.configure(onMessage: (Map<String, dynamic> msg)async {
+    fbm.configure(onMessage: (Map<String, dynamic> msg) async {
       print("onMessage: $msg");
-      
-      return ;
-    }, onLaunch: (Map<String, dynamic> msg) async{
-      print(msg);
-            print("onLaunch: $msg");
 
-      
       return;
-    }, onResume: (Map<String, dynamic> msg)async {
+    }, onLaunch: (Map<String, dynamic> msg) async {
       print(msg);
-             print("onResume: $msg");
+      print("onLaunch: $msg");
+
+      return;
+    }, onResume: (Map<String, dynamic> msg) async {
+      print(msg);
+      print("onResume: $msg");
       return;
     });
     fbm.subscribeToTopic('messages');
@@ -204,7 +202,16 @@ final FirebaseMessaging fbm = FirebaseMessaging();
               title: Row(
                 children: [
                   (imageUrl == null)
-                      ? Image.asset('images/chat.png')
+                      ? Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: AssetImage('images/user.png'),
+                                fit: BoxFit.fill),
+                          ),
+                        )
                       : Container(
                           width: 50,
                           height: 50,
