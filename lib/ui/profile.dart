@@ -265,6 +265,7 @@ class _ProfileState extends State<Profile> {
             ),
             Row(children: [
               Container(
+                width: MediaQuery.of(this.context).size.width * 0.8,
                 padding: EdgeInsets.only(
                     left: MediaQuery.of(this.context).size.width / 1.25,
                     top: 10),
