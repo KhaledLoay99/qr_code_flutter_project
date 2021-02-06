@@ -29,13 +29,7 @@ class scanQrState extends State<scanQr> {
         "#004297", "Cancel", true, ScanMode.DEFAULT);
     if (_userid.toString() != "-1") {
       setState(() {
-        _value = _userid;
         openChat(FirebaseAuth.instance.currentUser.uid, _userid);
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage('something')),
-          (Route<dynamic> route) => false,
-        );
       });
     }
   }
@@ -48,31 +42,44 @@ class scanQrState extends State<scanQr> {
     list.sort();
     DocumentSnapshot variable = await collectionReference.doc(userid).get();
     DocumentSnapshot variable2 = await collectionReference.doc(myid).get();
+    if (variable.exists) {
+      var username = variable['username'];
+      var myusername = variable2['username'];
+      var now = new DateTime.now();
 
-    var username = variable['username'];
-    var myusername = variable2['username'];
-    var now = new DateTime.now();
-
-    Map<String, dynamic> chatlist = {
-      'chatlist': FieldValue.arrayUnion([
-        {
-          'userid': myid,
-          'username': myusername,
-          'date': now,
-        }
-      ])
-    };
-    collectionReference.doc(userid).update(chatlist);
-    Map<String, dynamic> chatlist2 = {
-      'chatlist': FieldValue.arrayUnion([
-        {
-          'userid': userid,
-          'username': username,
-          'date': now,
-        }
-      ])
-    };
-    collectionReference.doc(myid).update(chatlist2);
+      Map<String, dynamic> chatlist = {
+        'chatlist': FieldValue.arrayUnion([
+          {
+            'userid': myid,
+            'username': myusername,
+            'date': now,
+          }
+        ])
+      };
+      collectionReference.doc(userid).update(chatlist);
+      Map<String, dynamic> chatlist2 = {
+        'chatlist': FieldValue.arrayUnion([
+          {
+            'userid': userid,
+            'username': username,
+            'date': now,
+          }
+        ])
+      };
+      collectionReference.doc(myid).update(chatlist2);
+      setState(() {
+        _value = "Waiting.....";
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage('something')),
+          (Route<dynamic> route) => false,
+        );
+      });
+    } else {
+      setState(() {
+        _value = "User Not Found";
+      });
+    }
   }
 
   @override
@@ -82,60 +89,9 @@ class scanQrState extends State<scanQr> {
       resizeToAvoidBottomInset: false,
       appBar: new AppBar(
         title: Image.asset('images/Dcode_home.jpg', fit: BoxFit.cover),
-//          title: new Text("Login"),
         backgroundColor: c1,
       ),
       backgroundColor: Colors.white,
-//       bottomNavigationBar: BottomNavigationBar(
-//         type: BottomNavigationBarType.fixed,
-//         backgroundColor: c1,
-//         selectedItemColor: Colors.black45,
-// //        unselectedItemColor: Colors.white.withOpacity(.60),
-// //        selectedFontSize: 14,
-// //        unselectedFontSize: 14,
-//         onTap: (value) {
-//           // Respond to item press.
-//           if (value == 0) {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(builder: (context) => home()),
-//             );
-//           } else if (value == 1) {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(builder: (context) => notify()),
-//             );
-//           } else if (value == 2) {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(builder: (context) => chatlist()),
-//             );
-//           } else if (value == 3) {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(builder: (context) => Profile()),
-//             );
-//           }
-//         },
-//         items: [
-//           BottomNavigationBarItem(
-//             title: Text('Home'),
-//             icon: Icon(Icons.home),
-//           ),
-//           BottomNavigationBarItem(
-//             title: Text('Notifications'),
-//             icon: Icon(Icons.notifications),
-//           ),
-//           BottomNavigationBarItem(
-//             title: Text('Recent Chats'),
-//             icon: Icon(Icons.chat),
-//           ),
-//           BottomNavigationBarItem(
-//             title: Text('My Profile'),
-//             icon: Icon(Icons.account_circle),
-//           ),
-//         ],
-//       ),
       body: new ListView(
         //alignment: Alignment.topCenter,
         children: [
@@ -170,7 +126,7 @@ class scanQrState extends State<scanQr> {
                     color: Colors.blue),
               ),
               Text(
-                "Scanned:" + _value,
+                "Scanned: " + _value,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
