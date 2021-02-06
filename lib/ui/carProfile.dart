@@ -163,12 +163,12 @@ class _carProfileState extends State<carProfile> {
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide.none)),
             ),
-            Row(children: [
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
               Container(
                 padding: EdgeInsets.only(
-                    left: type == "SaleStatus"
+                    /* left: type == "SaleStatus"
                         ? MediaQuery.of(this.context).size.width / 1.5
-                        : MediaQuery.of(this.context).size.width / 1.25,
+                        : MediaQuery.of(this.context).size.width / 1.25,*/
                     top: 10),
                 child: type == "SaleStatus"
                     ? Container(

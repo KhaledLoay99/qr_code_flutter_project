@@ -17,7 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  device_preview: ^0.5.5
+  device_preview:
   flutter_barcode_scanner:
   gallery_saver:
   qr_flutter:
@@ -30,7 +30,7 @@ dependencies:
   badges: ^1.1.4
   http: ^0.12.2
   provider: ^4.3.2+3
-  firebase_auth: ^0.18.4+1
+  firebase_auth:
   firebase_messaging: ^7.0.3
   firebase_core:
   cloud_firestore:
@@ -111,5 +111,5 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_native_splash:
-  color: "#6eccea"  # required parameter
-  image: images/logo.png 
+  color: "#6eccea" # required parameter
+  image: images/logo.png
