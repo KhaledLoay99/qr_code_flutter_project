@@ -365,7 +365,7 @@ class _ChatScreenState extends State<ChatScreen> {
       'text': text,
       'userid1': list[0],
       'userid2': list[1],
-      'Recevername': username
+      'sendername': username
     };
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection('messages');
