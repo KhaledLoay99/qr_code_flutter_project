@@ -30,50 +30,52 @@ class scanQrState extends State<scanQr> {
   }
 
   Future<void> openChat(String myid, String userid) async {
-    await Firebase.initializeApp();
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection('users');
-    var list = [myid, userid];
-    list.sort();
-    DocumentSnapshot variable = await collectionReference.doc(userid).get();
-    DocumentSnapshot variable2 = await collectionReference.doc(myid).get();
-    if (variable.exists) {
-      var username = variable['username'];
-      var myusername = variable2['username'];
-      var now = new DateTime.now();
+    if (myid != userid) {
+      await Firebase.initializeApp();
+      CollectionReference collectionReference =
+          FirebaseFirestore.instance.collection('users');
+      var list = [myid, userid];
+      list.sort();
+      DocumentSnapshot variable = await collectionReference.doc(userid).get();
+      DocumentSnapshot variable2 = await collectionReference.doc(myid).get();
+      if (variable.exists) {
+        var username = variable['username'];
+        var myusername = variable2['username'];
+        var now = new DateTime.now();
 
-      Map<String, dynamic> chatlist = {
-        'chatlist': FieldValue.arrayUnion([
-          {
-            'userid': myid,
-            'username': myusername,
-            'date': now,
-          }
-        ])
-      };
-      collectionReference.doc(userid).update(chatlist);
-      Map<String, dynamic> chatlist2 = {
-        'chatlist': FieldValue.arrayUnion([
-          {
-            'userid': userid,
-            'username': username,
-            'date': now,
-          }
-        ])
-      };
-      collectionReference.doc(myid).update(chatlist2);
-      setState(() {
-        _value = "Waiting.....";
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage('something')),
-          (Route<dynamic> route) => false,
-        );
-      });
-    } else {
-      setState(() {
-        _value = "User Not Found";
-      });
+        Map<String, dynamic> chatlist = {
+          'chatlist': FieldValue.arrayUnion([
+            {
+              'userid': myid,
+              'username': myusername,
+              'date': now,
+            }
+          ])
+        };
+        collectionReference.doc(userid).update(chatlist);
+        Map<String, dynamic> chatlist2 = {
+          'chatlist': FieldValue.arrayUnion([
+            {
+              'userid': userid,
+              'username': username,
+              'date': now,
+            }
+          ])
+        };
+        collectionReference.doc(myid).update(chatlist2);
+        setState(() {
+          _value = "Waiting.....";
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage('something')),
+            (Route<dynamic> route) => false,
+          );
+        });
+      } else {
+        setState(() {
+          _value = "User Not Found";
+        });
+      }
     }
   }
 
