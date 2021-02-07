@@ -2,6 +2,9 @@ import 'package:Dcode/ui/privateChat.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(chatlist());
@@ -16,12 +19,24 @@ class chatlist extends StatelessWidget {
       home: UserList(),
     );
   }
+
 // #enddocregion build
 }
 // #enddocregion MyApp
 
 // #docregion RWS-var
 class UserListState extends State<UserList> {
+  String username = "";
+  Future<String> getusername() async {
+    await Firebase.initializeApp();
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection('users');
+    DocumentSnapshot variable = await collectionReference
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .get();
+    username = await variable['username'];
+  }
+
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
   final _biggerFont = const TextStyle(fontSize: 18.0);
@@ -29,7 +44,9 @@ class UserListState extends State<UserList> {
   // #enddocregion RWS-var
 
   // #docregion _buildSuggestions
+
   Widget _buildChatList() {
+    getusername();
     var imageUrl;
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
@@ -116,7 +133,8 @@ class UserListState extends State<UserList> {
                               user: {
                                 "username": sections[index]['username'],
                                 "imagepath": imageUrl,
-                                "userid": sections[index]['userid']
+                                "userid": sections[index]['userid'],
+                                'senderusername': username
                               },
                             )),
                   );
