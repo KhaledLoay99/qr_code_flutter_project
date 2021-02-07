@@ -36,12 +36,13 @@ class _ChatScreenState extends State<ChatScreen> {
 
       return;
     }, onLaunch: (Map<String, dynamic> msg) async {
-      print("onMessage: $msg");
+      print(msg);
+      print("onLaunch: $msg");
 
       return;
     }, onResume: (Map<String, dynamic> msg) async {
-      print("onMessage: $msg");
-
+      print(msg);
+      print("onResume: $msg");
       return;
     });
     fbm.subscribeToTopic('messages');
