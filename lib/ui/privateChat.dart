@@ -193,29 +193,29 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               title: Row(
                 children: [
-                  (imageUrl == null)
-                      ? Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: AssetImage('images/user.png'),
-                                fit: BoxFit.fill),
-                          ),
-                        )
-                      : Flexible(
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: NetworkImage(imageUrl),
-                                  fit: BoxFit.fill),
-                            ),
-                          ),
-                        ),
+                  // (imageUrl == null)
+                  //     ? Container(
+                  //         width: 50,
+                  //         height: 50,
+                  //         decoration: BoxDecoration(
+                  //           shape: BoxShape.circle,
+                  //           image: DecorationImage(
+                  //               image: AssetImage('images/user.png'),
+                  //               fit: BoxFit.fill),
+                  //         ),
+                  //       )
+                  //     :
+                  Flexible(
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      child: ClipOval(
+                        child: FadeInImage(
+                            placeholder: AssetImage('images/user.png'),
+                            image: NetworkImage(imageUrl)),
+                      ),
+                    ),
+                  ),
                   Flexible(
                     child: Text(
                       ' ' + widget.user['username'],

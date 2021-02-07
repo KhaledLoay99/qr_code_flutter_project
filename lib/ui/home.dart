@@ -34,42 +34,43 @@ class homeState extends State<home> {
     return new Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(120),
+        child: Container(
+          decoration: BoxDecoration(
+            color: c1,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(60),
+            ),
+          ),
+          child: ListView(
+            children: [
+              new Padding(padding: new EdgeInsets.all(10.0)),
+              Center(
+                child: Text(
+                  'Welcome ,\n ',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
+              ),
+              Center(
+                child: Text(
+                  '$email',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
       body: ListView(
         children: [
           new Column(children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 7,
-              decoration: BoxDecoration(
-                color: c1,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(60),
-                ),
-              ),
-              child: Center(
-                child: Column(
-                  children: [
-                    new Padding(padding: new EdgeInsets.all(8.0)),
-                    Text(
-                      'Welcome ,\n ',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '$email',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
             new Padding(padding: new EdgeInsets.all(50.0)),
 
             new Row(
