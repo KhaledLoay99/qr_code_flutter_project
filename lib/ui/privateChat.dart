@@ -32,17 +32,23 @@ class _ChatScreenState extends State<ChatScreen> {
   void initstate() {
     fbm.requestNotificationPermissions();
     fbm.configure(onMessage: (Map<String, dynamic> msg) async {
-      print("onMessage: $msg");
+      if (msg['sentby'] == FirebaseAuth.instance.currentUser.uid) {
+        print("onMessage: $msg");
+      }
 
       return;
     }, onLaunch: (Map<String, dynamic> msg) async {
-      print(msg);
-      print("onLaunch: $msg");
+      if (msg['sentby'] == FirebaseAuth.instance.currentUser.uid) {
+        print(msg);
+        print("onMessage: $msg");
+      }
 
       return;
     }, onResume: (Map<String, dynamic> msg) async {
-      print(msg);
-      print("onResume: $msg");
+      if (msg['sentby'] == FirebaseAuth.instance.currentUser.uid) {
+        print(msg);
+        print("onMessage: $msg");
+      }
       return;
     });
     fbm.subscribeToTopic('messages');
