@@ -71,8 +71,8 @@ class _ChatScreenState extends State<ChatScreen> {
             iconSize: 25.0,
             onPressed: () {
               if (_messagefield.text != "") {
-                sendMessage(
-                    currentUser, widget.user["userid"], _messagefield.text);
+                sendMessage(widget.user['senderusername'], currentUser,
+                    widget.user["userid"], _messagefield.text);
                 _messagefield.text = "";
                 _scrollController
                     .jumpTo(_scrollController.position.minScrollExtent);
@@ -353,16 +353,19 @@ class _ChatScreenState extends State<ChatScreen> {
         });
   }
 
-  Future<void> sendMessage(String myid, String userid, String text) async {
+  Future<void> sendMessage(
+      String username, String myid, String userid, String text) async {
     await Firebase.initializeApp();
     var list = [myid, userid];
     list.sort();
     Map<String, dynamic> messageInfo = {
       'date': FieldValue.serverTimestamp(),
       'sentby': myid,
+      'receivedby': userid,
       'text': text,
-      "userid1": list[0],
-      'userid2': list[1]
+      'userid1': list[0],
+      'userid2': list[1],
+      'Recevername': username
     };
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection('messages');
