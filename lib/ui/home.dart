@@ -1,4 +1,5 @@
 import 'package:Dcode/ui/settings.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:Dcode/ui/scanQr.dart';
@@ -23,6 +24,27 @@ class homeState extends State<home> {
 
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
+
+
+        final FirebaseMessaging fbm = FirebaseMessaging();
+  void initstate() {
+    fbm.requestNotificationPermissions();
+    fbm.configure(onMessage: (Map<String, dynamic> msg) async {
+      print("onMessage: $msg");
+
+      return;
+    }, onLaunch: (Map<String, dynamic> msg) async {
+      print(msg);
+      print("onMessage: $msg");
+
+      return;
+    }, onResume: (Map<String, dynamic> msg) async {
+      print(msg);
+      print("onMessage: $msg");
+      return;
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     if (user != null) {
