@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Dcode/ui/profile.dart';
@@ -28,26 +27,8 @@ class _ChatScreenState extends State<ChatScreen> {
   Color c1 = const Color.fromRGBO(110, 204, 234, 1.0);
   var _messagefield = new TextEditingController();
   var currentUser = FirebaseAuth.instance.currentUser.uid;
-  final FirebaseMessaging fbm = FirebaseMessaging();
-  void initstate() {
-    fbm.requestNotificationPermissions();
-    fbm.configure(onMessage: (Map<String, dynamic> msg) async {
-      print("onMessage: $msg");
-
-      return;
-    }, onLaunch: (Map<String, dynamic> msg) async {
-      print(msg);
-      print("onMessage: $msg");
-
-      return;
-    }, onResume: (Map<String, dynamic> msg) async {
-      print(msg);
-      print("onMessage: $msg");
-      return;
-    });
-    fbm.subscribeToTopic('messages');
-    super.initState();
-  }
+ 
+ 
 
   Widget _buildMessageComposer() {
     return Container(
@@ -370,6 +351,6 @@ class _ChatScreenState extends State<ChatScreen> {
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection('messages');
     collectionReference.add(messageInfo);
-    fbm.subscribeToTopic('messages');
+   
   }
 }
