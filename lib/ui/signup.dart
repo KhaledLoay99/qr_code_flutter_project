@@ -20,9 +20,14 @@ class SignupState extends State<Signup> {
   static final validCharacters = RegExp(r"^[a-zA-Z]+$");
   var _email = new TextEditingController();
   var _username = new TextEditingController();
+    Pattern pattern2 = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
   var _password = new TextEditingController();
+  Pattern pattern =r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
   @override
   Widget build(BuildContext context) {
+      RegExp regex = new RegExp(pattern);
+      RegExp regex2 = new RegExp(pattern2);
     // TODO: implement build
     return new Scaffold(
       resizeToAvoidBottomInset: true,
@@ -81,17 +86,14 @@ class SignupState extends State<Signup> {
                         if (value.isEmpty) {
                           return 'Please Enter Email';
                         }
-                        if (value.length > 35) {
-                          return 'Email is too long';
-                        }
-                        if (value.length < 11) {
-                          return 'Email is too short';
-                        }
-                        if (!value.contains('@')) {
-                          return 'Invalid Email';
-                        }
-                        if (!value.contains('.com')) {
-                          return 'Invalid Email';
+                        // if (value.length > 35) {
+                        //   return 'Email is too long';
+                        // }
+                        // if (value.length < 11) {
+                        //   return 'Email is too short';
+                        // }
+                        if (!regex.hasMatch(value)) {
+                          return 'Invalid Email format';
                         }
                         return null;
                       },
@@ -109,11 +111,15 @@ class SignupState extends State<Signup> {
                         if (value.isEmpty) {
                           return 'Please Enter Your Password';
                         }
-                        if (value.length > 25) {
+                        if (value.length > 30) {
                           return 'Password is too long';
                         }
-                        if (value.length < 5) {
+                        if (value.length < 8) {
                           return 'Password is too short';
+                        }
+                        if(!regex2.hasMatch(value))
+                        {
+                          return 'contains at least one lowercase letter and one uppercase letter and one number and one special Character ';
                         }
                         return null;
                       },
