@@ -45,8 +45,8 @@ class homeState extends State<home> {
       },
       onMessage: (Map<String, dynamic> msg) {
         // when app is running on foreground
-        navigatorKey.currentState
-            .push(MaterialPageRoute(builder: (_) => chatlist()));
+        /*navigatorKey.currentState
+            .push(MaterialPageRoute(builder: (_) => chatlist()));*/
       },
     );
     super.initState();
