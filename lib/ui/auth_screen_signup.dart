@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:Dcode/ui/navigatorBar.dart';
 import 'package:Dcode/ui/signup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
@@ -13,11 +16,15 @@ class AuthForm extends StatefulWidget {
 }
 
 class AuthFormState extends State<AuthForm> {
+  final FirebaseMessaging fbm = FirebaseMessaging();
   final _auth = FirebaseAuth.instance;
   UserCredential userCredential;
   bool _isLoading = false;
   String location = "No Location Added";
   String profileImage = null;
+
+FirebaseFirestore db = FirebaseFirestore.instance;
+
 
   String carProfileImage = null;
   String car_location = "No Location Added";
@@ -31,13 +38,15 @@ class AuthFormState extends State<AuthForm> {
       });
       userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+            String fcmToken = await fbm.getToken();
       FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user.uid)
           .set({
         'username': username,
         'location': location,
-        'profileImage': profileImage
+        'profileImage': profileImage,
+        
       });
 
       FirebaseFirestore.instance
@@ -49,6 +58,17 @@ class AuthFormState extends State<AuthForm> {
         'Location': car_location,
         'SaleStatus': saleStatus,
         'carModel': carModel
+      });
+
+  var tokens = db
+          .collection('users')
+          .doc(userCredential.user.uid)
+          .collection('tokens')
+          .doc(fcmToken);
+             await tokens.set({
+        'token': fcmToken,
+        'createdAt': FieldValue.serverTimestamp(), // optional
+        'platform': Platform.operatingSystem // optional
       });
 
       Navigator.pushAndRemoveUntil(
