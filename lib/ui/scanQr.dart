@@ -40,11 +40,12 @@ class scanQrState extends State<scanQr> {
       DocumentSnapshot variable2 = await collectionReference.doc(myid).get();
 
       if (variable.exists) {
-        print(variable2['chatlist']);
-        var list = variable2['chatlist'];
-        for (var x in list) {
-          if (x['userid'] == userid) {
-            return;
+        if (variable2['chatlist'] != null) {
+          var list = variable2['chatlist'];
+          for (var x in list) {
+            if (x['userid'] == userid) {
+              return;
+            }
           }
         }
 
