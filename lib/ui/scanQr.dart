@@ -38,7 +38,15 @@ class scanQrState extends State<scanQr> {
       list.sort();
       DocumentSnapshot variable = await collectionReference.doc(userid).get();
       DocumentSnapshot variable2 = await collectionReference.doc(myid).get();
+
       if (variable.exists) {
+        var list = variable2['chatlist'];
+        for (var x in list) {
+          if (x['userid'] == userid) {
+            return;
+          }
+        }
+
         var username = variable['username'];
         var myusername = variable2['username'];
         var now = new DateTime.now();
