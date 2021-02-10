@@ -247,6 +247,7 @@ class _carProfileState extends State<carProfile> {
         uImage = image;
       });
       String filename = "car" + user_id + '.png';
+      _imageUrl = '';
       var firebaseStorageRef = FirebaseStorage.instance.ref().child(filename);
       var uploadTask = firebaseStorageRef.putFile(uImage).then((loc) {
         update.updateData(user_id, {'CarProfileImage': filename});

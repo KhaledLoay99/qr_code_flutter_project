@@ -321,6 +321,7 @@ class _ProfileState extends State<Profile> {
         uImage = image;
       });
       String filename = "user" + user_id + '.png';
+      _imageUrl = '';
       var firebaseStorageRef = FirebaseStorage.instance.ref().child(filename);
       var uploadTask = firebaseStorageRef.putFile(uImage).then((loc) {
         update.updateData(user_id, {'profileImage': filename});
