@@ -5,6 +5,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 
 class scanQr extends StatefulWidget {
   @override
@@ -40,13 +41,16 @@ class scanQrState extends State<scanQr> {
       DocumentSnapshot variable2 = await collectionReference.doc(myid).get();
 
       if (variable.exists) {
-        if (variable2['chatlist'] != null) {
-          var list = variable2['chatlist'];
-          for (var x in list) {
+        try {
+          dynamic nested = variable2.get(FieldPath(['chatlist']));
+
+          for (var x in nested) {
             if (x['userid'] == userid) {
               return;
             }
           }
+        } on StateError catch (e) {
+          print('No nested field exists!');
         }
 
         var username = variable['username'];
