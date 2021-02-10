@@ -93,6 +93,9 @@ class AuthFormState extends State<AuthForm> {
           content: Text(userIsAlreadyExists),
           backgroundColor: Theme.of(ctx).errorColor,
         ));
+        setState(() {
+          _isLoading = false;
+        });
       }
     } on FirebaseAuthException catch (e) {
       String message = "error Occured";
