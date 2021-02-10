@@ -23,13 +23,21 @@ class AuthFormState extends State<AuthForm> {
   String location = "No Location Added";
   String profileImage = null;
 
-FirebaseFirestore db = FirebaseFirestore.instance;
-
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   String carProfileImage = null;
   String car_location = "No Location Added";
   bool saleStatus = false;
   String carModel = "No Car Model Added";
+
+  Future<bool> usernameCheck(String username) async {
+    final result = await Firestore.instance
+        .collection('users')
+        .where('username', isEqualTo: username)
+        .getDocuments();
+    return result.documents.isEmpty;
+  }
+
   void _submitAuthForm(
       String username, String email, String password, BuildContext ctx) async {
     try {
@@ -38,44 +46,57 @@ FirebaseFirestore db = FirebaseFirestore.instance;
       });
       userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-            String fcmToken = await fbm.getToken();
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCredential.user.uid)
-          .set({
-        'username': username,
-        'location': location,
-        'profileImage': profileImage,
-        
-      });
+      String fcmToken = await fbm.getToken();
 
-      FirebaseFirestore.instance
-          .collection('cars')
-          .doc(userCredential.user.uid)
-          .set({
-        'userid': userCredential.user.uid,
-        'CarProfileImage': carProfileImage,
-        'Location': car_location,
-        'SaleStatus': saleStatus,
-        'carModel': carModel
-      });
+      final valid = await usernameCheck(username);
 
-  var tokens = db
-          .collection('users')
-          .doc(userCredential.user.uid)
-          .collection('tokens')
-          .doc(fcmToken);
-             await tokens.set({
-        'token': fcmToken,
-        'createdAt': FieldValue.serverTimestamp(), // optional
-        'platform': Platform.operatingSystem // optional
-      });
+      if (valid) {
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user.uid)
+            .set({
+          'username': username,
+          'location': location,
+          'profileImage': profileImage,
+        });
 
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage('')),
-        (Route<dynamic> route) => false, // remove back arrow
-      );
+        FirebaseFirestore.instance
+            .collection('cars')
+            .doc(userCredential.user.uid)
+            .set({
+          'userid': userCredential.user.uid,
+          'CarProfileImage': carProfileImage,
+          'Location': car_location,
+          'SaleStatus': saleStatus,
+          'carModel': carModel
+        });
+
+        var tokens = db
+            .collection('users')
+            .doc(userCredential.user.uid)
+            .collection('tokens')
+            .doc(fcmToken);
+        await tokens.set({
+          'token': fcmToken,
+          'createdAt': FieldValue.serverTimestamp(), // optional
+          'platform': Platform.operatingSystem // optional
+        });
+
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage('')),
+          (Route<dynamic> route) => false, // remove back arrow
+        );
+      } else {
+        String userIsAlreadyExists = "Username already exists";
+        Scaffold.of(ctx).showSnackBar(SnackBar(
+          content: Text(userIsAlreadyExists),
+          backgroundColor: Theme.of(ctx).errorColor,
+        ));
+        setState(() {
+          _isLoading = false;
+        });
+      }
     } on FirebaseAuthException catch (e) {
       String message = "error Occured";
       if (e.code == 'weak-password') {
