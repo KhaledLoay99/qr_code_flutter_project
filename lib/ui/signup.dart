@@ -20,14 +20,16 @@ class SignupState extends State<Signup> {
   static final validCharacters = RegExp(r"^[a-zA-Z]+$");
   var _email = new TextEditingController();
   var _username = new TextEditingController();
-    Pattern pattern2 = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+  Pattern pattern2 =
+      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
   var _password = new TextEditingController();
-  Pattern pattern =r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+  Pattern pattern =
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
   @override
   Widget build(BuildContext context) {
-      RegExp regex = new RegExp(pattern);
-      RegExp regex2 = new RegExp(pattern2);
+    RegExp regex = new RegExp(pattern);
+    RegExp regex2 = new RegExp(pattern2);
     // TODO: implement build
     return new Scaffold(
       resizeToAvoidBottomInset: true,
@@ -117,9 +119,8 @@ class SignupState extends State<Signup> {
                         if (value.length < 8) {
                           return 'Password is too short';
                         }
-                        if(!regex2.hasMatch(value))
-                        {
-                          return 'contains at least one lowercase letter and one uppercase letter and one number and one special Character ';
+                        if (!regex2.hasMatch(value)) {
+                          return ' \n contains at least one lowercase letter \n and one uppercase letter and one number and \n one special Character ';
                         }
                         return null;
                       },
