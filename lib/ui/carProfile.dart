@@ -24,7 +24,8 @@ class _carProfileState extends State<carProfile> {
   bool _isEnabled;
   var val = false;
   List carList;
-  static final validCharacters = RegExp(r"^[a-zA-Z]+$");
+  static final validCharacters = RegExp(r"^(?:.*[a-zA-Z].*){5}");
+  static final validCharacters2 = RegExp(r"^(?:.*[a-zA-Z].*){5}");
   static final validNumbers = RegExp('[0-9]');
   final _formKey = GlobalKey<FormState>();
   TextEditingController _customController;
@@ -83,17 +84,20 @@ class _carProfileState extends State<carProfile> {
                       validator: (value) {
                         if (type == "carModel") {
                           if (value.isEmpty) {
-                            return 'Please Enter Car Name';
+                            return 'Please Enter Car Model';
                           }
                           if (value.length < 5) {
-                            return 'Car Name is too short';
+                            return 'Car Model is too short';
                           }
                           if (value.length > 25) {
-                            return 'Car Name is too long';
+                            return 'Car Model is too long';
                           }
-                          if (new RegExp(r'[ !@#$%^&*(),.?":{}|<>]$')
+                          /* if (new RegExp(r'[ !@#$%^&*(),.?":{}|<>]$')
                               .hasMatch(value)) {
                             return "Car Name shouldn't contain any symbols";
+                          }*/
+                          if (!validCharacters.hasMatch(value)) {
+                            return "Car Model should contain at least 5 letters";
                           }
                           return null;
                         }
@@ -106,6 +110,9 @@ class _carProfileState extends State<carProfile> {
                           }
                           if (value.length < 11) {
                             return 'Location is too short';
+                          }
+                          if (!validCharacters.hasMatch(value)) {
+                            return "Location should contain at least 5 letters";
                           }
                           return null;
                         }

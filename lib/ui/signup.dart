@@ -25,7 +25,7 @@ class SignupState extends State<Signup> {
   var _password = new TextEditingController();
   Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-
+  static final validCharacters2 = RegExp(r"^(?:.*[a-zA-Z].*){3}");
   @override
   Widget build(BuildContext context) {
     RegExp regex = new RegExp(pattern);
@@ -70,9 +70,9 @@ class SignupState extends State<Signup> {
                         if (value.length > 18) {
                           return 'Username is too long';
                         }
-                        // if (!validCharacters.hasMatch(value)) {
-                        //   return 'First Name should be alphabets only';
-                        // }
+                        if (!validCharacters2.hasMatch(value)) {
+                          return 'UserName should contain atleast 3 letters';
+                        }
                         return null;
                       },
                       decoration: new InputDecoration(

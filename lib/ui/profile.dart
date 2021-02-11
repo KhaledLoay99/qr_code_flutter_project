@@ -29,7 +29,9 @@ class _ProfileState extends State<Profile> {
   Color c1 = const Color.fromRGBO(110, 204, 234, 1.0);
   TextFormField test;
   bool _isEnabled;
-  static final validCharacters = RegExp(r"^[a-zA-Z]+$");
+  static final validCharacters = RegExp(r"^(?:.*[a-zA-Z].*){3}");
+  static final validCharacters2 = RegExp(r"^(?:.*[a-zA-Z].*){5}");
+  static final validNumbers = RegExp("[0-9]");
   final _formKey = GlobalKey<FormState>();
   TextEditingController _customController;
   List<Userprofile> userList;
@@ -82,7 +84,7 @@ class _ProfileState extends State<Profile> {
           return AlertDialog(
             title: Text("Your $type"),
             content: Container(
-              height: 125,
+              height: 150,
               width: 250,
               child: Form(
                 key: _formKey,
@@ -100,7 +102,9 @@ class _ProfileState extends State<Profile> {
                           if (value.length < 3) {
                             return 'Username is too short';
                           }
-
+                          if (!validCharacters.hasMatch(value)) {
+                            return "UserName should contain at least 3 letters";
+                          }
                           userList.forEach((user) {
                             if (user.id != userList[userIndex].id) {
                               userNames.add(user.get_username);
@@ -119,8 +123,11 @@ class _ProfileState extends State<Profile> {
                           if (value.length > 35) {
                             return 'Location is too long';
                           }
-                          if (value.length < 11) {
+                          if (value.length < 5) {
                             return 'Location is too short';
+                          }
+                          if (!validCharacters2.hasMatch(value)) {
+                            return "Location should contain at least 6 letters";
                           }
                           return null;
                         }
