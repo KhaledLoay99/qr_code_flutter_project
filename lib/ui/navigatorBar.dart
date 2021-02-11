@@ -32,6 +32,9 @@ class _HomePageState extends State<HomePage> {
     if (something == 'something') {
       selectedPage = 2;
     }
+    if (something == 'test') {
+      selectedPage = 0;
+    }
   }
 
   @override

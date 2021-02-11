@@ -75,7 +75,6 @@ class Userprovider with ChangeNotifier {
   }
 
   Future<void> fetchdata() async {
-    print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
     await Firebase.initializeApp();
     try {
       var snaps = FirebaseFirestore.instance.collection('users');
@@ -101,32 +100,22 @@ class Userprovider with ChangeNotifier {
         });
       });*/
       snaps.snapshots().listen((QuerySnapshot querySnapshot) {
-        if (querySnapshot.size > 0) {
-          querySnapshot.documents.forEach((document) async {
-            user.add(Userprofile(
-                id: document.documentID,
-                email: await document.data()['email'],
-                username: await document.data()['username'],
-                location: await document.data()['location'],
-                profileImage: await document.data()['profileImage'],
-                qrImage: await document.data()['qrImage'],
-                noOfChats: await document.data()['chatlist'] == null
-                    ? 0
-                    : document.data()['chatlist'].length));
-          });
-          snaps.get().then((value) {
-            notifyListeners();
-          });
-        } else {
-          prog = false;
-          err = true;
+        querySnapshot.documents.forEach((document) async {
+          user.add(Userprofile(
+              id: document.documentID,
+              email: await document.data()['email'],
+              username: await document.data()['username'],
+              location: await document.data()['location'],
+              profileImage: await document.data()['profileImage'],
+              qrImage: await document.data()['qrImage'],
+              noOfChats: await document.data()['chatlist'] == null
+                  ? 0
+                  : document.data()['chatlist'].length));
+        });
+        snaps.get().then((value) {
           notifyListeners();
-        }
+        });
       });
-    } catch (error) {
-      prog = false;
-      err = true;
-      notifyListeners();
-    }
+    } catch (error) {}
   }
 }

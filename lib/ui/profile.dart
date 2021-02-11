@@ -1,4 +1,5 @@
 import 'package:Dcode/logic/userProfile.dart';
+import 'package:Dcode/ui/navigatorBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -115,10 +116,10 @@ class _ProfileState extends State<Profile> {
                           if (value.isEmpty) {
                             return 'Please Enter your location';
                           }
-                          if (value.length > 15) {
+                          if (value.length > 35) {
                             return 'Location is too long';
                           }
-                          if (value.length < 5) {
+                          if (value.length < 11) {
                             return 'Location is too short';
                           }
                           return null;
@@ -339,7 +340,11 @@ class _ProfileState extends State<Profile> {
                 content: new Text('Error while fetching data!'),
                 actions: <Widget>[
                   new FlatButton(
-                    onPressed: () => Navigator.of(context).pop(true),
+                    onPressed: () => Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage('test')),
+                      (Route<dynamic> route) => false,
+                    ),
                     child: new Text('Exit'),
                   ),
                 ],

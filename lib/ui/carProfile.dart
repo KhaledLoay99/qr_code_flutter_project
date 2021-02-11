@@ -85,10 +85,10 @@ class _carProfileState extends State<carProfile> {
                           if (value.isEmpty) {
                             return 'Please Enter Car Name';
                           }
-                          if (value.length < 3) {
+                          if (value.length < 5) {
                             return 'Car Name is too short';
                           }
-                          if (value.length > 18) {
+                          if (value.length > 25) {
                             return 'Car Name is too long';
                           }
                           if (new RegExp(r'[ !@#$%^&*(),.?":{}|<>]$')
@@ -195,7 +195,6 @@ class _carProfileState extends State<carProfile> {
                                   update.updateData(user_id, {
                                     'SaleStatus': carList[carIndex].salestatus
                                   });
-                                  print('switched to: $index');
                                 },
                               )
                             : null,

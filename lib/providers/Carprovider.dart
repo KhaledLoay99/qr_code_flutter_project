@@ -14,9 +14,7 @@ class Carprovider with ChangeNotifier {
         .collection('cars')
         .document(id)
         .updateData(val)
-        .catchError((e) {
-      print(e);
-    });
+        .catchError((e) {});
 
     var nMap = Map<String, dynamic>.from(val);
     print(nMap);
@@ -34,29 +32,21 @@ class Carprovider with ChangeNotifier {
     try {
       var snaps = FirebaseFirestore.instance.collection('cars');
       snaps.snapshots().listen((QuerySnapshot querySnapshot) {
-        if (querySnapshot.size > 0) {
-          querySnapshot.documents.forEach((document) async {
-            car.add(Carprofile(
-              id: await document.documentID,
-              userid: await document.data()['userid'],
-              location: await document.data()['Location'],
-              salestatus: await document.data()['SaleStatus'],
-              carmodel: await document.data()['carModel'],
-              carprofileImage: await document.data()['CarProfileImage'],
-            ));
-          });
-          snaps.get().then((value) {
-            notifyListeners();
-          });
-        } else {
-          prog = false;
-          err = true;
+        querySnapshot.documents.forEach((document) async {
+          car.add(Carprofile(
+            id: await document.documentID,
+            userid: await document.data()['userid'],
+            location: await document.data()['Location'],
+            salestatus: await document.data()['SaleStatus'],
+            carmodel: await document.data()['carModel'],
+            carprofileImage: await document.data()['CarProfileImage'],
+          ));
+        });
+        snaps.get().then((value) {
           notifyListeners();
-        }
+        });
       });
     } catch (error) {
-      prog = false;
-      err = true;
       notifyListeners();
     }
   }
