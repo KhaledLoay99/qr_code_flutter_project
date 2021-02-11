@@ -29,70 +29,93 @@ class AuthFormState extends State<AuthForm> {
   String car_location = "No Location Added";
   bool saleStatus = false;
   String carModel = "No Car Model Added";
+  bool check = true;
   void _submitAuthForm(
       String username, String email, String password, BuildContext ctx) async {
-    try {
-      setState(() {
-        _isLoading = true;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        if (username == result["username"]) {
+          return check = false;
+        }
       });
-      userCredential = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      String fcmToken = await fbm.getToken();
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCredential.user.uid)
-          .set({
-        'username': username,
-        'location': location,
-        'profileImage': profileImage,
-      });
-
-      FirebaseFirestore.instance
-          .collection('cars')
-          .doc(userCredential.user.uid)
-          .set({
-        'userid': userCredential.user.uid,
-        'CarProfileImage': carProfileImage,
-        'Location': car_location,
-        'SaleStatus': saleStatus,
-        'carModel': carModel
-      });
-
-      var tokens = db
-          .collection('users')
-          .doc(userCredential.user.uid)
-          .collection('tokens')
-          .doc(fcmToken);
-      await tokens.set({
-        'token': fcmToken,
-        'createdAt': FieldValue.serverTimestamp(), // optional
-        'platform': Platform.operatingSystem // optional
-      });
-
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage('')),
-        (Route<dynamic> route) => false, // remove back arrow
-      );
-    } on FirebaseAuthException catch (e) {
-      String message = "error Occured";
-      if (e.code == 'weak-password') {
-        message = "The password provided is too weak";
-      } else if (e.code == 'email-already-in-use') {
-        message = "The account already exists for that email";
-      }
+    });
+    if (check == false) {
       Scaffold.of(ctx).showSnackBar(SnackBar(
-        content: Text(message),
+        content: Text("username already exists"),
         backgroundColor: Theme.of(ctx).errorColor,
       ));
       setState(() {
         _isLoading = false;
+        check = true;
       });
-    } catch (e) {
-      print(e);
-      setState(() {
-        _isLoading = false;
-      });
+    } else {
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+
+        userCredential = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+        String fcmToken = await fbm.getToken();
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user.uid)
+            .set({
+          'username': username,
+          'location': location,
+          'profileImage': profileImage,
+        });
+
+        FirebaseFirestore.instance
+            .collection('cars')
+            .doc(userCredential.user.uid)
+            .set({
+          'userid': userCredential.user.uid,
+          'CarProfileImage': carProfileImage,
+          'Location': car_location,
+          'SaleStatus': saleStatus,
+          'carModel': carModel
+        });
+
+        var tokens = db
+            .collection('users')
+            .doc(userCredential.user.uid)
+            .collection('tokens')
+            .doc(fcmToken);
+        await tokens.set({
+          'token': fcmToken,
+          'createdAt': FieldValue.serverTimestamp(), // optional
+          'platform': Platform.operatingSystem // optional
+        });
+
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage('')),
+          (Route<dynamic> route) => false, // remove back arrow
+        );
+      } on FirebaseAuthException catch (e) {
+        String message = "error Occured";
+        if (e.code == 'weak-password') {
+          message = "The password provided is too weak";
+        } else if (e.code == 'email-already-in-use') {
+          message = "The account already exists for that email";
+        }
+        Scaffold.of(ctx).showSnackBar(SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(ctx).errorColor,
+        ));
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (e) {
+        print(e);
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
