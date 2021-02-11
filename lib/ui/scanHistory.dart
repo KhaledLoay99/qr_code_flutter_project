@@ -65,7 +65,11 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
 
         if (snapshot.connectionState == ConnectionState.active) {
           var courseDocument = snapshot.data.data;
+          if (courseDocument() == null) {
+            return Container();
+          }
           var sections = courseDocument()['chatlist'];
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Loading");
           }
