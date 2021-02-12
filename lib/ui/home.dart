@@ -60,6 +60,7 @@ class homeState extends State<home> {
     }
     return new MaterialApp(
       navigatorKey: navigatorKey,
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
