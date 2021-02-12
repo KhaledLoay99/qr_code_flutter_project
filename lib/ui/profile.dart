@@ -170,73 +170,78 @@ class _ProfileState extends State<Profile> {
               content: Container(
                 height: 350,
                 width: 250,
-                child: Column(
+                child: ListView(
                   children: [
-                    Screenshot(
-                      controller: screenshotController,
-                      child: Container(
-                        color: Colors.white,
-                        child: QrImage(
-                          data: userTake.uid,
-                          version: QrVersions.auto,
-                          size: 200.0,
+                    Column(
+                      children: [
+                        Screenshot(
+                          controller: screenshotController,
+                          child: Container(
+                            color: Colors.white,
+                            child: QrImage(
+                              data: userTake.uid,
+                              version: QrVersions.auto,
+                              size: 200.0,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    !_loading
-                        ? Visibility(
-                            visible: save_done,
-                            child: (nUser == null)
-                                ? RaisedButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    onPressed: () {
-                                      screenshotController
-                                          .capture(
-                                              delay: Duration(milliseconds: 10))
-                                          .then((File image) async {
-                                        Map<Permission, PermissionStatus>
-                                            statuses = await [
-                                          Permission.storage,
-                                        ].request();
-                                        if (statuses[Permission.storage]
-                                            .isDenied) {
-                                          return Text("NEED A Permission");
-                                        }
-                                        if (image != null &&
-                                            image.path != null) {
-                                          setState(() {
-                                            _loading = true;
-                                          });
-                                          GallerySaver.saveImage(image.path)
-                                              .then((value) => setState(() {
-                                                    _loading = false;
+                        !_loading
+                            ? Visibility(
+                                visible: save_done,
+                                child: (nUser == null)
+                                    ? RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        onPressed: () {
+                                          screenshotController
+                                              .capture(
+                                                  delay: Duration(
+                                                      milliseconds: 10))
+                                              .then((File image) async {
+                                            Map<Permission, PermissionStatus>
+                                                statuses = await [
+                                              Permission.storage,
+                                            ].request();
+                                            if (statuses[Permission.storage]
+                                                .isDenied) {
+                                              return Text("NEED A Permission");
+                                            }
+                                            if (image != null &&
+                                                image.path != null) {
+                                              setState(() {
+                                                _loading = true;
+                                              });
+                                              GallerySaver.saveImage(image.path)
+                                                  .then((value) => setState(() {
+                                                        _loading = false;
 
-                                                    save_done = false;
-                                                    save_done2 = true;
-                                                  }));
-                                        }
-                                      }).catchError((onError) {});
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.arrow_circle_down),
-                                        Text("Download Your Qr Code"),
-                                      ],
-                                    ),
-                                  )
-                                : Text('QR'))
-                        : CircularProgressIndicator(),
-                    Visibility(
-                        visible: save_done2,
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        )),
-                    Visibility(
-                      visible: save_done2,
-                      child: Text("Saved To Gallery"),
+                                                        save_done = false;
+                                                        save_done2 = true;
+                                                      }));
+                                            }
+                                          }).catchError((onError) {});
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.arrow_circle_down),
+                                            Text("Download Your Qr Code"),
+                                          ],
+                                        ),
+                                      )
+                                    : Text('QR'))
+                            : CircularProgressIndicator(),
+                        Visibility(
+                            visible: save_done2,
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.green,
+                            )),
+                        Visibility(
+                          visible: save_done2,
+                          child: Text("Saved To Gallery"),
+                        ),
+                      ],
                     ),
                   ],
                 ),
