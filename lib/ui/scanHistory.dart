@@ -62,7 +62,6 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
         if (!snapshot.hasData || snapshot.data == null) {
           return Container();
         }
-
         if (snapshot.connectionState == ConnectionState.active) {
           var courseDocument = snapshot.data.data;
           if (courseDocument() == null) {
@@ -159,9 +158,7 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
             separatorBuilder: (context, index) {
               return Divider();
             },
-            itemCount: sections.runtimeType.toString() == "List<dynamic>"
-                ? sections.length
-                : 0,
+            itemCount: sections != null ? sections.length : 0,
           );
         } else {
           return Container();

@@ -57,7 +57,6 @@ class UserListState extends State<UserList> {
         if (!snapshot.hasData || snapshot.data == null) {
           return Container();
         }
-
         if (snapshot.connectionState == ConnectionState.active) {
           var courseDocument = snapshot.data.data;
           if (courseDocument() == null) {
@@ -148,9 +147,7 @@ class UserListState extends State<UserList> {
             separatorBuilder: (context, index) {
               return Divider();
             },
-            itemCount: sections.runtimeType.toString() == "List<dynamic>"
-                ? sections.length
-                : 0,
+            itemCount: sections != null ? sections.length : 0,
           );
         } else {
           return Container();
