@@ -27,8 +27,6 @@ class _ChatScreenState extends State<ChatScreen> {
   Color c1 = const Color.fromRGBO(110, 204, 234, 1.0);
   var _messagefield = new TextEditingController();
   var currentUser = FirebaseAuth.instance.currentUser.uid;
- 
- 
 
   Widget _buildMessageComposer() {
     return Container(
@@ -281,19 +279,19 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.only(top: 20.0),
+                      //margin: EdgeInsets.only(top: 20.0),
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        // borderRadius: BorderRadius.only(
-                        //   topRight: Radius.circular(80.0),
-                        //   topLeft: Radius.circular(80.0),
-                        // ),
-                      ),
+                          //color: Colors.white,
+                          // borderRadius: BorderRadius.only(
+                          //   topRight: Radius.circular(80.0),
+                          //   topLeft: Radius.circular(80.0),
+                          // ),
+                          ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(30.0),
-                          topLeft: Radius.circular(30.0),
-                        ),
+                        // borderRadius: BorderRadius.only(
+                        //   topRight: Radius.circular(30.0),
+                        //   topLeft: Radius.circular(30.0),
+                        // ),
                         child: ListView.builder(
                             controller: _scrollController,
                             reverse: true,
@@ -351,6 +349,5 @@ class _ChatScreenState extends State<ChatScreen> {
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection('messages');
     collectionReference.add(messageInfo);
-   
   }
 }

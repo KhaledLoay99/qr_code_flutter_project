@@ -170,55 +170,61 @@ class _notifyState extends State<notify> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     if (chatNumber > 0) {
-      return WillPopScope(
-        onWillPop: () async {
-          return Navigator.canPop(context); //avoid app from exiting
-        },
-        child: Scaffold(
-            appBar: new AppBar(
-              backgroundColor: c1,
-              title: Row(
-                children: <Widget>[
-                  Text('Your Scan History '),
-                  RotationTransition(
-                    turns: Tween(begin: 0.0, end: -.1)
-                        .chain(CurveTween(curve: Curves.elasticIn))
-                        .animate(_animationController),
-                    child: Badge(
-                      badgeContent: Text(chatNumber.toString(),
-                          style: TextStyle(color: Colors.white)),
-                      child: Icon(
-                        Icons.qr_code,
-                        color: Colors.black,
+      return MaterialApp(
+        title: "Scan History",
+        home: WillPopScope(
+          onWillPop: () async {
+            return Navigator.canPop(context); //avoid app from exiting
+          },
+          child: Scaffold(
+              appBar: new AppBar(
+                backgroundColor: c1,
+                title: Row(
+                  children: <Widget>[
+                    Text('Your Scan History '),
+                    RotationTransition(
+                      turns: Tween(begin: 0.0, end: -.1)
+                          .chain(CurveTween(curve: Curves.elasticIn))
+                          .animate(_animationController),
+                      child: Badge(
+                        badgeContent: Text(chatNumber.toString(),
+                            style: TextStyle(color: Colors.white)),
+                        child: Icon(
+                          Icons.qr_code,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
 //          title: new Text("Login"),
-            ),
-            body: _buildChatList()),
+              ),
+              body: _buildChatList()),
+        ),
       );
     } else {
-      return WillPopScope(
-        onWillPop: () async {
-          return Navigator.canPop(context); //avoid app from exiting
-        },
-        child: Scaffold(
-            appBar: new AppBar(
-              backgroundColor: c1,
-              title: Row(
-                children: <Widget>[
-                  Text('Your Scan History '),
-                  Icon(
-                    Icons.qr_code,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
+      return MaterialApp(
+        title: "Scan History",
+        home: WillPopScope(
+          onWillPop: () async {
+            return Navigator.canPop(context); //avoid app from exiting
+          },
+          child: Scaffold(
+              appBar: new AppBar(
+                backgroundColor: c1,
+                title: Row(
+                  children: <Widget>[
+                    Text('Your Scan History '),
+                    Icon(
+                      Icons.qr_code,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
 //          title: new Text("Login"),
-            ),
-            body: _buildChatList()),
+              ),
+              body: _buildChatList()),
+        ),
       );
     }
   }

@@ -9,6 +9,7 @@ class intro extends StatelessWidget {
     Color c1 = const Color.fromRGBO(110, 204, 234, 1.0);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: "Welcome",
       home: new Scaffold(
         backgroundColor: Colors.white,
         appBar: new AppBar(
