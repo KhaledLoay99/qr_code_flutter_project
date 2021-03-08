@@ -1,4 +1,3 @@
-import 'package:Dcode/logic/notifications.dart';
 import 'package:Dcode/providers/Userprovider.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,7 +16,6 @@ class notify extends StatefulWidget {
 class _notifyState extends State<notify> with TickerProviderStateMixin {
   Color c1 = const Color.fromRGBO(
       110, 204, 234, 1.0); // fully transparent white (invisible)
-  final notifylogic Notification = notifylogic();
   AnimationController _animationController;
   final _biggerFont = const TextStyle(fontSize: 18.0);
   int chatNumber = 0;

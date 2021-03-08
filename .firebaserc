@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "dcode-bd3d1"
+    "default": "dcode-bd3d1",
+    "firebase init functions": "dcode-bd3d1"
   }
 }
